@@ -4,11 +4,10 @@ import { useState, useEffect } from "react";
 let currAns;
 
 const Current = (props) => {
-
   currAns = props.currQus;
 
   console.log(currAns.CompletedUser);
-  
+
   return (
     <>
       <div
@@ -22,7 +21,7 @@ const Current = (props) => {
           fontSize: "16px",
         }}
       >
-        <div>{currAns.Practice}</div>
+        <div>{currAns.Title}</div>
         <div>{currAns.Step}</div>
       </div>
       <div
@@ -63,7 +62,7 @@ const Current = (props) => {
             textAlign: "center",
             cursor: "pointer",
           }}
-          onClick={() => { 
+          onClick={() => {
             props.completeQus(currAns.ID, currAns.CompletedUser);
           }}
         >

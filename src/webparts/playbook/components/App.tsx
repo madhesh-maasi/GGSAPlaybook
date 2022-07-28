@@ -1,9 +1,9 @@
-import * as React from 'react'
-import Header from './Header'
-import Questions from './Questions'
-import Footerimg from './Footerimg'
-import FooterCategories from './FooterCategories'
-import { useState, useEffect } from 'react'
+import * as React from "react";
+import Header from "./Header";
+import Questions from "./Questions";
+import Footerimg from "./Footerimg";
+import FooterCategories from "./FooterCategories";
+import { useState, useEffect } from "react";
 
 let arrPrctice = [];
 let UserId;
@@ -37,10 +37,10 @@ const App = (props) => {
               return {
                 Title: head.Title,
                 deliver: arrJSON,
-                About: head.About
-              }
+                About: head.About,
+              };
             });
-          })
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -51,64 +51,82 @@ const App = (props) => {
   useEffect(() => {
     props.sp.web.lists
       .getByTitle("Practice")
-      .items
-      .select("*,Practice/Title")
+      .items.select("*,Practice/Title")
       .expand("Practice")
       .get()
       .then((val) => {
         console.log(val);
         arrPrctice = val.map((row) => {
-          let isUserCompleted = row.CompletedUser ?
-            row.CompletedUser.split(",").map(id => +id).some((id) => id == UserId)
+          let isUserCompleted = row.CompletedUser
+            ? row.CompletedUser.split(",")
+                .map((id) => +id)
+                .some((id) => id == UserId)
             : false;
-          return (
-            {
-              UserId: UserId,
-              Title: row.Title ? row.Title : "",
-              ID: row.ID,
-              Step: row.Step,
-              Practice: row.Practice.Title,
-              Time: row.Time,
-              Order: row.Qorder,
-              CompletedUser: row.CompletedUser != null ? row.CompletedUser : "",
-              isRead: isUserCompleted,
-            }
-          )
-        })
+          return {
+            UserId: UserId,
+            Title: row.Title ? row.Title : "",
+            ID: row.ID,
+            Step: row.Step,
+            Practice: row.Practice.Title,
+            Time: row.Time,
+            Order: row.Qorder,
+            CompletedUser: row.CompletedUser != null ? row.CompletedUser : "",
+            isRead: isUserCompleted,
+            Icon: row.Icon ? row.Icon : "",
+          };
+        });
         console.log(arrPrctice);
         setAllPrctice([...arrPrctice]);
-        let primaryPractice = moduleHead.map((title) => {
-          return {
-            Title: title.Title,
-            About: title.About,
-            deliver: title.deliver,
-            isInComplete: allPrctice.filter((step) => step.Practice == title.Title).some((step) => step.isRead == false)
-          }
-        }).filter((practice) => practice.isInComplete == true)[0];
-        arrDeliver = moduleHead.filter((deliver) => deliver.Title == primaryPractice.Title)[0];
-        arrPrimarySteps = allPrctice.filter((step) => step.Practice == primaryPractice.Title);
-        setArrDelSec(arrDeliver)
+        let primaryPractice = moduleHead
+          .map((title) => {
+            return {
+              Title: title.Title,
+              About: title.About,
+              deliver: title.deliver,
+              isInComplete: allPrctice
+                .filter((step) => step.Practice == title.Title)
+                .some((step) => step.isRead == false),
+            };
+          })
+          .filter((practice) => practice.isInComplete == true)[0];
+        arrDeliver = moduleHead.filter(
+          (deliver) => deliver.Title == primaryPractice.Title
+        )[0];
+        arrPrimarySteps = allPrctice.filter(
+          (step) => step.Practice == primaryPractice.Title
+        );
+        setArrDelSec(arrDeliver);
         setPrimarySteps([]);
         setPrimarySteps([...arrPrimarySteps]);
         setRender(false);
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   }, [render]);
 
   const reRunning = () => {
     setRender(true);
-  }
+  };
 
   return (
     <>
-      {arrDelSec && Object.keys(arrDelSec).length !== 0 && Object.getPrototypeOf(arrDelSec) === Object.prototype && <Header context={props.context} sp={props.sp} arrDelSec={arrDelSec} />}
-      {primarySteps.length > 0 && <Questions context={props.context} sp={props.sp} PrimarySteps={primarySteps} arrDelSec={arrDelSec} reRunning={reRunning} />}
+      {primarySteps.length > 0 && (
+        <>
+          <Header context={props.context} sp={props.sp} arrDelSec={arrDelSec} />
+          <Questions
+            context={props.context}
+            sp={props.sp}
+            PrimarySteps={primarySteps}
+            arrDelSec={arrDelSec}
+            reRunning={reRunning}
+          />
+        </>
+      )}
       <Footerimg context={props.context} sp={props.sp} />
       <FooterCategories context={props.context} sp={props.sp} />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
