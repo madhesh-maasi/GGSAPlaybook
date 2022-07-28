@@ -1,0 +1,16 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "version": "1.14.0",
+    "libraryName": "ggsa-playbook",
+    "libraryId": "50269cd2-3c42-4ceb-8f6e-b317d1516387",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "ggsa-playbook",
+    "solutionShortDescription": "ggsa-playbook description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

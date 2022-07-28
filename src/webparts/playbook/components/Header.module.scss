@@ -1,0 +1,67 @@
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  @extend .flex;
+  font-size: 12px;
+  border: 3px solid;
+  margin: 0 7px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+}
+.valueofHead {
+  @extend .flex;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  .titleWrapper {
+    @extend .flex;
+    justify-content: space-between;
+    width: 100%;
+    .title {
+      font-size: 30px;
+      color: #00859c;
+      font-weight: 500;
+    .infoIcon{
+        width: 15px;
+        margin-left: 30px;
+      }
+    }
+  }
+  .profiles {
+    @extend .flex;
+
+    .dev {
+      @extend .profile;
+      border-color: #66afc9;
+      cursor: context-menu;
+      color: #66afc9;
+      font-weight: bold;
+    }
+
+    .manager {
+      @extend .profile;
+      border-color: #f99d26;
+      cursor: context-menu;
+      color: #f99d26;
+      font-weight: bold;
+    }
+    .user {
+      border: 3px solid #00859c;
+      cursor: context-menu;
+      font-weight: bold;
+      color: #00859c;
+      border-radius: 50%;
+      padding: 8px;
+      margin: 0 7px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif
+    }
+  }
+}

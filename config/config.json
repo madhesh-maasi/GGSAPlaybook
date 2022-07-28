@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "playbook-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/playbook/PlaybookWebPart.js",
+          "manifest": "./src/webparts/playbook/PlaybookWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "PlaybookWebPartStrings": "lib/webparts/playbook/loc/{locale}.js"
+  }
+}

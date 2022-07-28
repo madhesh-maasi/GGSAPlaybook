@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "ggsa-playbook-client-side-solution",
+    "id": "50269cd2-3c42-4ceb-8f6e-b317d1516387",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.14.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "ggsa-playbook description"
+      },
+      "longDescription": {
+        "default": "ggsa-playbook description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "ggsa-playbook Feature",
+        "description": "The feature that activates elements of the ggsa-playbook solution.",
+        "id": "3b92800a-b4df-4881-94b7-11ed2609b44e",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/ggsa-playbook.sppkg"
+  }
+}
