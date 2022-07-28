@@ -13,25 +13,34 @@ let remainingQuestions = [];
 let UserId;
 let lastIndex;
 let lastIndexId;
+let arrTimeline = [];
 
 const Questions = (props) => {
   const [allPrctice, setAllPrctice] = useState([]);
   const [question, setQuestion] = useState([]);
   const [currQus, setCurrQus] = useState();
   const [render, setRender] = useState(true);
-
+  const [TLData, setTLData] = useState(arrTimeline);
   // life cycle of render
   useEffect(() => {
     arrPrctice = props.PrimarySteps;
     lastIndex = arrPrctice[arrPrctice.length - 1];
     lastIndexId = lastIndex.ID;
-    console.log(lastIndexId);
     UserId = arrPrctice.map((e) => e.UserId)[0].toString();
+    arrTimeline = arrPrctice.map((item) => {
+      return {
+        ID: item.ID,
+        Icon: item.Icon,
+        isRead: item.isRead,
+        Order: item.Order,
+      };
+    });
+    setTLData([]);
+    setTLData([...arrTimeline]);
     setAllPrctice([...arrPrctice]);
+
     readQuestions = allPrctice.filter((step) => step.isRead == true);
-    objCurrentQuestion = allPrctice.filter(
-      (step) => step.isRead == false
-    )[0];
+    objCurrentQuestion = allPrctice.filter((step) => step.isRead == false)[0];
     remainingQuestions = [
       ...allPrctice.filter(
         (row) => row.isRead == false && row.Step != objCurrentQuestion.Step
@@ -47,35 +56,43 @@ const Questions = (props) => {
     arrPrctice.filter((complete) => complete.ID == Id)[0].isRead = true;
     setAllPrctice([...arrPrctice]);
     addUserId(Id, completeValues);
-  }
+  };
 
   // Add user id
   const addUserId = (Id, completeValues) => {
-    let currCompleteValue = !completeValues ? `${UserId}` : `${completeValues},${UserId}`;
+    let currCompleteValue = !completeValues
+      ? `${UserId}`
+      : `${completeValues},${UserId}`;
     props.sp.web.lists
       .getByTitle("Practice")
-      .items
-      .getById(Id)
+      .items.getById(Id)
       .update({
         CompletedUser: currCompleteValue,
       })
       .then(() => {
         setRender(true);
         setTimeout(() => {
-          Id == lastIndexId && (props.reRunning());
-        }, 500)
+          Id == lastIndexId && props.reRunning();
+        }, 500);
       })
       .catch((err) => {
         console.log(err);
-      })
-  }
+      });
+  };
 
   return (
     <>
-      <Timeline context={props.context} sp={props.sp} />
+      {TLData.length > 0 && (
+        <Timeline
+          context={props.context}
+          sp={props.sp}
+          timeline={TLData}
+          renderTL={true}
+        />
+      )}
       <div className={styles.Qus}>
         <div style={{ width: "50%" }}>
-          {currQus &&
+          {currQus && (
             <>
               <Current
                 context={props.context}
@@ -88,7 +105,8 @@ const Questions = (props) => {
                 sp={props.sp}
                 arrDelSec={props.arrDelSec}
               />
-            </>}
+            </>
+          )}
         </div>
         <div>
           <AllQuestions
