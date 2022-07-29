@@ -72,9 +72,9 @@ const Questions = (props) => {
         CompletedUser: currCompleteValue,
       })
       .then(() => {
-        if(Id == lastIndexId){
-          props.reRunning()
-        } else{
+        if (Id == lastIndexId) {
+          props.reRunning();
+        } else {
           setTimelineRender(false);
           setRender(true);
         }
@@ -97,10 +97,11 @@ const Questions = (props) => {
       <div className={styles.Qus}>
         <button
           onClick={() => props.BeforeModule()}
+          style={{ marginRight: "1rem" }}
         >
           Before
         </button>
-        <div style={{ width: "50%" }}>
+        <div className={styles.QuestionCover}>
           {currQus && (
             <>
               <Current
@@ -124,7 +125,7 @@ const Questions = (props) => {
             question={question}
           />
         </div>
-        <button>After</button>
+        <button style={{ marginLeft: "1rem" }}>After</button>
       </div>
     </>
   );
