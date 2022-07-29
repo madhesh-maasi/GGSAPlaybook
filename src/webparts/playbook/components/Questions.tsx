@@ -75,8 +75,8 @@ const Questions = (props) => {
         if(Id == lastIndexId){
           props.reRunning()
         } else{
-          setRender(true);
           setTimelineRender(false);
+          setRender(true);
         }
       })
       .catch((err) => {
@@ -95,7 +95,11 @@ const Questions = (props) => {
         />
       )}
       <div className={styles.Qus}>
-        <button>Before</button>
+        <button
+          onClick={() => props.BeforeModule()}
+        >
+          Before
+        </button>
         <div style={{ width: "50%" }}>
           {currQus && (
             <>

@@ -11,6 +11,8 @@ let arrPracticeConfig = [];
 let moduleHead = [];
 let arrPrimarySteps = [];
 let arrDeliver = {};
+let objCompleteDeliver = {};
+let arrCompleteSteps = [];
 
 const App = (props) => {
   const [allPrctice, setAllPrctice] = useState(arrPrctice);
@@ -59,8 +61,8 @@ const App = (props) => {
         arrPrctice = val.map((row) => {
           let isUserCompleted = row.CompletedUser
             ? row.CompletedUser.split(",")
-                .map((id) => +id)
-                .some((id) => id == UserId)
+              .map((id) => +id)
+              .some((id) => id == UserId)
             : false;
           return {
             UserId: UserId,
@@ -75,7 +77,6 @@ const App = (props) => {
             Icon: row.Icon ? row.Icon : "",
           };
         });
-        console.log(arrPrctice);
         setAllPrctice([...arrPrctice]);
         let primaryPractice = moduleHead
           .map((title) => {
@@ -109,6 +110,33 @@ const App = (props) => {
     setRender(true);
   };
 
+  const BeforeModule = () => {
+    let completePractice = moduleHead
+      .map((title) => {
+        return {
+          Title: title.Title,
+          About: title.About,
+          deliver: title.deliver,
+          isInComplete: allPrctice
+            .filter((step) => step.Practice == title.Title)
+            .some((step) => step.isRead == false),
+        };
+      })
+      .filter((practice) => practice.isInComplete == false)[0];
+    objCompleteDeliver = moduleHead.filter(
+      (deliver) => deliver.Title == completePractice.Title
+    )[0];
+    arrCompleteSteps = allPrctice.filter(
+      (step) => step.Practice == completePractice.Title
+    );
+    console.log(completePractice);
+    console.log(objCompleteDeliver);
+    console.log(arrCompleteSteps);
+    setArrDelSec(objCompleteDeliver);
+    setPrimarySteps([]);
+    setPrimarySteps([...arrCompleteSteps]);
+  }
+
   return (
     <>
       {primarySteps.length > 0 && (
@@ -120,6 +148,7 @@ const App = (props) => {
             PrimarySteps={primarySteps}
             arrDelSec={arrDelSec}
             reRunning={reRunning}
+            BeforeModule={BeforeModule}
           />
         </>
       )}
