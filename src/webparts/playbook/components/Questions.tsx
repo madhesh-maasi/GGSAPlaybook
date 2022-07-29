@@ -21,6 +21,8 @@ const Questions = (props) => {
   const [currQus, setCurrQus] = useState();
   const [render, setRender] = useState(true);
   const [TLData, setTLData] = useState(arrTimeline);
+  const [timelineRender, setTimelineRender] = useState(true);
+
   // life cycle of render
   useEffect(() => {
     arrPrctice = props.PrimarySteps;
@@ -38,7 +40,6 @@ const Questions = (props) => {
     setTLData([]);
     setTLData([...arrTimeline]);
     setAllPrctice([...arrPrctice]);
-
     readQuestions = allPrctice.filter((step) => step.isRead == true);
     objCurrentQuestion = allPrctice.filter((step) => step.isRead == false)[0];
     remainingQuestions = [
@@ -50,6 +51,7 @@ const Questions = (props) => {
     setQuestion(remainingQuestions);
     setCurrQus({ ...objCurrentQuestion });
     setRender(false);
+    setTimelineRender(true);
   }, [render]);
 
   const completeQus = (Id, completeValues) => {
@@ -70,10 +72,12 @@ const Questions = (props) => {
         CompletedUser: currCompleteValue,
       })
       .then(() => {
-        setRender(true);
-        setTimeout(() => {
-          Id == lastIndexId && props.reRunning();
-        }, 500);
+        if(Id == lastIndexId){
+          props.reRunning()
+        } else{
+          setRender(true);
+          setTimelineRender(false);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -87,10 +91,11 @@ const Questions = (props) => {
           context={props.context}
           sp={props.sp}
           timeline={TLData}
-          renderTL={true}
+          timelineRender={timelineRender}
         />
       )}
       <div className={styles.Qus}>
+        <button>Before</button>
         <div style={{ width: "50%" }}>
           {currQus && (
             <>
@@ -115,6 +120,7 @@ const Questions = (props) => {
             question={question}
           />
         </div>
+        <button>After</button>
       </div>
     </>
   );

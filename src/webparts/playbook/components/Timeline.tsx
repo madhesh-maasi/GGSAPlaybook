@@ -3,8 +3,10 @@ import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
 import { Icon } from "@fluentui/react";
 import classes from "./Timeline.module.scss";
 import { useState, useEffect } from "react";
+
 let arrTimeline = [];
 let curQusOrderNo = 0;
+
 const ProgressStyles = {
   root: {
     width: 200,
@@ -21,10 +23,12 @@ const ProgressStyles = {
     backgroundColor: "#03787c",
   },
 };
+
 const Timeline = (props) => {
   const [timelineData, setTimelineData] = useState(arrTimeline);
   const [curOrder, setCurOrder] = useState(curQusOrderNo);
-  const [render, setRender] = useState(true);
+  const [render, setRender] = useState(props.timelineRender);
+  
   useEffect(() => {
     arrTimeline = props.timeline;
     curQusOrderNo =
@@ -35,7 +39,8 @@ const Timeline = (props) => {
     console.log(arrTimeline);
     setTimelineData([...arrTimeline]);
     setRender(false);
-  }, [render]);
+  }, [render,props.timelineRender]);
+
   return (
     <div
       style={{
@@ -46,7 +51,7 @@ const Timeline = (props) => {
       }}
     >
       {timelineData.length > 0 &&
-        timelineData.map((li) => {
+        timelineData.map((li,i) => {
           return (
             <>
               <div

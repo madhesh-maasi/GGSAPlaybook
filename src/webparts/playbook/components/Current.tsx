@@ -1,25 +1,16 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import styles from "./Current.module.scss"
 
 let currAns;
 
 const Current = (props) => {
   currAns = props.currQus;
 
-  console.log(currAns.CompletedUser);
-
   return (
     <>
       <div
-        style={{
-          padding: "10px",
-          width: "400px",
-          height: "80px",
-          backgroundColor: "#00859c",
-          color: "#fff",
-          fontWeight: "600",
-          fontSize: "16px",
-        }}
+        className={styles.CurrentCover}
       >
         <div>{currAns.Title}</div>
         <div>{currAns.Step}</div>
