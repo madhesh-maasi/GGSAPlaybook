@@ -9,7 +9,7 @@ let curQusOrderNo = 0;
 
 const ProgressStyles = {
   root: {
-    width: 200,
+    minWidth: 70,
     marginRight: -2,
     marginLeft: -2,
   },
@@ -23,12 +23,11 @@ const ProgressStyles = {
     backgroundColor: "#03787c",
   },
 };
-
 const Timeline = (props) => {
   const [timelineData, setTimelineData] = useState(arrTimeline);
   const [curOrder, setCurOrder] = useState(curQusOrderNo);
   const [render, setRender] = useState(props.timelineRender);
-  
+
   useEffect(() => {
     arrTimeline = props.timeline;
     curQusOrderNo =
@@ -37,31 +36,24 @@ const Timeline = (props) => {
     setCurOrder(curQusOrderNo);
     setTimelineData([...arrTimeline]);
     setRender(false);
-  }, [render,props.timelineRender]);
+  }, [render, props.timelineRender]);
 
   return (
-    <div
-      style={{
-        margin: 16,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <div className={classes.TimeLineCover}>
       {timelineData.length > 0 &&
-        timelineData.map((li,i) => {
+        timelineData.map((li, i) => {
           return (
             <>
               <div
                 className={classes.TimeLineIconCover}
                 style={{
-                  border: `3px solid ${
+                  border: `4px solid ${
                     li.Order <= curOrder ? "#03787c" : "#878787"
                   }`,
                 }}
               >
                 <Icon
-                  iconName="MessageFill"
+                  iconName={`${li.Icon}`}
                   styles={{
                     root: {
                       fontSize: 24,

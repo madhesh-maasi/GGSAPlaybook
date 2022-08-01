@@ -1,12 +1,16 @@
 .flex {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .Qus {
-  @extend .flex;
-  align-items: flex-start;
-  width:1000px;
-  margin-left: auto;
-  margin-right: auto;
+    @extend .flex;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    .QuestionCover {
+        margin-right: 2rem;
+    }
 }

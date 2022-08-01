@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import styles from "./Current.module.scss"
+import styles from "./Current.module.scss";
 
 let currAns;
 
@@ -9,15 +9,13 @@ const Current = (props) => {
 
   return (
     <>
-      <div
-        className={styles.CurrentCover}
-      >
+      <div className={styles.CurrentCover}>
         <div>{currAns.Title}</div>
         <div>{currAns.Step}</div>
       </div>
       <div
         style={{
-          width: "440px",
+          width: "540px",
           display: "flex",
           transform: "translateY(-20px)",
           zIndex: "2",
