@@ -1,10 +1,11 @@
 import * as React from 'react';
-import styles from './Playbook.module.scss';
 import { IPlaybookProps } from './IPlaybookProps';
-import { escape } from '@microsoft/sp-lodash-subset';
 import App from './App';
 import { sp } from "@pnp/pnpjs";
-import "../../../ExternalRef/css/style.scss"
+import { Web } from "@pnp/sp/webs";
+import "../../../ExternalRef/css/style.scss";
+
+const webURL = "https://ggsaus.sharepoint.com/sites/Intranet_Test";
 
 export default class Playbook extends React.Component<IPlaybookProps, {}> {
   constructor(prop: IPlaybookProps, state: {}) {
@@ -14,9 +15,11 @@ export default class Playbook extends React.Component<IPlaybookProps, {}> {
     });
   }
   public render(): React.ReactElement<IPlaybookProps> {
+    const _web = Web(webURL);
+
     return (
       <>
-        <App context={this.props.context} sp={sp} />
+        <App context={this.props.context} sp={sp} URL={_web} />
       </>
     );
   }

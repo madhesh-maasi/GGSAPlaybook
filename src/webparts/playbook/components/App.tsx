@@ -10,25 +10,30 @@ let UserId;
 let arrPracticeConfig = [];
 let moduleHead = [];
 let arrPrimarySteps = [];
-let arrDeliver = {};
+let arrDeliver;
 let objCompleteDeliver = {};
 let arrCompleteSteps = [];
+let backModule = [];
+let backContent = { Title: "", COrder: "" };
+let firstIndexOrderNo;
+let lastOrderNo;
+let latestOrderNO;
 
 const App = (props) => {
   const [allPrctice, setAllPrctice] = useState(arrPrctice);
   const [render, setRender] = useState(true);
   const [primarySteps, setPrimarySteps] = useState([]);
   const [arrDelSec, setArrDelSec] = useState(arrDeliver);
+  const [readValue, setReadValue] = useState(false);
 
   // life cycle of onload
   useEffect(() => {
     // Current user mail get
-    props.sp.web
-      .currentUser()
+    props.URL.currentUser()
       .then(async (res) => {
         UserId = res.Id;
         // get configList
-        await props.sp.web.lists
+        await props.URL.lists
           .getByTitle("PracticeConfig")
           .items.get()
           .then((res) => {
@@ -40,8 +45,10 @@ const App = (props) => {
                 Title: head.Title,
                 deliver: arrJSON,
                 About: head.About,
+                COrder: head.Order0,
               };
             });
+            firstIndexOrderNo = moduleHead[0].COrder;
           });
       })
       .catch((err) => {
@@ -51,13 +58,12 @@ const App = (props) => {
 
   // life cycle of render
   useEffect(() => {
-    props.sp.web.lists
+    props.URL.lists
       .getByTitle("Practice")
       .items.select("*,Practice/Title")
       .expand("Practice")
       .get()
       .then((val) => {
-        console.log(val);
         arrPrctice = val.map((row) => {
           let isUserCompleted = row.CompletedUser
             ? row.CompletedUser.split(",")
@@ -96,6 +102,7 @@ const App = (props) => {
         arrPrimarySteps = allPrctice.filter(
           (step) => step.Practice == primaryPractice.Title
         );
+        lastOrderNo = arrDeliver != undefined ? arrDeliver.COrder : {};
         setArrDelSec(arrDeliver);
         setPrimarySteps([]);
         setPrimarySteps([...arrPrimarySteps]);
@@ -106,42 +113,51 @@ const App = (props) => {
       });
   }, [render]);
 
+  useEffect(() => {
+    let moduleName = backContent.Title;
+    latestOrderNO = backContent.COrder;
+    {
+      !moduleName
+        ? setReadValue(false)
+        : ((objCompleteDeliver = moduleHead.filter(
+          (deliver) => deliver.Title == backContent.Title
+        )[0]),
+          (arrCompleteSteps = allPrctice.filter(
+            (step) => step.Practice == backContent.Title
+          )),
+          setArrDelSec(objCompleteDeliver),
+          setPrimarySteps([]),
+          setPrimarySteps([...arrCompleteSteps]),
+          setReadValue(false));
+    }
+  }, [readValue]);
+
   const reRunning = () => {
     setRender(true);
   };
 
-  const BeforeModule = () => {
-    let completePractice = moduleHead
-      .map((title) => {
-        return {
-          Title: title.Title,
-          About: title.About,
-          deliver: title.deliver,
-          isInComplete: allPrctice
-            .filter((step) => step.Practice == title.Title)
-            .some((step) => step.isRead == false),
-        };
-      })
-      .filter((practice) => practice.isInComplete == false)[0];
-    objCompleteDeliver = moduleHead.filter(
-      (deliver) => deliver.Title == completePractice.Title
-    )[0];
-    arrCompleteSteps = allPrctice.filter(
-      (step) => step.Practice == completePractice.Title
-    );
-    console.log(completePractice);
-    console.log(objCompleteDeliver);
-    console.log(arrCompleteSteps);
-    setArrDelSec(objCompleteDeliver);
-    setPrimarySteps([]);
-    setPrimarySteps([...arrCompleteSteps]);
-  }
+  const BeforeModule = (ordNumber) => {
+    backModule = moduleHead.filter((e) => e.COrder < ordNumber);
+    backContent = backModule[backModule.length - 1];
+    setReadValue(true);
+  };
+
+  const AfterModule = (ordNumber) => {
+    backModule = moduleHead.filter((e) => e.COrder > ordNumber);
+    backContent = backModule.shift();
+    setReadValue(true);
+  };
 
   return (
     <>
-      {primarySteps.length > 0 && (
+      {lastOrderNo != "" && primarySteps.length > 0 && (
         <>
-          <Header context={props.context} sp={props.sp} arrDelSec={arrDelSec} />
+          <Header
+            context={props.context}
+            sp={props.sp}
+            arrDelSec={arrDelSec}
+            URL={props.URL}
+          />
           <Questions
             context={props.context}
             sp={props.sp}
@@ -149,11 +165,16 @@ const App = (props) => {
             arrDelSec={arrDelSec}
             reRunning={reRunning}
             BeforeModule={BeforeModule}
+            AfterModule={AfterModule}
+            URL={props.URL}
+            firstIndexOrderNo={firstIndexOrderNo}
+            lastOrderNo={lastOrderNo}
+            latestOrderNO={latestOrderNO}
           />
         </>
       )}
-      <Footerimg context={props.context} sp={props.sp} />
-      <FooterCategories context={props.context} sp={props.sp} />
+      {/* <Footerimg context={props.context} sp={props.sp} URL={props.URL} />
+      <FooterCategories context={props.context} sp={props.sp} URL={props.URL} /> */}
     </>
   );
 };

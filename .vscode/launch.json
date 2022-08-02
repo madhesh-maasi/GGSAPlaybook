@@ -5,7 +5,7 @@
       "name": "Hosted workbench",
       "type": "pwa-chrome",
       "request": "launch",
-      "url": "https://ggsaus.sharepoint.com/sites/Intranet_Test/_layouts/workbench.aspx",
+      "url": "https://ggsaus.sharepoint.com/sites/Intranet_dev/_layouts/workbench.aspx",
       "webRoot": "${workspaceRoot}",
       "sourceMaps": true,
       "sourceMapPathOverrides": {

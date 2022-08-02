@@ -5,6 +5,7 @@ import Deliverable from "./Deliverable";
 import AllQuestions from "./AllQuestions";
 import styles from "./Questions.module.scss";
 import { useState, useEffect } from "react";
+import { Icon } from "@fluentui/react";
 
 let arrPrctice = [];
 let readQuestions;
@@ -26,6 +27,7 @@ const Questions = (props) => {
   // life cycle of render
   useEffect(() => {
     arrPrctice = props.PrimarySteps;
+    console.log(props.arrDelSec.COrder);
     lastIndex = arrPrctice[arrPrctice.length - 1];
     lastIndexId = lastIndex.ID;
     UserId = arrPrctice.map((e) => e.UserId)[0].toString();
@@ -65,7 +67,7 @@ const Questions = (props) => {
     let currCompleteValue = !completeValues
       ? `${UserId}`
       : `${completeValues},${UserId}`;
-    props.sp.web.lists
+    props.URL.lists
       .getByTitle("Practice")
       .items.getById(Id)
       .update({
@@ -84,6 +86,24 @@ const Questions = (props) => {
       });
   };
 
+  const firstOrderNo = (orderNo) => {
+    props.firstIndexOrderNo < orderNo
+      ? (
+        props.BeforeModule(orderNo)
+      ) : (
+        ""
+      )
+  };
+
+  const lastOrderNo = (orderNo) => {
+    orderNo != "" ? (props.lastOrderNo > orderNo
+      ? (
+        props.AfterModule(orderNo)
+      ) : (
+        ""
+      )) : ""
+  }
+
   return (
     <>
       {TLData.length > 0 && (
@@ -92,15 +112,23 @@ const Questions = (props) => {
           sp={props.sp}
           timeline={TLData}
           timelineRender={timelineRender}
+          URL={props.URL}
         />
       )}
       <div className={styles.Qus}>
-        <button
-          onClick={() => props.BeforeModule()}
-          style={{ marginRight: "1rem" }}
-        >
-          Before
-        </button>
+        <Icon
+          iconName="MSNVideosSolid"
+          style={{
+            cursor: props.firstIndexOrderNo != props.arrDelSec.COrder ? "pointer" : "not-allowed",
+            transform: "rotate(180deg)",
+            fontSize: "46px",
+            color: props.firstIndexOrderNo != props.arrDelSec.COrder ? "#66afc9" : "gray",
+            display: "none"
+          }}
+          onClick={() =>
+            firstOrderNo(props.arrDelSec.COrder)
+          }
+        />
         <div className={styles.QuestionCover}>
           {currQus && (
             <>
@@ -109,11 +137,13 @@ const Questions = (props) => {
                 sp={props.sp}
                 completeQus={completeQus}
                 currQus={currQus}
+                URL={props.URL}
               />
               <Deliverable
                 context={props.context}
                 sp={props.sp}
                 arrDelSec={props.arrDelSec}
+                URL={props.URL}
               />
             </>
           )}
@@ -123,9 +153,21 @@ const Questions = (props) => {
             context={props.context}
             sp={props.sp}
             question={question}
+            URL={props.URL}
           />
         </div>
-        <button style={{ marginLeft: "1rem" }}>After</button>
+        <Icon
+          iconName="MSNVideosSolid"
+          style={{
+            cursor: props.lastOrderNo != props.arrDelSec.COrder ? "pointer" : "not-allowed",
+            fontSize: "46px",
+            color: props.lastOrderNo != props.arrDelSec.COrder ? "#66afc9" : "gray",
+            display: "none"
+          }}
+          onClick={() =>
+            lastOrderNo(props.latestOrderNO)
+          }
+        />
       </div>
     </>
   );

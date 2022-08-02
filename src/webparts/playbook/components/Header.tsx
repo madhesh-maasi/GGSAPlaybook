@@ -40,7 +40,7 @@ const Header = (props) => {
     setModHeading(headingDetails);
 
     // current user taken
-    props.sp.web
+    props.URL
       .currentUser()
       .then(async (res) => {
         await props.sp.profiles
@@ -78,7 +78,7 @@ const Header = (props) => {
   }, []);
 
   return (
-    <div style={{ padding: "0 10px" }}>
+    <div style={{ padding: "16px" }}>
       <div className={styles.valueofHead}>
         <div className={styles.titleWrapper}>
           <span className={styles.title}>

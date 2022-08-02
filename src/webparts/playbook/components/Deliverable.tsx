@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import style from "./Deliverable.module.scss";
+import { Icon } from "@fluentui/react";
 
 const planningImg = require("../../../ExternalRef/img/grapgBars.png");
 const devImg = require("../../../ExternalRef/img/codeTags.png");
@@ -62,6 +63,16 @@ const Deliverable = (props) => {
                   >
                     {item.Title == "Planning" ? (
                       <>
+                      {/* <Icon
+                        iconName="BarChart4"
+                        style={{
+                          position: "absolute",
+                          top: "8%",
+                          left: "50%",
+                          // transform: "translateX(-50%)",
+                          color: "white"
+                        }}
+                      /> */}
                         <img
                           src={`${planningImg}`}
                           alt="planning"
@@ -89,6 +100,16 @@ const Deliverable = (props) => {
                       </>
                     ) : item.Title == "Development" ? (
                       <>
+                      {/* <Icon
+                        iconName="ChevronUnfold10"
+                        style={{
+                          position: "absolute",
+                          top: "8%",
+                          left: "50%",
+                          transform: "translateX(90%)",
+                          color: "white"
+                        }}
+                      /> */}
                         <img
                           src={`${devImg}`}
                           alt="planning"
