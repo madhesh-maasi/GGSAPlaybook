@@ -1,6 +1,7 @@
 import * as React from "react";
 import styles from "./Header.module.scss";
 import { useState, useEffect } from "react";
+import { Icon } from "@fluentui/react";
 
 const infoIcon = require("../../../ExternalRef/img/infoIcon.png");
 const settingIcon = require("../../../ExternalRef/img/setting.png");
@@ -27,18 +28,6 @@ const Header = (props) => {
 
   // Life cycle of Onload
   useEffect(() => {
-    headingDetails = {
-      Title: props.arrDelSec.Title,
-      About: props.arrDelSec.About,
-      isShow: false,
-    };
-    setModHeading({
-      Title: "",
-      About: "",
-      isShow: false,
-    });
-    setModHeading(headingDetails);
-
     // current user taken
     props.URL
       .currentUser()
@@ -66,6 +55,17 @@ const Header = (props) => {
             lastValSplit = lastValue.split("");
             valueOfFirstLetter = firstValSplit[0];
             valueOfLastLetter = lastValSplit[0];
+            headingDetails = {
+              Title: props.arrDelSec.Title,
+              About: props.arrDelSec.About,
+              isShow: false,
+            };
+            setModHeading({
+              Title: "",
+              About: "",
+              isShow: false,
+            });
+            setModHeading(headingDetails);
           })
           .catch((err) => {
             console.log(err);
@@ -96,26 +96,40 @@ const Header = (props) => {
               />
             )}
             {modHeading.isShow == true && (
-              <div>
+              <div
+                className={styles.parentModalBox}
+              >
                 <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  className={styles.modalBox}
                 >
-                  <div style={{ display: "flex" }}>
-                    <img src={`${settingIcon}`} height={35} width={35} />{" "}
-                    <div>About</div>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div
+                      className={styles.modalSet}
+                      style={{ display: "flex" }}
+                    >
+                      <Icon
+                        iconName="Settings"
+                        style={{
+                          color: "white"
+                        }}
+                      />{"      "}
+                      <div>About</div>
+                    </div>
+                    <img
+                      style={{ cursor: "pointer" }}
+                      src={`${closeIcon}`}
+                      height={15}
+                      width={15}
+                      onClick={() => {
+                        modHeading.isShow = false;
+                        setModHeading({ ...modHeading });
+                      }}
+                    />
                   </div>
-                  <img
-                    style={{ cursor: "pointer" }}
-                    src={`${closeIcon}`}
-                    height={15}
-                    width={15}
-                    onClick={() => {
-                      modHeading.isShow = false;
-                      setModHeading({ ...modHeading });
-                    }}
-                  />
+                  <p>{modHeading.About}</p>
                 </div>
-                <p>{modHeading.About}</p>
               </div>
             )}
           </span>

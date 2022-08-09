@@ -5,7 +5,13 @@ import { sp } from "@pnp/pnpjs";
 import { Web } from "@pnp/sp/webs";
 import "../../../ExternalRef/css/style.scss";
 
+/*development URL */
 const webURL = "https://ggsaus.sharepoint.com/sites/Intranet_Test";
+
+
+/*Production URL */
+// const webURL = "https://ggsaus.sharepoint.com";
+
 
 export default class Playbook extends React.Component<IPlaybookProps, {}> {
   constructor(prop: IPlaybookProps, state: {}) {

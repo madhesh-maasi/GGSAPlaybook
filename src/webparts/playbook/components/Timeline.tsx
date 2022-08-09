@@ -30,9 +30,9 @@ const Timeline = (props) => {
 
   useEffect(() => {
     arrTimeline = props.timeline;
-    curQusOrderNo =
+    curQusOrderNo = 
       arrTimeline.length > 0 &&
-      arrTimeline.filter((li) => li.isRead == false)[0].Order;
+      arrTimeline.filter((li) => li.isRead == false).length > 0 ? arrTimeline.filter((li) => li.isRead == false)[0].Order:arrTimeline[arrTimeline.length -1].Order;
     setCurOrder(curQusOrderNo);
     setTimelineData([...arrTimeline]);
     setRender(false);

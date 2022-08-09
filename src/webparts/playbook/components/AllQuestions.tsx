@@ -13,17 +13,43 @@ const AllQuestions = (props) => {
         return (
           <>
             {row.isRead == false &&
-              <div
-                className={styles.listItem}
-              >
-                <li>{row.Step}</li>
+              <div className={styles.listItem}>
+                <div>
+                  <li>{row.Step}</li>
+                </div>
+                {
+                  row.arrSubStep.length > 0
+                    ? <ul>
+                      {
+                        row.arrSubStep.map((row) => {
+                          return <div>
+                            <li>{row.SubSteps}</li>
+                          </div>
+                        })
+                      }
+                    </ul>
+                    : ""
+                }
               </div>
             }
             {row.isRead == true &&
-              <div
-                className={styles.listItemCom}
-              >
-                <li>{row.Step}</li>
+              <div className={styles.listItemCom}>
+                <div>
+                  <li>{row.Step}</li>
+                </div>
+                {
+                  row.arrSubStep.length > 0
+                    ? <ul>
+                      {
+                        row.arrSubStep.map((row) => {
+                          return <div>
+                            <li>{row.SubSteps}</li>
+                          </div>
+                        })
+                      }
+                    </ul>
+                    : ""
+                }
               </div>
             }
           </>

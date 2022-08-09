@@ -15,6 +15,7 @@ let UserId;
 let lastIndex;
 let lastIndexId;
 let arrTimeline = [];
+let currentObjValue;
 
 const Questions = (props) => {
   const [allPrctice, setAllPrctice] = useState([]);
@@ -27,7 +28,6 @@ const Questions = (props) => {
   // life cycle of render
   useEffect(() => {
     arrPrctice = props.PrimarySteps;
-    console.log(props.arrDelSec.COrder);
     lastIndex = arrPrctice[arrPrctice.length - 1];
     lastIndexId = lastIndex.ID;
     UserId = arrPrctice.map((e) => e.UserId)[0].toString();
@@ -42,28 +42,34 @@ const Questions = (props) => {
     setTLData([]);
     setTLData([...arrTimeline]);
     setAllPrctice([...arrPrctice]);
-    readQuestions = allPrctice.filter((step) => step.isRead == true);
-    objCurrentQuestion = allPrctice.filter((step) => step.isRead == false)[0];
+    readQuestions = arrPrctice.filter((step) => step.isRead == true);
+    objCurrentQuestion = arrPrctice.filter((step) => step.isRead == false)[0];
     remainingQuestions = [
-      ...allPrctice.filter(
+      ...arrPrctice.filter(
         (row) => row.isRead == false && row.Step != objCurrentQuestion.Step
       ),
       ...readQuestions,
     ];
+    currentObjValue = objCurrentQuestion == undefined
+      ? (
+        {
+          isRead: true
+        }
+      ) : objCurrentQuestion;
     setQuestion(remainingQuestions);
-    setCurrQus({ ...objCurrentQuestion });
+    setCurrQus({ ...currentObjValue });
     setRender(false);
     setTimelineRender(true);
   }, [render]);
 
-  const completeQus = (Id, completeValues) => {
+  const completeQus = (Id, completeValues, currentModuleOrderNO) => {
     arrPrctice.filter((complete) => complete.ID == Id)[0].isRead = true;
     setAllPrctice([...arrPrctice]);
-    addUserId(Id, completeValues);
+    addUserId(Id, completeValues, currentModuleOrderNO);
   };
 
   // Add user id
-  const addUserId = (Id, completeValues) => {
+  const addUserId = (Id, completeValues, currentModuleOrderNO) => {
     let currCompleteValue = !completeValues
       ? `${UserId}`
       : `${completeValues},${UserId}`;
@@ -75,7 +81,7 @@ const Questions = (props) => {
       })
       .then(() => {
         if (Id == lastIndexId) {
-          props.reRunning();
+          props.reRunning(currentModuleOrderNO);
         } else {
           setTimelineRender(false);
           setRender(true);
@@ -122,47 +128,53 @@ const Questions = (props) => {
             cursor: props.firstIndexOrderNo != props.arrDelSec.COrder ? "pointer" : "not-allowed",
             transform: "rotate(180deg)",
             fontSize: "46px",
-            color: props.firstIndexOrderNo != props.arrDelSec.COrder ? "#66afc9" : "gray",
-            display: "none"
+            color: props.firstIndexOrderNo != props.arrDelSec.COrder ? "#66afc9" : "gray"
           }}
           onClick={() =>
             firstOrderNo(props.arrDelSec.COrder)
           }
         />
-        <div className={styles.QuestionCover}>
-          {currQus && (
-            <>
-              <Current
-                context={props.context}
-                sp={props.sp}
-                completeQus={completeQus}
-                currQus={currQus}
-                URL={props.URL}
-              />
-              <Deliverable
-                context={props.context}
-                sp={props.sp}
-                arrDelSec={props.arrDelSec}
-                URL={props.URL}
-              />
-            </>
-          )}
-        </div>
-        <div>
-          <AllQuestions
-            context={props.context}
-            sp={props.sp}
-            question={question}
-            URL={props.URL}
-          />
+        <div
+          style={{
+            display: "flex",
+            margin: "0px 60px"
+          }}
+        >
+          <div className={styles.QuestionCover}>
+            {currQus && (
+              <>
+                <Current
+                  context={props.context}
+                  sp={props.sp}
+                  completeQus={completeQus}
+                  currQus={currQus}
+                  arrDelSec={props.arrDelSec.COrder}
+                  URL={props.URL}
+                />
+                <Deliverable
+                  context={props.context}
+                  sp={props.sp}
+                  arrDelSec={props.arrDelSec}
+                  URL={props.URL}
+                />
+              </>
+            )}
+          </div>
+          <div>
+            <AllQuestions
+              context={props.context}
+              sp={props.sp}
+              question={question}
+              URL={props.URL}
+            />
+          </div>
         </div>
         <Icon
           iconName="MSNVideosSolid"
           style={{
             cursor: props.lastOrderNo != props.arrDelSec.COrder ? "pointer" : "not-allowed",
             fontSize: "46px",
-            color: props.lastOrderNo != props.arrDelSec.COrder ? "#66afc9" : "gray",
-            display: "none"
+            color: props.lastOrderNo != props.arrDelSec.COrder ? "#66afc9" : "gray"
           }}
           onClick={() =>
             lastOrderNo(props.latestOrderNO)
