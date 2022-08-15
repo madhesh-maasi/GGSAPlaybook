@@ -7,18 +7,16 @@ import styles from "./Questions.module.scss";
 import { useState, useEffect } from "react";
 import { Icon } from "@fluentui/react";
 
-let arrPrctice = [];
-let readQuestions;
-let objCurrentQuestion;
-let remainingQuestions = [];
+let arrAllPrctice = [];
+let lastStepID;
 let UserId;
-let lastIndex;
-let lastIndexId;
+let readQuestions;
+let objUnreadQuestions;
+let arRearrangedSteps = [];
 let arrTimeline = [];
-let currentObjValue;
+let curObjValue;
 
 const Questions = (props) => {
-  const [allPrctice, setAllPrctice] = useState([]);
   const [question, setQuestion] = useState([]);
   const [currQus, setCurrQus] = useState();
   const [render, setRender] = useState(true);
@@ -27,11 +25,10 @@ const Questions = (props) => {
 
   // life cycle of render
   useEffect(() => {
-    arrPrctice = props.PrimarySteps;
-    lastIndex = arrPrctice[arrPrctice.length - 1];
-    lastIndexId = lastIndex.ID;
-    UserId = arrPrctice.map((e) => e.UserId)[0].toString();
-    arrTimeline = arrPrctice.map((item) => {
+    arrAllPrctice = props.PrimarySteps;
+    lastStepID = arrAllPrctice[arrAllPrctice.length - 1].ID;
+    UserId = arrAllPrctice.map((e) => e.UserId)[0].toString();
+    arrTimeline = arrAllPrctice.map((item) => {
       return {
         ID: item.ID,
         Icon: item.Icon,
@@ -41,35 +38,37 @@ const Questions = (props) => {
     });
     setTLData([]);
     setTLData([...arrTimeline]);
-    setAllPrctice([...arrPrctice]);
-    readQuestions = arrPrctice.filter((step) => step.isRead == true);
-    objCurrentQuestion = arrPrctice.filter((step) => step.isRead == false)[0];
-    remainingQuestions = [
-      ...arrPrctice.filter(
-        (row) => row.isRead == false && row.Step != objCurrentQuestion.Step
+    readQuestions = arrAllPrctice.filter((step) => step.isRead == true);
+    objUnreadQuestions = arrAllPrctice.filter(
+      (step) => step.isRead == false
+    )[0];
+    arRearrangedSteps = [
+      ...arrAllPrctice.filter(
+        (row) => row.isRead == false && row.Step != objUnreadQuestions.Step
       ),
       ...readQuestions,
     ];
-    currentObjValue = objCurrentQuestion == undefined
-      ? (
-        {
-          isRead: true
-        }
-      ) : objCurrentQuestion;
-    setQuestion(remainingQuestions);
-    setCurrQus({ ...currentObjValue });
-    setRender(false);
+    curObjValue =
+      objUnreadQuestions == undefined
+        ? {
+            isRead: true,
+          }
+        : objUnreadQuestions;
+    console.log(arRearrangedSteps);
+    console.log(curObjValue);
+    setQuestion(arRearrangedSteps);
+    setCurrQus({ ...curObjValue });
     setTimelineRender(true);
+    setRender(false);
   }, [render]);
 
-  const completeQus = (Id, completeValues, currentModuleOrderNO) => {
-    arrPrctice.filter((complete) => complete.ID == Id)[0].isRead = true;
-    setAllPrctice([...arrPrctice]);
-    addUserId(Id, completeValues, currentModuleOrderNO);
+  const completeQus = (Id, completeValues) => {
+    arrAllPrctice.filter((row) => row.ID == Id)[0].isRead = true;
+    addUserId(Id, completeValues);
   };
 
   // Add user id
-  const addUserId = (Id, completeValues, currentModuleOrderNO) => {
+  const addUserId = (Id, completeValues) => {
     let currCompleteValue = !completeValues
       ? `${UserId}`
       : `${completeValues},${UserId}`;
@@ -80,8 +79,8 @@ const Questions = (props) => {
         CompletedUser: currCompleteValue,
       })
       .then(() => {
-        if (Id == lastIndexId) {
-          props.reRunning(currentModuleOrderNO);
+        if (Id == lastStepID) {
+          props.reRunning(props.arrDelSec.Order);
         } else {
           setTimelineRender(false);
           setRender(true);
@@ -93,22 +92,16 @@ const Questions = (props) => {
   };
 
   const firstOrderNo = (orderNo) => {
-    props.firstIndexOrderNo < orderNo
-      ? (
-        props.BeforeModule(orderNo)
-      ) : (
-        ""
-      )
+    props.firstModOrdNo < orderNo ? props.BeforeModule(orderNo) : "";
   };
 
   const lastOrderNo = (orderNo) => {
-    orderNo != "" ? (props.lastOrderNo > orderNo
-      ? (
-        props.AfterModule(orderNo)
-      ) : (
-        ""
-      )) : ""
-  }
+    orderNo != ""
+      ? props.latestModOrdNo > orderNo
+        ? props.AfterModule(orderNo)
+        : ""
+      : "";
+  };
 
   return (
     <>
@@ -119,25 +112,34 @@ const Questions = (props) => {
           timeline={TLData}
           timelineRender={timelineRender}
           URL={props.URL}
+          pageType={props.pageType}
         />
       )}
       <div className={styles.Qus}>
         <Icon
           iconName="MSNVideosSolid"
           style={{
-            cursor: props.firstIndexOrderNo != props.arrDelSec.COrder ? "pointer" : "not-allowed",
+            cursor:
+              props.firstModOrdNo != props.arrDelSec.Order
+                ? "pointer"
+                : "not-allowed",
             transform: "rotate(180deg)",
             fontSize: "46px",
-            color: props.firstIndexOrderNo != props.arrDelSec.COrder ? "#66afc9" : "gray"
+            color:
+              props.pageType == "phases"
+                ? props.firstModOrdNo != props.arrDelSec.Order
+                  ? "#f99d26"
+                  : "gray"
+                : props.firstModOrdNo != props.arrDelSec.Order
+                ? "#66afc9"
+                : "gray",
           }}
-          onClick={() =>
-            firstOrderNo(props.arrDelSec.COrder)
-          }
+          onClick={() => firstOrderNo(props.arrDelSec.Order)}
         />
         <div
           style={{
             display: "flex",
-            margin: "0px 60px"
+            margin: "0px 60px",
           }}
         >
           <div className={styles.QuestionCover}>
@@ -148,14 +150,15 @@ const Questions = (props) => {
                   sp={props.sp}
                   completeQus={completeQus}
                   currQus={currQus}
-                  arrDelSec={props.arrDelSec.COrder}
                   URL={props.URL}
+                  pageType={props.pageType}
                 />
                 <Deliverable
                   context={props.context}
                   sp={props.sp}
                   arrDelSec={props.arrDelSec}
                   URL={props.URL}
+                  pageType={props.pageType}
                 />
               </>
             )}
@@ -166,19 +169,28 @@ const Questions = (props) => {
               sp={props.sp}
               question={question}
               URL={props.URL}
+              pageType={props.pageType}
             />
           </div>
         </div>
         <Icon
           iconName="MSNVideosSolid"
           style={{
-            cursor: props.lastOrderNo != props.arrDelSec.COrder ? "pointer" : "not-allowed",
+            cursor:
+              props.latestModOrdNo != props.arrDelSec.Order
+                ? "pointer"
+                : "not-allowed",
             fontSize: "46px",
-            color: props.lastOrderNo != props.arrDelSec.COrder ? "#66afc9" : "gray"
+            color:
+              props.pageType == "phases"
+                ? props.latestModOrdNo != props.arrDelSec.Order
+                  ? "#f99d26"
+                  : "gray"
+                : props.latestModOrdNo != props.arrDelSec.Order
+                ? "#66afc9"
+                : "gray",
           }}
-          onClick={() =>
-            lastOrderNo(props.latestOrderNO)
-          }
+          onClick={() => lastOrderNo(props.latestOrderNO)}
         />
       </div>
     </>

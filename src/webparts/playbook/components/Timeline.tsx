@@ -23,16 +23,38 @@ const ProgressStyles = {
     backgroundColor: "#03787c",
   },
 };
+
 const Timeline = (props) => {
   const [timelineData, setTimelineData] = useState(arrTimeline);
   const [curOrder, setCurOrder] = useState(curQusOrderNo);
   const [render, setRender] = useState(props.timelineRender);
+  const [progressDetail, setprogressDetail] = useState(ProgressStyles);
 
   useEffect(() => {
+    setprogressDetail({
+      root: {
+        minWidth: 70,
+        marginRight: -2,
+        marginLeft: -2,
+      },
+      progressTrack: {
+        height: 10,
+      },
+      progressBar: {
+        height: 10,
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10,
+        backgroundColor: props.pageType == "phases" ? "#f99d26" : "#03787c",
+      },
+    });
     arrTimeline = props.timeline;
-    curQusOrderNo = 
+    curQusOrderNo =
       arrTimeline.length > 0 &&
-      arrTimeline.filter((li) => li.isRead == false).length > 0 ? arrTimeline.filter((li) => li.isRead == false)[0].Order:arrTimeline[arrTimeline.length -1].Order;
+      arrTimeline.filter((li) => li.isRead == false).length > 0
+        ? arrTimeline.filter((li) => li.isRead == false)[0].Order
+        : arrTimeline[arrTimeline.length - 1].Order;
+    console.log(arrTimeline);
+    console.log(curQusOrderNo);
     setCurOrder(curQusOrderNo);
     setTimelineData([...arrTimeline]);
     setRender(false);
@@ -47,9 +69,14 @@ const Timeline = (props) => {
               <div
                 className={classes.TimeLineIconCover}
                 style={{
-                  border: `4px solid ${
-                    li.Order <= curOrder ? "#03787c" : "#878787"
-                  }`,
+                  border:
+                    props.pageType == "phases"
+                      ? `4px solid ${
+                          li.Order <= curOrder ? "#f99d26" : "#878787"
+                        }`
+                      : `4px solid ${
+                          li.Order <= curOrder ? "#03787c" : "#878787"
+                        }`,
                 }}
               >
                 <Icon
@@ -58,7 +85,14 @@ const Timeline = (props) => {
                     root: {
                       fontSize: 24,
                       fontWeight: 600,
-                      color: li.Order <= curOrder ? "#03787c" : "#878787",
+                      color:
+                        props.pageType == "phases"
+                          ? li.Order <= curOrder
+                            ? "#f99d26"
+                            : "#878787"
+                          : li.Order <= curOrder
+                          ? "#03787c"
+                          : "#878787",
                       cursor: "pointer",
                     },
                   }}
@@ -68,7 +102,7 @@ const Timeline = (props) => {
                 ""
               ) : (
                 <ProgressIndicator
-                  styles={ProgressStyles}
+                  styles={progressDetail}
                   percentComplete={
                     li.Order == curOrder ? 0.5 : li.Order < curOrder ? 1 : 0
                   }

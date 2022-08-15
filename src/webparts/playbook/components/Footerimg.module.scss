@@ -12,8 +12,6 @@
     background-repeat: no-repeat;
     .overlayer {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       background: linear-gradient(90deg, transparent 60%, #ffffff 92%);
@@ -42,6 +40,50 @@
     }
   }
 }
+
+.phaseFooterImgWrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  flex-direction: row-reverse;
+  .footerImg {
+    width: 50%;
+    height: 300px;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    .overlayer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(270deg, transparent 60%, #ffffff 92%);
+      z-index: 2;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .footerContent {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 50%;
+    height: 300px;
+    .routineOperationList,
+    .routineInnovationList {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
+      width: 50%;
+      transform: translate(20px, 45px);
+    }
+  }}
+
 .routineTitle {
   font-size: 18px;
   color: #f99d26;
@@ -57,6 +99,23 @@
     background-color: #f99d26;
   }
 }
+
+.phaseRoutineTitle{
+  font-size: 18px;
+  color: #00859c;
+  position: relative;
+  margin-bottom: 30px;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -40%;
+    width: 50%;
+    height: 3px;
+    background-color: #00859c;
+  }
+}
+
 .list {
   display: flex;
   flex-direction: column;
@@ -81,6 +140,31 @@
     }
   }
 }
+
+.phaseList{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  li {
+    font-size: 12px;
+    color: #000;
+    position: relative;
+    padding: 2px 20px;
+    list-style-type: none;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 1%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      background-color: #f99d26;
+      border-radius: 2px;
+    }
+  }}
+
 .listActive {
   display: flex;
   flex-direction: column;
@@ -101,6 +185,31 @@
       width: 10px;
       height: 10px;
       background-color: #f99d26;
+      border-radius: 2px;
+    }
+  }
+}
+
+.phaseListActive{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  li {
+    font-size: 12px;
+    color: #000;
+    position: relative;
+    padding: 2px 20px;
+    list-style-type: none;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 1%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      background-color: #00859c;
       border-radius: 2px;
     }
   }

@@ -3,8 +3,6 @@ import styles from "./Header.module.scss";
 import { useState, useEffect } from "react";
 import { Icon } from "@fluentui/react";
 
-const infoIcon = require("../../../ExternalRef/img/infoIcon.png");
-const settingIcon = require("../../../ExternalRef/img/setting.png");
 const closeIcon = require("../../../ExternalRef/img/close-button.png");
 
 let firstName;
@@ -81,20 +79,17 @@ const Header = (props) => {
     <div style={{ padding: "16px" }}>
       <div className={styles.valueofHead}>
         <div className={styles.titleWrapper}>
-          <span className={styles.title}>
+          <span className={props.pageType == "phases" ? styles.phaseTitle : styles.title}>
             {modHeading.Title}{" "}
-            {modHeading.isShow == false && (
-              <img
-                style={{ cursor: "pointer" }}
-                src={`${infoIcon}`}
-                className={styles.infoIcon}
-                alt="info icon"
-                onClick={() => {
-                  modHeading.isShow = true;
-                  setModHeading({ ...modHeading });
-                }}
-              />
-            )}
+            <Icon
+              iconName="InfoSolid"
+              style={{ cursor: "pointer" }}
+              className={props.pageType == "phases" ? styles.phaseInfoIcon : styles.infoIcon}
+              onClick={() => {
+                modHeading.isShow = true;
+                setModHeading({ ...modHeading });
+              }}
+            />
             {modHeading.isShow == true && (
               <div
                 className={styles.parentModalBox}
@@ -106,7 +101,7 @@ const Header = (props) => {
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
                     <div
-                      className={styles.modalSet}
+                      className={props.pageType == "phases" ? styles.phaseModalSet : styles.modalSet}
                       style={{ display: "flex" }}
                     >
                       <Icon

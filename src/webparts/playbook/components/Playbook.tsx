@@ -7,11 +7,12 @@ import "../../../ExternalRef/css/style.scss";
 
 /*development URL */
 const webURL = "https://ggsaus.sharepoint.com/sites/Intranet_Test";
+const masterAnnualPlan = "Annual Plan Test";
 
 
 /*Production URL */
 // const webURL = "https://ggsaus.sharepoint.com";
-
+// const masterAnnualPlan = "Annual Plan";
 
 export default class Playbook extends React.Component<IPlaybookProps, {}> {
   constructor(prop: IPlaybookProps, state: {}) {
@@ -25,7 +26,12 @@ export default class Playbook extends React.Component<IPlaybookProps, {}> {
 
     return (
       <>
-        <App context={this.props.context} sp={sp} URL={_web} />
+        <App
+          context={this.props.context}
+          sp={sp}
+          URL={_web}
+          masterAnnualPlan={masterAnnualPlan}
+        />
       </>
     );
   }

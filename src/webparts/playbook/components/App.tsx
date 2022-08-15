@@ -5,8 +5,8 @@ import Footerimg from "./Footerimg";
 import FooterCategories from "./FooterCategories";
 import { useState, useEffect } from "react";
 import "../../../ExternalRef/css/style.scss";
-import styles from "./App.module.scss";
 import Loader from "./Loader";
+import Patheay from "./Patheay";
 
 let arrPrctice = [];
 let UserId;
@@ -15,31 +15,65 @@ let moduleHead = [];
 let moduleArr = [];
 let arrPrimarySteps = [];
 let arrDeliver;
-let objCompleteDeliver = { Title: "", COrder: "" };
-let arrCompleteSteps = [];
+let objComDeliver = { Title: "", Order: "" };
+let arrComSteps = [];
 let backModule = [];
-let backContent = { Title: "", COrder: "" };
-let firstIndexOrderNo;
-let lastOrderNo;
+let backContent = { Title: "", Order: "" };
+let firstModOrdNo;
+let latestModOrdNo;
 let latestOrderNO;
 let footerContent = [];
 let footerArr = [];
-let lastModuleOrderNo;
+let lastModOrdNo;
 let arrSubSteps = [];
+let arrMasterAnnual = [];
+let pageURL;
+let pageType;
+let nextModuleTitle;
+let PrimaryQus;
+let currentPractice;
 
 const App = (props) => {
   const [allPrctice, setAllPrctice] = useState(arrPrctice);
   const [render, setRender] = useState(false);
   const [primarySteps, setPrimarySteps] = useState([]);
   const [arrDelSec, setArrDelSec] = useState(arrDeliver);
-  const [readValue, setReadValue] = useState(false);
   const [arrFooter, setArrFooter] = useState([]);
   const [loader, setLoader] = useState(true);
-  const [completeModule, setCompleteModule] = useState(false);
 
   // life cycle of onload
   useEffect(() => {
-    setLoader(true)
+    pageURL = new URLSearchParams(window.location.search);
+    pageType = pageURL.get("type");
+    console.log(pageURL);
+    console.log(pageType);
+    props.URL.lists
+      .getByTitle(props.masterAnnualPlan)
+      .items.get()
+      .then(async (datas) => {
+        console.log(datas);
+        arrMasterAnnual = datas.map((objects) => {
+          return {
+            Project: objects.Title,
+            ID: objects.ID,
+            TOD: objects.TypeofProject,
+          };
+        });
+        console.log(arrMasterAnnual);
+        await props.URL.lists
+          .getByTitle("Delivery Plan Phase List")
+          .items.get()
+          .then((values) => {
+            console.log(values);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setLoader(true);
     // Current user mail get
     props.URL.currentUser()
       .then(async (res) => {
@@ -47,8 +81,11 @@ const App = (props) => {
         // get configList
         await props.URL.lists
           .getByTitle("PracticeConfig")
-          .items.get()
+          .items.select("*,Next/Title, Previous/Title")
+          .expand("Next, Previous")
+          .get()
           .then((res) => {
+            console.log(res);
             let arrJSON;
             arrPracticeConfig = res;
             moduleArr = arrPracticeConfig.map((head) => {
@@ -57,7 +94,10 @@ const App = (props) => {
                 Title: head.Title,
                 deliver: arrJSON,
                 About: head.About,
-                COrder: head.Order0,
+                Next: head.Next != undefined ? head.Next.Title : undefined,
+                Previous:
+                  head.Previous != undefined ? head.Previous.Title : undefined,
+                ID: head.ID,
               };
             });
             footerContent = arrPracticeConfig.map((footer) => {
@@ -65,12 +105,52 @@ const App = (props) => {
                 Title: footer.Title,
                 Category: footer.Category.toLowerCase(),
                 FooterImage: footer.FooterImage,
-                COrder: footer.Order0,
-              }
-            })
-            moduleHead = moduleArr.length > 0 && moduleArr;
-            firstIndexOrderNo = moduleHead[0].COrder;
-            lastModuleOrderNo = moduleArr[moduleArr.length - 1].COrder;
+                Next: footer.Next != undefined ? footer.Next.Title : undefined,
+                Previous:
+                  footer.Previous != undefined
+                    ? footer.Previous.Title
+                    : undefined,
+                ID: footer.ID,
+                Order: footer.Order,
+              };
+            });
+            let arrArrangedModules = [];
+            arrArrangedModules.push(
+              moduleArr.filter((row) => !row.Previous)[0]
+            );
+            moduleArr.slice(1).forEach(() => {
+              let nextTitle =
+                arrArrangedModules[arrArrangedModules.length - 1].Next;
+              arrArrangedModules.push(
+                moduleArr.filter((row) => row.Title == nextTitle)[0]
+              );
+            });
+            arrArrangedModules = arrArrangedModules.map((row, i) => {
+              return {
+                Title: row.Title,
+                deliver: row.deliver,
+                About: row.About,
+                Next: row.Next,
+                Previous: row.Previous,
+                ID: row.ID,
+                Order: i + 1,
+              };
+            });
+            moduleHead = arrArrangedModules.length > 0 && arrArrangedModules;
+            firstModOrdNo = moduleHead
+              .filter((ordNo) => ordNo.Previous == undefined)
+              .map((firstID) => {
+                return firstID.Order;
+              })[0];
+            lastModOrdNo = moduleHead
+              .filter((ordNo) => ordNo.Next == undefined)
+              .map((lastID) => {
+                return lastID.Order;
+              })[0];
+            console.log(moduleHead);
+            console.log(footerContent);
+            console.log(firstModOrdNo);
+            console.log(lastModOrdNo);
             setRender(true);
           });
       })
@@ -84,29 +164,27 @@ const App = (props) => {
     setLoader(true);
     props.URL.lists
       .getByTitle("Practice")
-      .items.select("*,Practice/Title")
-      .expand("Practice")
+      .items.select("*,Practice/Title, Next/ID, Previous/ID")
+      .expand("Practice, Next, Previous")
       .get()
       .then(async (val) => {
         await props.URL.lists
           .getByTitle("PracticeSubSteps")
-          .items
-          .select("*, Practice/ID")
+          .items.select("*, Practice/ID")
           .expand("Practice")
           .get()
           .then((SubSteps) => {
-            console.log(SubSteps);
             arrSubSteps = SubSteps.map((obj) => {
               return {
                 ID: obj.PracticeId,
-                SubSteps: obj.SubSteps
-              }
-            })
+                SubSteps: obj.SubSteps,
+              };
+            });
             arrPrctice = val.map((row) => {
               let isUserCompleted = row.CompletedUser
                 ? row.CompletedUser.split(",")
-                  .map((id) => +id)
-                  .some((id) => id == UserId)
+                    .map((id) => +id)
+                    .some((id) => id == UserId)
                 : false;
               return {
                 UserId: UserId,
@@ -115,144 +193,265 @@ const App = (props) => {
                 Step: row.Step,
                 Practice: row.Practice.Title,
                 Time: row.Time,
-                Order: row.Qorder,
-                CompletedUser: row.CompletedUser != null ? row.CompletedUser : "",
+                CompletedUser:
+                  row.CompletedUser != null ? row.CompletedUser : "",
                 isRead: isUserCompleted,
                 Icon: row.Icon ? row.Icon : "",
                 arrSubStep: arrSubSteps.filter((data) => data.ID == row.ID),
-              }
-            })
+                Next: row.NextId,
+                Previous: row.PreviousId,
+              };
+            });
             setAllPrctice([...arrPrctice]);
-            console.log(arrPrctice);
-            let primaryPractice = moduleHead
-              .map((title) => {
-                return {
-                  Title: title.Title,
-                  About: title.About,
-                  deliver: title.deliver,
-                  COrder: title.COrder,
-                  isInComplete: arrPrctice
-                    .filter((step) => step.Practice == title.Title)
-                    .some((step) => step.isRead == false),
-                };
-              })
-              .filter((practice) => practice.isInComplete == true)[0];
-            primaryPractice != undefined
-              ? (
-                arrDeliver = moduleHead.filter(
-                  (deliver) => deliver.Title == primaryPractice.Title
-                )[0],
-                arrPrimarySteps = arrPrctice.filter(
-                  (step) => step.Practice == primaryPractice.Title
-                ),
-                footerArr = footerContent.length > 0
-                &&
-                footerContent.map((row) => {
-                  return {
-                    Title: row.Title,
-                    Category: row.Category,
-                    FooterImage: row.FooterImage,
-                    COrder: row.COrder,
-                    isActive: row.Title == arrDeliver.Title ? true : false
-                  }
-                }),
-                (lastOrderNo = arrDeliver != undefined ? arrDeliver.COrder : {}),
-                setArrFooter(footerArr),
-                setArrDelSec(arrDeliver),
-                setPrimarySteps([]),
-                setPrimarySteps([...arrPrimarySteps]),
-                setLoader(false),
-                setRender(false)
-              ) : (
-                reRunning(lastModuleOrderNo)
-              );
+            let startPractice = moduleHead.filter(
+              (firstModule) => firstModule.Previous == undefined
+            )[0];
+            currentPractice = [
+              {
+                Title: startPractice.Title,
+                About: startPractice.About,
+                deliver: startPractice.deliver,
+                Next: startPractice.Next,
+                Previous: startPractice.Previous,
+                ID: startPractice.ID,
+                Order: startPractice.Order,
+                isInComplete: arrPrctice
+                  .filter((step) => step.Practice == startPractice.Title)
+                  .some((step) => step.isRead == false),
+              },
+            ].filter((practice) => practice.isInComplete == true)[0];
+            currentPractice != undefined
+              ? ((arrDeliver = moduleHead.filter(
+                  (DeliSec) => DeliSec.Title == currentPractice.Title
+                )[0]),
+                (arrPrimarySteps = arrPrctice.filter(
+                  (step) => step.Practice == currentPractice.Title
+                )),
+                (footerArr =
+                  footerContent.length > 0 &&
+                  footerContent.map((row) => {
+                    return {
+                      Title: row.Title,
+                      Category: row.Category,
+                      FooterImage: row.FooterImage,
+                      Order: row.Order,
+                      isActive: row.Title == arrDeliver.Title ? true : false,
+                    };
+                  })),
+                (latestModOrdNo = arrDeliver.Order),
+                arrPrimarySteps.length > 0 &&
+                  ((nextModuleTitle = arrDeliver.Next),
+                  reArrange(arrPrimarySteps, footerArr, arrDeliver)),
+                setRender(false))
+              : moduleRerunning(startPractice.Next);
           })
           .catch((err) => {
             console.log(err);
-          })
+          });
       })
       .catch((err) => {
         console.log(err);
       });
   }, [render]);
 
-  useEffect(() => {
-    latestOrderNO = backContent.COrder;
-    objCompleteDeliver = moduleHead.filter(
+  const moduleRerunning = (nextQus) => {
+    nextQus != undefined
+      ? ((PrimaryQus = moduleHead.filter(
+          (currentObj) => currentObj.Title == nextQus
+        )[0]),
+        PrimaryQus != undefined &&
+          ((currentPractice = [
+            {
+              Title: PrimaryQus.Title,
+              About: PrimaryQus.About,
+              deliver: PrimaryQus.deliver,
+              Next: PrimaryQus.Next,
+              Previous: PrimaryQus.Previous,
+              ID: PrimaryQus.ID,
+              isInComplete: arrPrctice
+                .filter((step) => step.Practice == PrimaryQus.Title)
+                .some((step) => step.isRead == false),
+            },
+          ].filter((practice) => practice.isInComplete == true)[0]),
+          currentPractice != undefined
+            ? ((arrDeliver = moduleHead.filter(
+                (deliver) => deliver.Title == currentPractice.Title
+              )[0]),
+              (arrPrimarySteps = arrPrctice.filter(
+                (step) => step.Practice == currentPractice.Title
+              )),
+              (footerArr =
+                footerContent.length > 0 &&
+                footerContent.map((row) => {
+                  return {
+                    Title: row.Title,
+                    Category: row.Category,
+                    FooterImage: row.FooterImage,
+                    Order: row.Order,
+                    isActive: row.Title == arrDeliver.Title ? true : false,
+                  };
+                })),
+              (latestModOrdNo = arrDeliver.Order),
+              arrPrimarySteps.length > 0 &&
+                ((nextModuleTitle = arrDeliver.Next),
+                reArrange(arrPrimarySteps, footerArr, arrDeliver)))
+            : moduleRerunning(PrimaryQus.Next)))
+      : comAllModule();
+  };
+
+  const reArrange = (arrAllSteps, footerArr, DeliverableObj) => {
+    let arrArrangedSteps = [];
+    arrArrangedSteps.push(arrAllSteps.filter((row) => !row.Previous)[0]);
+    arrAllSteps.slice(1).forEach(() => {
+      let nextID = arrArrangedSteps[arrArrangedSteps.length - 1].Next;
+      arrArrangedSteps.push(arrAllSteps.filter((row) => row.ID == nextID)[0]);
+    });
+    arrArrangedSteps = arrArrangedSteps.map((row, i) => {
+      return {
+        CompletedUser: row.CompletedUser,
+        ID: row.ID,
+        Icon: row.Icon,
+        Next: row.Next,
+        Practice: row.Practice,
+        Previous: row.Previous,
+        Step: row.Step,
+        Time: row.Time,
+        Title: row.Title,
+        UserId: row.UserId,
+        arrSubStep: row.arrSubStep,
+        isRead: row.isRead,
+        Order: i + 1,
+      };
+    });
+    setArrFooter(footerArr);
+    setArrDelSec(DeliverableObj);
+    setPrimarySteps([]);
+    setPrimarySteps(arrArrangedSteps);
+    setRender(false);
+    setLoader(false);
+  };
+
+  const comAllModule = () => {
+    let arrComArrangedTime = [];
+    objComDeliver = moduleHead.filter((module) => !module.Previous)[0];
+    arrComSteps = arrPrctice.filter(
+      (step) => step.Practice == objComDeliver.Title
+    );
+    arrComArrangedTime.push(arrComSteps.filter((row) => !row.Previous)[0]);
+    arrComSteps.slice(1).forEach(() => {
+      let nextID = arrComArrangedTime[arrComArrangedTime.length - 1].Next;
+      arrComArrangedTime.push(arrComSteps.filter((row) => row.ID == nextID)[0]);
+    });
+    arrComArrangedTime = arrComArrangedTime.map((row, i) => {
+      return {
+        CompletedUser: row.CompletedUser,
+        ID: row.ID,
+        Icon: row.Icon,
+        Next: row.Next,
+        Practice: row.Practice,
+        Previous: row.Previous,
+        Step: row.Step,
+        Time: row.Time,
+        Title: row.Title,
+        UserId: row.UserId,
+        arrSubStep: row.arrSubStep,
+        isRead: row.isRead,
+        Order: i + 1,
+      };
+    });
+    footerArr =
+      footerContent.length > 0 &&
+      footerContent.map((row) => {
+        return {
+          Title: row.Title,
+          Category: row.Category,
+          FooterImage: row.FooterImage,
+          Order: row.Order,
+          isActive: row.Title == objComDeliver.Title ? true : false,
+        };
+      });
+    latestModOrdNo = moduleHead[moduleHead.length - 1].Order;
+    latestOrderNO = moduleHead[0].Order;
+    setArrFooter(footerArr);
+    setArrDelSec(objComDeliver);
+    setPrimarySteps([]);
+    setPrimarySteps([...arrComArrangedTime]);
+    setLoader(false);
+  };
+
+  const readModules = () => {
+    let arrArrangedTime = [];
+    latestOrderNO = backContent.Order;
+    objComDeliver = moduleHead.filter(
       (deliver) => deliver.Title == backContent.Title
     )[0];
-    arrCompleteSteps = allPrctice.filter(
+    arrComSteps = allPrctice.filter(
       (step) => step.Practice == backContent.Title
     );
-    footerArr = footerContent.length > 0
-      &&
+    arrArrangedTime.push(arrComSteps.filter((row) => !row.Previous)[0]);
+    arrComSteps.slice(1).forEach(() => {
+      let nextID = arrArrangedTime[arrArrangedTime.length - 1].Next;
+      arrArrangedTime.push(arrComSteps.filter((row) => row.ID == nextID)[0]);
+    });
+    arrArrangedTime = arrArrangedTime.map((row, i) => {
+      return {
+        CompletedUser: row.CompletedUser,
+        ID: row.ID,
+        Icon: row.Icon,
+        Next: row.Next,
+        Practice: row.Practice,
+        Previous: row.Previous,
+        Step: row.Step,
+        Time: row.Time,
+        Title: row.Title,
+        UserId: row.UserId,
+        arrSubStep: row.arrSubStep,
+        isRead: row.isRead,
+        Order: i + 1,
+      };
+    });
+    footerArr =
+      footerContent.length > 0 &&
       footerContent.map((row) => {
         return {
           Title: row.Title,
           Category: row.Category,
           FooterImage: row.FooterImage,
-          COrder: row.COrder,
-          isActive: row.Title == backContent.Title ? true : false
-        }
-      })
+          Order: row.Order,
+          isActive: row.Title == backContent.Title ? true : false,
+        };
+      });
     setArrFooter(footerArr);
-    setArrDelSec(objCompleteDeliver);
+    setArrDelSec(objComDeliver);
     setPrimarySteps([]);
-    setPrimarySteps([...arrCompleteSteps]);
-    setReadValue(false);
+    setPrimarySteps([...arrArrangedTime]);
     setLoader(false);
-  }, [readValue]);
+  };
 
-  useEffect(() => {
-    objCompleteDeliver = moduleHead[0];
-    arrCompleteSteps = allPrctice.filter(
-      (step) => step.Practice == objCompleteDeliver.Title
-    );
-    footerArr = footerContent.length > 0
-      &&
-      footerContent.map((row) => {
-        return {
-          Title: row.Title,
-          Category: row.Category,
-          FooterImage: row.FooterImage,
-          COrder: row.COrder,
-          isActive: row.Title == objCompleteDeliver.Title ? true : false
-        }
-      })
-    setArrFooter(footerArr);
-    setArrDelSec(objCompleteDeliver);
-    setPrimarySteps([]);
-    setPrimarySteps([...arrCompleteSteps]);
-    setLoader(false);
-    setCompleteModule(false);
-  }, [completeModule]);
-
-  const reRunning = (currentModuleOrderNO) => {
-    lastModuleOrderNo == currentModuleOrderNO
-      ? (
-        setLoader(true),
-        latestOrderNO = moduleHead[0].COrder,
-        lastOrderNo = moduleHead[moduleHead.length - 1].COrder,
-        setCompleteModule(true)
-      )
+  const reRunning = (curModOrdNo) => {
+    lastModOrdNo == curModOrdNo
+      ? (setLoader(true),
+        (latestOrderNO = moduleHead[0].Order),
+        (latestModOrdNo = moduleHead[moduleHead.length - 1].Order),
+        comAllModule())
       : setRender(true);
   };
 
   const BeforeModule = (ordNumber) => {
     setLoader(true);
-    backModule = moduleHead.filter((e) => e.COrder < ordNumber);
+    backModule = moduleHead.filter((row) => row.Order < ordNumber);
     backContent = backModule[backModule.length - 1];
     setTimeout(() => {
-      setReadValue(true);
+      readModules();
     }, 1000);
   };
 
   const AfterModule = (ordNumber) => {
     setLoader(true);
-    backModule = moduleHead.filter((e) => e.COrder > ordNumber);
+    backModule = moduleHead.filter((row) => row.Order > ordNumber);
     backContent = backModule.shift();
     setTimeout(() => {
-      setReadValue(true);
+      readModules();
     }, 1000);
   };
 
@@ -260,46 +459,50 @@ const App = (props) => {
     <>
       {primarySteps.length > 0 && (
         <>
-          {
-            loader
-              ? (
-                <Loader />
-              )
-              : <>
-                <Header
-                  context={props.context}
-                  sp={props.sp}
-                  arrDelSec={arrDelSec}
-                  URL={props.URL}
-                />
-                <Questions
-                  context={props.context}
-                  sp={props.sp}
-                  PrimarySteps={primarySteps}
-                  arrDelSec={arrDelSec}
-                  reRunning={reRunning}
-                  BeforeModule={BeforeModule}
-                  AfterModule={AfterModule}
-                  URL={props.URL}
-                  firstIndexOrderNo={firstIndexOrderNo}
-                  lastOrderNo={lastOrderNo}
-                  latestOrderNO={latestOrderNO}
-                />
-                <Footerimg
-                  context={props.context}
-                  sp={props.sp}
-                  URL={props.URL}
-                  arrFooter={arrFooter}
-                />
-                <FooterCategories
-                  context={props.context}
-                  sp={props.sp}
-                  URL={props.URL}
-                />
-              </>
-          }
+          {loader ? (
+            <Loader />
+          ) : (
+            <>
+              <Header
+                context={props.context}
+                sp={props.sp}
+                arrDelSec={arrDelSec}
+                URL={props.URL}
+                pageType={pageType}
+              />
+              <Questions
+                context={props.context}
+                sp={props.sp}
+                URL={props.URL}
+                pageType={pageType}
+                PrimarySteps={primarySteps}
+                arrDelSec={arrDelSec}
+                reRunning={reRunning}
+                BeforeModule={BeforeModule}
+                AfterModule={AfterModule}
+                firstModOrdNo={firstModOrdNo}
+                lastModOrdNo={lastModOrdNo}
+                latestOrderNO={latestOrderNO}
+                latestModOrdNo={latestModOrdNo}
+              />
+              <Footerimg
+                context={props.context}
+                sp={props.sp}
+                URL={props.URL}
+                arrFooter={arrFooter}
+                pageType={pageType}
+              />
+              <FooterCategories
+                context={props.context}
+                sp={props.sp}
+                URL={props.URL}
+                pageType={pageType}
+              />
+            </>
+          )}
         </>
       )}
+      {/* <Patheay /> */}
     </>
   );
 };

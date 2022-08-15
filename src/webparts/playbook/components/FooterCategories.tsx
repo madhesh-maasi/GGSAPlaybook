@@ -9,7 +9,7 @@ const operateImg = require("../../../ExternalRef/img/operateImg.png");
 const FooterCategories = (props) => {
   return (
     <div className={styles.footerWrapper}>
-      <div className={styles.footerContent}>
+      <div className={props.pageType.toLowerCase() == "phases" ? styles.phaseFooterContent : styles.footerContent}>
         <h3>Phases : </h3>
         <a href="#" className={styles.footerItem}>
           <img src={`${designImg}`} alt="" />

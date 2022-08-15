@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
 import styles from "./AllQuestions.module.scss";
 
 let allQues;
@@ -13,7 +12,7 @@ const AllQuestions = (props) => {
         return (
           <>
             {row.isRead == false &&
-              <div className={styles.listItem}>
+              <div className={props.pageType.toLowerCase() == "phases" ? styles.phaseListItem : styles.listItem}>
                 <div>
                   <li>{row.Step}</li>
                 </div>
@@ -33,7 +32,7 @@ const AllQuestions = (props) => {
               </div>
             }
             {row.isRead == true &&
-              <div className={styles.listItemCom}>
+              <div className={props.pageType.toLowerCase() == "phases" ? styles.phaseListItemCom : styles.listItemCom}>
                 <div>
                   <li>{row.Step}</li>
                 </div>

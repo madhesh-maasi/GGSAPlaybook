@@ -42,7 +42,7 @@ const Deliverable = (props) => {
                     flexDirection: "column",
                     height: "100px",
                     width: "200px",
-                    backgroundColor: "#f99d26",
+                    backgroundColor: props.pageType.toLowerCase() == "phases" ? "#00859c" : "#f99d26",
                     padding: "15px",
                     borderRadius: "20px",
                     position: "relative",
@@ -150,7 +150,7 @@ const Deliverable = (props) => {
                     setCurrDeliver([...arrDlble]);
                   }}
                   style={{
-                    color: "#f99d26",
+                    color: props.pageType.toLowerCase() == "phases" ? "#00859c" : "#f99d26",
                     padding: "5px 10px",
                     margin: "10px",
                     cursor: "pointer",
@@ -163,7 +163,7 @@ const Deliverable = (props) => {
                     width: 100,
                   }}
                 >
-                  <div className={style.cardImg}>
+                  <div className={ props.pageType.toLowerCase() == "phases" ? style.phaseCardImg : style.cardImg}>
                     {item.Title == "Planning" ? (
                       <Icon
                         iconName="BarChart4"

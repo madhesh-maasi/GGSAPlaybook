@@ -20,6 +20,28 @@
     }
 }
 
+.phaseListItem{
+    width: 400px;
+    border: 2px solid #f99d26;
+    padding: 7px 30px;
+    margin-bottom: 5px;
+    position: relative;
+    list-style-type: none;
+    font-size: 12px;
+    background-color: #55555510;
+    &::before{
+        content: '';
+        position: absolute;
+        top: 16px;
+        transform: translateY(-48%);
+        left: 3%;
+        width: 8px;
+        height: 8px;
+        background-color: #f99d26;
+        border-radius: 2px;
+    }
+}
+
 .listItemCom{
     width: 400px;
     border: 2px solid #f99d26;
@@ -38,6 +60,28 @@
         width: 8px;
         height: 8px;
         background-color: #f99d26;
+        border-radius: 2px;
+    }
+}
+
+.phaseListItemCom{
+    width: 400px;
+    border: 2px solid #00859c;
+    padding: 7px 30px;
+    margin-bottom: 5px;
+    position: relative;
+    list-style-type: none;
+    font-size: 12px;
+    background-color: #55555510;
+    &::before{
+        content: '';
+        position: absolute;
+        top: 16px;
+        transform: translateY(-48%);
+        left: 3%;
+        width: 8px;
+        height: 8px;
+        background-color: #00859c;
         border-radius: 2px;
     }
 }
