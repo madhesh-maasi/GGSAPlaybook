@@ -32,6 +32,14 @@ let pageType;
 let nextModuleTitle;
 let PrimaryQus;
 let currentPractice;
+let firstName;
+let firstValue;
+let lastName;
+let lastValue;
+let firstValSplit;
+let lastValSplit;
+let valueOfFirstLetter;
+let valueOfLastLetter;
 
 const App = (props) => {
   const [allPrctice, setAllPrctice] = useState(arrPrctice);
@@ -40,18 +48,19 @@ const App = (props) => {
   const [arrDelSec, setArrDelSec] = useState(arrDeliver);
   const [arrFooter, setArrFooter] = useState([]);
   const [loader, setLoader] = useState(true);
+  const [userName, setUserName] = useState("");
 
   // life cycle of onload
   useEffect(() => {
     pageURL = new URLSearchParams(window.location.search);
     pageType = pageURL.get("type");
-    console.log(pageURL);
-    console.log(pageType);
+    // console.log(pageURL);
+    // console.log(pageType);
     props.URL.lists
       .getByTitle(props.masterAnnualPlan)
       .items.get()
       .then(async (datas) => {
-        console.log(datas);
+        // console.log(datas);
         arrMasterAnnual = datas.map((objects) => {
           return {
             Project: objects.Title,
@@ -59,99 +68,133 @@ const App = (props) => {
             TOD: objects.TypeofProject,
           };
         });
-        console.log(arrMasterAnnual);
+        // console.log(arrMasterAnnual);
         await props.URL.lists
           .getByTitle("Delivery Plan Phase List")
           .items.get()
           .then((values) => {
-            console.log(values);
+            // console.log(values);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
     setLoader(true);
+
     // Current user mail get
     props.URL.currentUser()
       .then(async (res) => {
         UserId = res.Id;
-        // get configList
-        await props.URL.lists
-          .getByTitle("PracticeConfig")
-          .items.select("*,Next/Title, Previous/Title")
-          .expand("Next, Previous")
-          .get()
-          .then((res) => {
-            console.log(res);
-            let arrJSON;
-            arrPracticeConfig = res;
-            moduleArr = arrPracticeConfig.map((head) => {
-              arrJSON = JSON.parse(head.Deliverable.slice(1, -1));
-              return {
-                Title: head.Title,
-                deliver: arrJSON,
-                About: head.About,
-                Next: head.Next != undefined ? head.Next.Title : undefined,
-                Previous:
-                  head.Previous != undefined ? head.Previous.Title : undefined,
-                ID: head.ID,
-              };
-            });
-            footerContent = arrPracticeConfig.map((footer) => {
-              return {
-                Title: footer.Title,
-                Category: footer.Category.toLowerCase(),
-                FooterImage: footer.FooterImage,
-                Next: footer.Next != undefined ? footer.Next.Title : undefined,
-                Previous:
-                  footer.Previous != undefined
-                    ? footer.Previous.Title
-                    : undefined,
-                ID: footer.ID,
-                Order: footer.Order,
-              };
-            });
-            let arrArrangedModules = [];
-            arrArrangedModules.push(
-              moduleArr.filter((row) => !row.Previous)[0]
+        setUserName(res.Title);
+
+        /* Current user details */
+        await props.sp.profiles
+          .getPropertiesFor(res.LoginName)
+          .then(async (event) => {
+            firstName = event.UserProfileProperties.filter(
+              (val) => val.Key == "FirstName"
             );
-            moduleArr.slice(1).forEach(() => {
-              let nextTitle =
-                arrArrangedModules[arrArrangedModules.length - 1].Next;
-              arrArrangedModules.push(
-                moduleArr.filter((row) => row.Title == nextTitle)[0]
-              );
-            });
-            arrArrangedModules = arrArrangedModules.map((row, i) => {
-              return {
-                Title: row.Title,
-                deliver: row.deliver,
-                About: row.About,
-                Next: row.Next,
-                Previous: row.Previous,
-                ID: row.ID,
-                Order: i + 1,
-              };
-            });
-            moduleHead = arrArrangedModules.length > 0 && arrArrangedModules;
-            firstModOrdNo = moduleHead
-              .filter((ordNo) => ordNo.Previous == undefined)
-              .map((firstID) => {
-                return firstID.Order;
-              })[0];
-            lastModOrdNo = moduleHead
-              .filter((ordNo) => ordNo.Next == undefined)
-              .map((lastID) => {
-                return lastID.Order;
-              })[0];
-            console.log(moduleHead);
-            console.log(footerContent);
-            console.log(firstModOrdNo);
-            console.log(lastModOrdNo);
-            setRender(true);
+            lastName = event.UserProfileProperties.filter(
+              (val) => val.Key == "LastName"
+            );
+            firstValue = firstName
+              .map((firstVal) => {
+                return firstVal.Value;
+              })
+              .toString();
+            lastValue = lastName
+              .map((lastVal) => {
+                return lastVal.Value;
+              })
+              .toString();
+            firstValSplit = firstValue.split("");
+            lastValSplit = lastValue.split("");
+            valueOfFirstLetter = firstValSplit[0];
+            valueOfLastLetter = lastValSplit[0];
+
+            /* get configlist datas */
+            await props.URL.lists
+              .getByTitle("PracticeConfig")
+              .items.select("*,Next/Title, Previous/Title")
+              .expand("Next, Previous")
+              .get()
+              .then((res) => {
+                let arrJSON;
+                arrPracticeConfig = res;
+                moduleArr = arrPracticeConfig.map((head) => {
+                  arrJSON = JSON.parse(head.Deliverable.slice(1, -1));
+                  return {
+                    Title: head.Title,
+                    deliver: arrJSON,
+                    About: head.About,
+                    Next: head.Next != undefined ? head.Next.Title : undefined,
+                    Previous:
+                      head.Previous != undefined
+                        ? head.Previous.Title
+                        : undefined,
+                    ID: head.ID,
+                  };
+                });
+                footerContent = arrPracticeConfig.map((footer) => {
+                  return {
+                    Title: footer.Title,
+                    Category: footer.Category.toLowerCase(),
+                    FooterImage: footer.FooterImage,
+                    Next:
+                      footer.Next != undefined ? footer.Next.Title : undefined,
+                    Previous:
+                      footer.Previous != undefined
+                        ? footer.Previous.Title
+                        : undefined,
+                    ID: footer.ID,
+                    Order: footer.Order,
+                  };
+                });
+                let arrArrangedModules = [];
+                arrArrangedModules.push(
+                  moduleArr.filter((row) => !row.Previous)[0]
+                );
+                moduleArr.slice(1).forEach(() => {
+                  let nextTitle =
+                    arrArrangedModules[arrArrangedModules.length - 1].Next;
+                  arrArrangedModules.push(
+                    moduleArr.filter((row) => row.Title == nextTitle)[0]
+                  );
+                });
+                arrArrangedModules = arrArrangedModules.map((row, i) => {
+                  return {
+                    Title: row.Title,
+                    deliver: row.deliver,
+                    About: row.About,
+                    Next: row.Next,
+                    Previous: row.Previous,
+                    ID: row.ID,
+                    Order: i + 1,
+                  };
+                });
+                moduleHead =
+                  arrArrangedModules.length > 0 && arrArrangedModules;
+                firstModOrdNo = moduleHead
+                  .filter((ordNo) => ordNo.Previous == undefined)
+                  .map((firstID) => {
+                    return firstID.Order;
+                  })[0];
+                lastModOrdNo = moduleHead
+                  .filter((ordNo) => ordNo.Next == undefined)
+                  .map((lastID) => {
+                    return lastID.Order;
+                  })[0];
+                setRender(true);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((err) => {
+            console.log(err);
           });
       })
       .catch((err) => {
@@ -466,9 +509,12 @@ const App = (props) => {
               <Header
                 context={props.context}
                 sp={props.sp}
-                arrDelSec={arrDelSec}
                 URL={props.URL}
                 pageType={pageType}
+                arrDelSec={arrDelSec}
+                userName={userName}
+                valueOfFirstLetter={valueOfFirstLetter}
+                valueOfLastLetter={valueOfLastLetter}
               />
               <Questions
                 context={props.context}

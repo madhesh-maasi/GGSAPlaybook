@@ -54,8 +54,6 @@ const Questions = (props) => {
             isRead: true,
           }
         : objUnreadQuestions;
-    console.log(arRearrangedSteps);
-    console.log(curObjValue);
     setQuestion(arRearrangedSteps);
     setCurrQus({ ...curObjValue });
     setTimelineRender(true);

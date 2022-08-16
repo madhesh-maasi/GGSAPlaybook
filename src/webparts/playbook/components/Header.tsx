@@ -5,15 +5,6 @@ import { Icon } from "@fluentui/react";
 
 const closeIcon = require("../../../ExternalRef/img/close-button.png");
 
-let firstName;
-let firstValue;
-let lastName;
-let lastValue;
-let firstValSplit;
-let lastValSplit;
-let valueOfFirstLetter;
-let valueOfLastLetter;
-
 let headingDetails = {
   Title: "",
   About: "",
@@ -21,58 +12,21 @@ let headingDetails = {
 };
 
 const Header = (props) => {
-  const [userName, setUserName] = useState("");
   const [modHeading, setModHeading] = useState(headingDetails);
 
   // Life cycle of Onload
   useEffect(() => {
-    // current user taken
-    props.URL
-      .currentUser()
-      .then(async (res) => {
-        await props.sp.profiles
-          .getPropertiesFor(res.LoginName)
-          .then((event) => {
-            firstName = event.UserProfileProperties.filter(
-              (val) => val.Key == "FirstName"
-            );
-            lastName = event.UserProfileProperties.filter(
-              (val) => val.Key == "LastName"
-            );
-            firstValue = firstName
-              .map((firstVal) => {
-                return firstVal.Value;
-              })
-              .toString();
-            lastValue = lastName
-              .map((lastVal) => {
-                return lastVal.Value;
-              })
-              .toString();
-            firstValSplit = firstValue.split("");
-            lastValSplit = lastValue.split("");
-            valueOfFirstLetter = firstValSplit[0];
-            valueOfLastLetter = lastValSplit[0];
-            headingDetails = {
-              Title: props.arrDelSec.Title,
-              About: props.arrDelSec.About,
-              isShow: false,
-            };
-            setModHeading({
-              Title: "",
-              About: "",
-              isShow: false,
-            });
-            setModHeading(headingDetails);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        setUserName(res.Title);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setModHeading({
+      Title: "",
+      About: "",
+      isShow: false,
+    });
+    headingDetails = {
+      Title: props.arrDelSec.Title,
+      About: props.arrDelSec.About,
+      isShow: false,
+    };
+    setModHeading(headingDetails);
   }, []);
 
   return (
@@ -132,9 +86,9 @@ const Header = (props) => {
         <div className={styles.profiles}>
           <div className={styles.dev}>BA</div>
           <div className={styles.manager}>CP</div>
-          <div title={userName} className={styles.user}>
-            {valueOfFirstLetter}
-            {valueOfLastLetter}
+          <div title={props.userName} className={styles.user}>
+            {props.valueOfFirstLetter}
+            {props.valueOfLastLetter}
           </div>
         </div>
       </div>

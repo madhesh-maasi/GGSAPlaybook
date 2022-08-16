@@ -53,8 +53,6 @@ const Timeline = (props) => {
       arrTimeline.filter((li) => li.isRead == false).length > 0
         ? arrTimeline.filter((li) => li.isRead == false)[0].Order
         : arrTimeline[arrTimeline.length - 1].Order;
-    console.log(arrTimeline);
-    console.log(curQusOrderNo);
     setCurOrder(curQusOrderNo);
     setTimelineData([...arrTimeline]);
     setRender(false);

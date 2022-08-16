@@ -5,7 +5,6 @@ let curAns;
 
 const Current = (props) => {
   curAns = props.currQus;
-  console.log(curAns);
 
   return (
     <>
