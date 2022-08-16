@@ -366,6 +366,7 @@ const App = (props) => {
         Order: i + 1,
       };
     });
+    latestOrderNO = "";
     setArrFooter(footerArr);
     setArrDelSec(DeliverableObj);
     setPrimarySteps([]);

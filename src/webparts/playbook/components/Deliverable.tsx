@@ -40,13 +40,15 @@ const Deliverable = (props) => {
                     alignItems: "center",
                     justifyContent: "center",
                     flexDirection: "column",
-                    height: "100px",
+                    height: "126px",
                     width: "200px",
                     backgroundColor: props.pageType.toLowerCase() == "phases" ? "#00859c" : "#f99d26",
                     padding: "15px",
                     borderRadius: "20px",
                     position: "relative",
                     cursor: "pointer",
+                    marginTop: "46px",
+                    boxSizing: "border-box"
                   }}
                   className={style.deliverOpenWrapper}
                   onClick={() => {

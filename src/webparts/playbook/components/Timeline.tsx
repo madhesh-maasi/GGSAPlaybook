@@ -91,7 +91,7 @@ const Timeline = (props) => {
                           : li.Order <= curOrder
                           ? "#03787c"
                           : "#878787",
-                      cursor: "pointer",
+                      cursor: "context-menu",
                     },
                   }}
                 />

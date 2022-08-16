@@ -35,7 +35,7 @@ const Current = (props) => {
           </>
         ) : (
           <div className={styles.currentCompleteQuestionsHead}>
-            You have Complete all Modules
+            You have completed all steps
           </div>
         )}
       </div>
