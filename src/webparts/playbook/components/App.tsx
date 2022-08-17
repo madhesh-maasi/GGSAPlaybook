@@ -52,8 +52,9 @@ const App = (props) => {
 
   // life cycle of onload
   useEffect(() => {
-    pageURL = new URLSearchParams(window.location.search);
-    pageType = pageURL.get("type");
+    // pageURL = new URLSearchParams(window.location.search);
+    // pageType = pageURL.get("type");
+    pageType = "phases";
     // console.log(pageURL);
     // console.log(pageType);
     props.URL.lists
