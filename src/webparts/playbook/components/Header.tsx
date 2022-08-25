@@ -12,10 +12,11 @@ let headingDetails = {
 };
 
 const Header = (props) => {
+  /* All States */
   const [modHeading, setModHeading] = useState(headingDetails);
 
-  // Life cycle of Onload
-  useEffect(() => {
+  /* function of get header details */
+  const getHeaderDetail = () => {
     setModHeading({
       Title: "",
       About: "",
@@ -27,6 +28,11 @@ const Header = (props) => {
       isShow: false,
     };
     setModHeading(headingDetails);
+  }
+
+  /* Life cycle of Onload */
+  useEffect(() => {
+    getHeaderDetail();
   }, []);
 
   return (

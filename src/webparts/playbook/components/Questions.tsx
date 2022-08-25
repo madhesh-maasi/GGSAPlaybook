@@ -17,14 +17,15 @@ let arrTimeline = [];
 let curObjValue;
 
 const Questions = (props) => {
+  /* All States */
   const [question, setQuestion] = useState([]);
   const [currQus, setCurrQus] = useState();
   const [render, setRender] = useState(true);
   const [TLData, setTLData] = useState(arrTimeline);
   const [timelineRender, setTimelineRender] = useState(true);
 
-  // life cycle of render
-  useEffect(() => {
+  /* function of arranged Steps */
+  const getArrangedSteps = () => {
     arrAllPrctice = props.PrimarySteps;
     lastStepID = arrAllPrctice[arrAllPrctice.length - 1].ID;
     UserId = arrAllPrctice.map((e) => e.UserId)[0].toString();
@@ -58,41 +59,62 @@ const Questions = (props) => {
     setCurrQus({ ...curObjValue });
     setTimelineRender(true);
     setRender(false);
-  }, [render]);
+  }
 
+  /* function of complete steps */
   const completeQus = (Id, completeValues) => {
     arrAllPrctice.filter((row) => row.ID == Id)[0].isRead = true;
     addUserId(Id, completeValues);
   };
 
-  // Add user id
+  /* update the complete steps */
   const addUserId = (Id, completeValues) => {
     let currCompleteValue = !completeValues
-      ? `${UserId}`
-      : `${completeValues},${UserId}`;
-    props.URL.lists
-      .getByTitle("Practice")
-      .items.getById(Id)
-      .update({
-        CompletedUser: currCompleteValue,
-      })
-      .then(() => {
-        if (Id == lastStepID) {
-          props.reRunning(props.arrDelSec.Order);
-        } else {
-          setTimelineRender(false);
-          setRender(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    ? `${UserId}`
+    : `${completeValues},${UserId}`;
+  props.pageType == "phases"
+    ? props.URL.lists
+        .getByTitle("phases")
+        .items.getById(Id)
+        .update({
+          CompletedUser: currCompleteValue,
+        })
+        .then(() => {
+          if (Id == lastStepID) {
+            props.reRunning(props.arrDelSec.Order);
+          } else {
+            setTimelineRender(false);
+            setRender(true);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    : props.URL.lists
+        .getByTitle("Practice")
+        .items.getById(Id)
+        .update({
+          CompletedUser: currCompleteValue,
+        })
+        .then(() => {
+          if (Id == lastStepID) {
+            props.reRunning(props.arrDelSec.Order);
+          } else {
+            setTimelineRender(false);
+            setRender(true);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+};
 
+  /* function of before module */
   const firstOrderNo = (orderNo) => {
     props.firstModOrdNo < orderNo ? props.BeforeModule(orderNo) : "";
   };
 
+  /* function of after module */
   const lastOrderNo = (orderNo) => {
     orderNo != ""
       ? props.latestModOrdNo > orderNo
@@ -100,6 +122,11 @@ const Questions = (props) => {
         : ""
       : "";
   };
+
+  /* life cycle of render */
+  useEffect(() => {
+    getArrangedSteps();
+  }, [render]);
 
   return (
     <>

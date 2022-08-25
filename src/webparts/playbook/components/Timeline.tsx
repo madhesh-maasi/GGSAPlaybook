@@ -25,12 +25,14 @@ const ProgressStyles = {
 };
 
 const Timeline = (props) => {
+  /* All states */
   const [timelineData, setTimelineData] = useState(arrTimeline);
   const [curOrder, setCurOrder] = useState(curQusOrderNo);
   const [render, setRender] = useState(props.timelineRender);
   const [progressDetail, setprogressDetail] = useState(ProgressStyles);
 
-  useEffect(() => {
+  /* function of time line */
+  const getTimeLine = () => {
     setprogressDetail({
       root: {
         minWidth: 70,
@@ -56,6 +58,11 @@ const Timeline = (props) => {
     setCurOrder(curQusOrderNo);
     setTimelineData([...arrTimeline]);
     setRender(false);
+  };
+
+  /* life cycle of onload */
+  useEffect(() => {
+    getTimeLine();
   }, [render, props.timelineRender]);
 
   return (
