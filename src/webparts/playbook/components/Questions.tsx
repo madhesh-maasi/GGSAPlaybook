@@ -59,7 +59,7 @@ const Questions = (props) => {
     setCurrQus({ ...curObjValue });
     setTimelineRender(true);
     setRender(false);
-  }
+  };
 
   /* function of complete steps */
   const completeQus = (Id, completeValues) => {
@@ -70,44 +70,44 @@ const Questions = (props) => {
   /* update the complete steps */
   const addUserId = (Id, completeValues) => {
     let currCompleteValue = !completeValues
-    ? `${UserId}`
-    : `${completeValues},${UserId}`;
-  props.pageType == "phases"
-    ? props.URL.lists
-        .getByTitle("phases")
-        .items.getById(Id)
-        .update({
-          CompletedUser: currCompleteValue,
-        })
-        .then(() => {
-          if (Id == lastStepID) {
-            props.reRunning(props.arrDelSec.Order);
-          } else {
-            setTimelineRender(false);
-            setRender(true);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    : props.URL.lists
-        .getByTitle("Practice")
-        .items.getById(Id)
-        .update({
-          CompletedUser: currCompleteValue,
-        })
-        .then(() => {
-          if (Id == lastStepID) {
-            props.reRunning(props.arrDelSec.Order);
-          } else {
-            setTimelineRender(false);
-            setRender(true);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-};
+      ? `${UserId}`
+      : `${completeValues},${UserId}`;
+    props.pageType == "phases"
+      ? props.URL.lists
+          .getByTitle("phases")
+          .items.getById(Id)
+          .update({
+            CompletedUser: currCompleteValue,
+          })
+          .then(() => {
+            if (Id == lastStepID) {
+              props.reRunning(props.arrDelSec.Order);
+            } else {
+              setTimelineRender(false);
+              setRender(true);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      : props.URL.lists
+          .getByTitle("Practice")
+          .items.getById(Id)
+          .update({
+            CompletedUser: currCompleteValue,
+          })
+          .then(() => {
+            if (Id == lastStepID) {
+              props.reRunning(props.arrDelSec.Order);
+            } else {
+              setTimelineRender(false);
+              setRender(true);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+  };
 
   /* function of before module */
   const firstOrderNo = (orderNo) => {

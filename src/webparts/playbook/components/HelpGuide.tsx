@@ -51,7 +51,7 @@ const pivotStyles: Partial<IStyleSet<IPivotStyles>> = {
     width: "100%",
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     padding: "20px 100px",
   },
   link: {
@@ -117,6 +117,13 @@ const eventab = mergeStyleSets({
     },
   },
 });
+// popup function
+// const openPopup = (e) => {
+//   document
+//     .querySelector(".MapPopup")
+//     .classList.toggle(`${styles.closeMapPopup}`);
+// };
+
 const HelpGuide = (props) => {
   return (
     <div className={styles.helpWrapper}>
@@ -425,7 +432,7 @@ const HelpGuide = (props) => {
               <h1>Our teams</h1>
             </div>
             <div className={styles.cardsSection}>
-              <div className={styles.cardBlue}>
+              <div className={styles.cardBlueSm}>
                 <div className={styles.topContentSm}>
                   <div className={styles.bgImg}>
                     <img src={`${bgImage1}`} alt="bgImage" />
@@ -456,7 +463,7 @@ const HelpGuide = (props) => {
                   </div>
                 </div>
               </div>
-              <div className={styles.cardBlue}>
+              <div className={styles.cardBlueSm}>
                 <div className={styles.topContentSm}>
                   <div className={styles.bgImg}>
                     <img src={`${bgImage2}`} alt="bgImage" />
@@ -491,7 +498,7 @@ const HelpGuide = (props) => {
                   </div>
                 </div>
               </div>
-              <div className={styles.cardBlue}>
+              <div className={styles.cardBlueSm}>
                 <div className={styles.topContentSm}>
                   <div className={styles.bgImg}>
                     <img src={`${bgImage2}`} alt="bgImage" />
@@ -546,8 +553,22 @@ const HelpGuide = (props) => {
                   <div className={styles.row1}>
                     <div className={styles.roundCard}>
                       <p>Buisness Area Manager</p>
-                      <div className={styles.img}>
+                      <div
+                        className={styles.img}
+                        onClick={() => {
+                          document
+                            .querySelector(".MapPopup1")
+                            .classList.toggle(`${styles.closeMapPopup}`);
+                        }}
+                      >
                         <img src={`${avatarYellow}`} alt="" />
+                        <div
+                          className={`MapPopup1 ${styles.MapPopup} ${styles.closeMapPopup}`}
+                        >
+                          Oversees development of solution throughout its life
+                          cycle to ensure it meets timeline, GGSA standard
+                          quality and is fit for purpose
+                        </div>
                       </div>
                     </div>
                     <img src={`${lineY1}`} className={styles.lineY1} alt="" />
@@ -566,8 +587,21 @@ const HelpGuide = (props) => {
                   <div className={styles.row3}>
                     <div className={styles.roundCard}>
                       <p>Solution Developer</p>
-                      <div className={styles.img}>
+                      <div
+                        className={styles.img}
+                        onClick={() => {
+                          document
+                            .querySelector(".MapPopup2")
+                            .classList.toggle(`${styles.closeMapPopup}`);
+                        }}
+                      >
                         <img src={`${avatarYellow}`} alt="" />
+                        <div
+                          className={`MapPopup2 ${styles.MapPopup} ${styles.closeMapPopup}`}
+                        >
+                          May come from any team in with right skills and takes
+                          solution through lifecycle from start-up
+                        </div>
                       </div>
                     </div>
                     <div className={styles.roundCard}>
@@ -584,7 +618,7 @@ const HelpGuide = (props) => {
                       <p>Client</p>
                       <div className={styles.img}>
                         {" "}
-                        <img src={`${giftBlue}`} alt="" />
+                        <img src={`${boxBlue}`} alt="" />
                       </div>
                       <img
                         src={`${lineBl8}`}
@@ -599,9 +633,23 @@ const HelpGuide = (props) => {
                     </div>
                     <div className={styles.roundCard}>
                       <p>Product Manager</p>
-                      <div className={styles.img}>
+                      <div
+                        className={styles.img}
+                        onClick={() => {
+                          document
+                            .querySelector(".MapPopup3")
+                            .classList.toggle(`${styles.closeMapPopup}`);
+                        }}
+                      >
                         {" "}
                         <img src={`${avatarBlue}`} alt="" />
+                        <div
+                          className={`MapPopup3 ${styles.MapPopup} ${styles.closeMapPopup}`}
+                        >
+                          Oversees development of solution throughout its life
+                          cycle to ensure it meets timeline, GGSA standard
+                          quality and Properly operationized
+                        </div>
                       </div>
                       <img
                         src={`${lineBl9}`}
@@ -611,9 +659,27 @@ const HelpGuide = (props) => {
                     </div>
                     <div className={styles.roundCard}>
                       <p>Product Developer</p>
-                      <div className={styles.img}>
+                      <div
+                        className={styles.img}
+                        onClick={() => {
+                          document
+                            .querySelector(".MapPopup4")
+                            .classList.toggle(`${styles.closeMapPopup}`);
+                        }}
+                      >
                         {" "}
                         <img src={`${avatarBlue}`} alt="" />
+                        <div
+                          className={`MapPopup4 ${styles.MapPopup} ${styles.closeMapPopup}`}
+                        >
+                          Curriculam, professional learning and school
+                          improvement. Develops a set of allocated products
+                          through every version in innovation life cycle from
+                          start-up onwards. ensures BA developers complete
+                          allocated deliverables on their product per client
+                          directions. and advises manager of any issues relating
+                          to collaboration across teams.
+                        </div>
                       </div>
                       <img
                         src={`${lineBl7}`}
@@ -625,33 +691,60 @@ const HelpGuide = (props) => {
                   <div className={styles.row2}>
                     <div className={styles.lCont}>
                       <div className={styles.infoCard}>
-                        <div className={styles.img}>
-                          <img src={`${avatarWhite}`} alt="" />
+                        <div className={styles.infoTop}>
+                          <div className={styles.img}>
+                            <img src={`${avatarWhite}`} alt="" />
+                          </div>
+                          <p>Technology Developer</p>
                         </div>
-                        <p>Technology Developer</p>
                       </div>
                       <div className={styles.infoCard}>
-                        <div className={styles.img}>
-                          <img src={`${avatarWhite}`} alt="" />
+                        <div className={styles.infoTop}>
+                          <div className={styles.img}>
+                            <img src={`${avatarWhite}`} alt="" />
+                          </div>
+                          <p>Data Developer</p>
                         </div>
-                        <p>Data Developer</p>
                       </div>
                       <div className={styles.infoCard}>
-                        <div className={styles.img}>
-                          <img src={`${avatarWhite}`} alt="" />
+                        <div className={styles.infoTop}>
+                          <div className={styles.img}>
+                            <img src={`${avatarWhite}`} alt="" />
+                          </div>
+                          <p>Research Developer</p>
                         </div>
-                        <p>Research Developer</p>
                       </div>
                       <div className={styles.infoCard}>
-                        <div className={styles.img}>
-                          <img src={`${avatarWhite}`} alt="" />
+                        <div className={styles.infoTop}>
+                          <div className={styles.img}>
+                            <img src={`${avatarWhite}`} alt="" />
+                          </div>
+                          <p>Design Developer</p>
                         </div>
-                        <p>Design Developer</p>
                       </div>
                     </div>
                     <div className={styles.roundCard}>
-                      <div className={styles.img}>
+                      <div
+                        className={styles.img}
+                        onClick={() => {
+                          document
+                            .querySelector(".MapPopup5")
+                            .classList.toggle(`${styles.closeMapPopup}`);
+                        }}
+                      >
                         <img src={`${giftBlue}`} alt="" />
+                        <div
+                          className={`MapPopup5 ${styles.MapPopup} ${styles.closeMapPopup}`}
+                        >
+                          Specialist developers sit across business areas and
+                          are assigned work from product managers( who hold the
+                          budget and purchase and purchase that resource).
+                          <span style={{ marginTop: "10px" }}>
+                            <b>Skilled services</b> develops product components
+                            in their areas to complete deliverables as needed
+                            according to annual and term plans
+                          </span>
+                        </div>
                       </div>
                     </div>
                     <img
@@ -674,28 +767,50 @@ const HelpGuide = (props) => {
                     />
                     <div className={styles.rCont}>
                       <div className={styles.infoCard}>
-                        <div className={styles.img}>
-                          <img src={`${avatarWhite}`} alt="" />
+                        <div className={styles.infoTop}>
+                          <div className={styles.img}>
+                            <img src={`${avatarWhite}`} alt="" />
+                          </div>
+                          <p>Marketing Developer</p>
                         </div>
-                        <p>Marketing Develper</p>
                       </div>
                       <div className={styles.infoCard}>
-                        <div className={styles.img}>
-                          <img src={`${avatarWhite}`} alt="" />
+                        <div className={styles.infoTop}>
+                          <div className={styles.img}>
+                            <img src={`${avatarWhite}`} alt="" />
+                          </div>
+                          <p>Content Curator</p>
                         </div>
-                        <p>Content curator</p>
                       </div>
                       <div className={styles.infoCard}>
-                        <div className={styles.img}>
-                          <img src={`${avatarWhite}`} alt="" />
+                        <div className={styles.infoTop}>
+                          <div className={styles.img}>
+                            <img src={`${avatarWhite}`} alt="" />
+                          </div>
+                          <p>Content Developer</p>
                         </div>
-                        <p>Content Developer</p>
                       </div>
-                      <div className={styles.infoCard}>
-                        <div className={styles.img}>
-                          <img src={`${avatarWhite}`} alt="" />
+                      <div
+                        className={styles.infoCard}
+                        onClick={() => {
+                          document
+                            .querySelector(".MapInfoPopup")
+                            .classList.toggle(`${styles.closeMapPopup}`);
+                        }}
+                      >
+                        <div className={styles.infoTop}>
+                          <div className={styles.img}>
+                            <img src={`${avatarWhite}`} alt="" />
+                          </div>
+                          <p>Events Developer</p>
                         </div>
-                        <p>Events Developer</p>
+                        <div
+                          className={`MapInfoPopup ${styles.infoBt} ${styles.closeMapPopup}`}
+                        >
+                          <span>
+                            Coordinates events to promote GGSA and its products
+                          </span>
+                        </div>
                       </div>
                     </div>
                     <div className={styles.infoBtCard}>
