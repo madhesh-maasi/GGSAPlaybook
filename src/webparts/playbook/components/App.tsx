@@ -8,6 +8,7 @@ import Loader from "./Loader";
 import Patheay from "./Patheay";
 import HelpGuide from "./HelpGuide";
 import "../../../ExternalRef/css/style.scss";
+import NavHeader from "./NavHeader";
 
 type Detail = {
   Title: string;
@@ -89,7 +90,7 @@ let firstModOrdNo: number;
 let latestModOrdNo: number;
 let latestOrderNO: number | string;
 let lastModOrdNo: number;
-let pageURL: string;
+let pageURL: any;
 let pageType: string;
 let nextModuleTitle: string;
 let PrimaryQus: IListConfig;
@@ -102,6 +103,9 @@ let firstValSplit: string[];
 let lastValSplit: string[];
 let valueOfFirstLetter: string;
 let valueOfLastLetter: string;
+let arrCategory;
+let arrCatConfig;
+// let pageURL:string;
 
 const App = (props: any): JSX.Element => {
   /* All States */
@@ -113,11 +117,11 @@ const App = (props: any): JSX.Element => {
   const [userName, setUserName] = useState<string>("");
 
   /* Get current user details */
-  const getCurrentUserDetail = () : void => {
-    // pageURL = new URLSearchParams(window.location.search);
-    // pageType = pageURL.get("type");
+  const getCurrentUserDetail = (): void => {
+    pageURL = new URLSearchParams(window.location.search);
+    pageType = pageURL.get("type") == "phases" ? "phases" : "practice";
     // pageType = "practice";
-    pageType = "phases";
+    // pageType = "phases";
     // console.log(pageURL);
     // console.log(pageType);
     // props.URL.lists
@@ -176,6 +180,7 @@ const App = (props: any): JSX.Element => {
             valueOfFirstLetter = firstValSplit[0];
             valueOfLastLetter = lastValSplit[0];
             pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
+            getCategoryConfig();
           })
           .catch((err) => {
             console.log(err);
@@ -186,8 +191,17 @@ const App = (props: any): JSX.Element => {
       });
   };
 
+  // * Get Category Config
+  const getCategoryConfig = () => {
+    props.URL.lists
+      .getByTitle("CaterogyConfig")
+      .items.get()
+      .then((res) => {
+        arrCatConfig = res.map((row) => ({ Title: row.Title, Icon: row.Icon }));
+      });
+  };
   /* Get practiceConfig list all datas */
-  const getPracticeConfig = () : void => {
+  const getPracticeConfig = (): void => {
     props.URL.lists
       .getByTitle("PracticeConfig")
       .items.select("*,Next/Title, Previous/Title")
@@ -253,13 +267,26 @@ const App = (props: any): JSX.Element => {
           })[0];
         getPractice();
       })
+      .then(() => {
+        props.URL.lists
+          .getByTitle("PhasesConfig")
+          .items.select("*,Next/Title, Previous/Title")
+          .expand("Next, Previous")
+          .get()
+          .then((res) => {
+            let categories = res.map((row) => row.Category);
+            arrCategory = categories.filter(function (item, pos, self) {
+              return self.indexOf(item) == pos;
+            });
+          });
+      })
       .catch((err) => {
         console.log(err);
       });
   };
 
   /* Get phasesConfig list all datas */
-  const getPhasesConfig = () : void => {
+  const getPhasesConfig = (): void => {
     props.URL.lists
       .getByTitle("PhasesConfig")
       .items.select("*,Next/Title, Previous/Title")
@@ -325,13 +352,26 @@ const App = (props: any): JSX.Element => {
           })[0];
         getPhases();
       })
+      .then(() => {
+        props.URL.lists
+          .getByTitle("PracticeConfig")
+          .items.select("*,Next/Title, Previous/Title")
+          .expand("Next, Previous")
+          .get()
+          .then((res) => {
+            let categories = res.map((row) => row.Category);
+            arrCategory = categories.filter(function (item, pos, self) {
+              return self.indexOf(item) == pos;
+            });
+          });
+      })
       .catch((err) => {
         console.log(err);
       });
   };
 
   /* Get practice list all datas */
-  const getPractice = () : void => {
+  const getPractice = (): void => {
     props.URL.lists
       .getByTitle("Practice")
       .items.select("*,Practice/Title, Next/ID, Previous/ID")
@@ -368,7 +408,7 @@ const App = (props: any): JSX.Element => {
   };
 
   /* Get phases list all datas */
-  const getPhases = () : void => {
+  const getPhases = (): void => {
     props.URL.lists
       .getByTitle("Phases")
       .items.select("*,Phases/Title, Next/ID, Previous/ID")
@@ -405,7 +445,7 @@ const App = (props: any): JSX.Element => {
   };
 
   /* Get practiceSubSteps list all datas */
-  const getPracticeSubSteps = () : void => {
+  const getPracticeSubSteps = (): void => {
     props.URL.lists
       .getByTitle("PracticeSubSteps")
       .items.select("*, Practice/ID")
@@ -483,7 +523,7 @@ const App = (props: any): JSX.Element => {
   };
 
   /* Get phasesSubSteps list all datas */
-  const getPhasesSubSteps = () : void => {
+  const getPhasesSubSteps = (): void => {
     props.URL.lists
       .getByTitle("PhasesSubSteps")
       .items.select("*, Phases/ID")
@@ -561,7 +601,7 @@ const App = (props: any): JSX.Element => {
   };
 
   /* All modules Rerunning */
-  const moduleRerunning = (nextQus) : void => {
+  const moduleRerunning = (nextQus): void => {
     nextQus != undefined
       ? ((PrimaryQus = moduleHead.filter(
           (currentObj) => currentObj.Title == nextQus
@@ -607,7 +647,7 @@ const App = (props: any): JSX.Element => {
   };
 
   /* All Values Rearrangeing */
-  const reArrange = (arrAllSteps, footerArr, DeliverableObj) : void => {
+  const reArrange = (arrAllSteps, footerArr, DeliverableObj): void => {
     let arrArrangedSteps = [];
     arrArrangedSteps.push(arrAllSteps.filter((row) => !row.Previous)[0]);
     arrAllSteps.slice(1).forEach(() => {
@@ -642,7 +682,7 @@ const App = (props: any): JSX.Element => {
   };
 
   /* all steps complete after first questions Running */
-  const comAllModule = () : void => {
+  const comAllModule = (): void => {
     let arrComArrangedTime = [];
     objComDeliver = moduleHead.filter((module) => !module.Previous)[0];
     arrComSteps = isArrSteps.filter(
@@ -693,7 +733,7 @@ const App = (props: any): JSX.Element => {
   };
 
   /* Read module function */
-  const readModules = () : void => {
+  const readModules = (): void => {
     let arrArrangedTime = [];
     latestOrderNO = backContent.Order;
     objComDeliver = moduleHead.filter(
@@ -743,7 +783,7 @@ const App = (props: any): JSX.Element => {
   };
 
   /* next module running */
-  const reRunning = (curModOrdNo) : void => {
+  const reRunning = (curModOrdNo): void => {
     lastModOrdNo == curModOrdNo
       ? (setLoader(true),
         (latestOrderNO = moduleHead[0].Order),
@@ -755,7 +795,7 @@ const App = (props: any): JSX.Element => {
   };
 
   /* function of Previous Module */
-  const BeforeModule = (ordNumber) : void => {
+  const BeforeModule = (ordNumber): void => {
     setLoader(true);
     backModule = moduleHead.filter((row) => row.Order < ordNumber);
     backContent = backModule[backModule.length - 1];
@@ -765,7 +805,7 @@ const App = (props: any): JSX.Element => {
   };
 
   /* function of Next Module */
-  const AfterModule = (ordNumber) : void => {
+  const AfterModule = (ordNumber): void => {
     setLoader(true);
     backModule = moduleHead.filter((row) => row.Order > ordNumber);
     backContent = backModule.shift();
@@ -787,6 +827,7 @@ const App = (props: any): JSX.Element => {
             <Loader />
           ) : (
             <>
+              <NavHeader />
               <Header
                 context={props.context}
                 sp={props.sp}
@@ -824,6 +865,8 @@ const App = (props: any): JSX.Element => {
                 sp={props.sp}
                 URL={props.URL}
                 pageType={pageType}
+                Category={arrCategory}
+                catConfig={arrCatConfig}
               />
             </>
           )}
