@@ -25,9 +25,7 @@ const Footerimg = (props) => {
             </div>
             <div className={styles.footerContent}>
               <div className={styles.routineOperationList}>
-                <h2 className={styles.phaseRoutineTitle}>
-                  Design
-                </h2>
+                <h2 className={styles.phaseRoutineTitle}>Design</h2>
                 {footerList.map((row) => {
                   return (
                     <>
@@ -38,18 +36,14 @@ const Footerimg = (props) => {
                             : styles.phaseList
                         }
                       >
-                        {row.Category == "design" && (
-                          <li>{row.Title}</li>
-                        )}
+                        {row.Category == "design" && <li>{row.Title}</li>}
                       </div>
                     </>
                   );
                 })}
               </div>
               <div className={styles.routineInnovationList}>
-                <h2 className={styles.phaseRoutineTitle}>
-                  Build
-                </h2>
+                <h2 className={styles.phaseRoutineTitle}>Build</h2>
                 {footerList.map((row) => {
                   return (
                     <>
@@ -60,18 +54,14 @@ const Footerimg = (props) => {
                             : styles.phaseList
                         }
                       >
-                        {row.Category == "build" && (
-                          <li>{row.Title}</li>
-                        )}
+                        {row.Category == "build" && <li>{row.Title}</li>}
                       </div>
                     </>
                   );
                 })}
               </div>
               <div className={styles.routineInnovationList}>
-                <h2 className={styles.phaseRoutineTitle}>
-                  Implement
-                </h2>
+                <h2 className={styles.phaseRoutineTitle}>Implement</h2>
                 {footerList.map((row) => {
                   return (
                     <>
@@ -82,18 +72,14 @@ const Footerimg = (props) => {
                             : styles.phaseList
                         }
                       >
-                        {row.Category == "implement" && (
-                          <li>{row.Title}</li>
-                        )}
+                        {row.Category == "implement" && <li>{row.Title}</li>}
                       </div>
                     </>
                   );
                 })}
               </div>
               <div className={styles.routineInnovationList}>
-                <h2 className={styles.phaseRoutineTitle}>
-                  Operate
-                </h2>
+                <h2 className={styles.phaseRoutineTitle}>Operate</h2>
                 {footerList.map((row) => {
                   return (
                     <>
@@ -104,9 +90,7 @@ const Footerimg = (props) => {
                             : styles.phaseList
                         }
                       >
-                        {row.Category == "operate" && (
-                          <li>{row.Title}</li>
-                        )}
+                        {row.Category == "operate" && <li>{row.Title}</li>}
                       </div>
                     </>
                   );
@@ -193,7 +177,7 @@ const Footerimg = (props) => {
                             : styles.list
                         }
                       >
-                        {row.Category == "rotine innovation practice" && (
+                        {row.Category == "routine innovation practice" && (
                           <li>{row.Title}</li>
                         )}
                       </div>
