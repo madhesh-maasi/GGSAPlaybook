@@ -8,6 +8,7 @@ import Loader from "./Loader";
 import Patheay from "./Patheay";
 import HelpGuide from "./HelpGuide";
 import "../../../ExternalRef/css/style.scss";
+import NavHeader from "./NavHeader";
 
 type Detail = {
   Title: string;
@@ -89,7 +90,7 @@ let firstModOrdNo: number;
 let latestModOrdNo: number;
 let latestOrderNO: number | string;
 let lastModOrdNo: number;
-let pageURL: string;
+let pageURL: any;
 let pageType: string;
 let nextModuleTitle: string;
 let PrimaryQus: IListConfig;
@@ -102,6 +103,9 @@ let firstValSplit: string[];
 let lastValSplit: string[];
 let valueOfFirstLetter: string;
 let valueOfLastLetter: string;
+let arrCategory;
+let arrCatConfig;
+// let pageURL:string;
 
 const App = (props: any): JSX.Element => {
   /* All States */
@@ -114,10 +118,10 @@ const App = (props: any): JSX.Element => {
 
   /* Get current user details */
   const getCurrentUserDetail = (): void => {
-    // pageURL = new URLSearchParams(window.location.search);
-    // pageType = pageURL.get("type");
+    pageURL = new URLSearchParams(window.location.search);
+    pageType = pageURL.get("type") == "phases" ? "phases" : "practice";
     // pageType = "practice";
-    pageType = "phases";
+    // pageType = "phases";
     // console.log(pageURL);
     // console.log(pageType);
     // props.URL.lists
@@ -176,6 +180,7 @@ const App = (props: any): JSX.Element => {
             valueOfFirstLetter = firstValSplit[0];
             valueOfLastLetter = lastValSplit[0];
             pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
+            getCategoryConfig();
           })
           .catch((err) => {
             console.log(err);
@@ -186,6 +191,15 @@ const App = (props: any): JSX.Element => {
       });
   };
 
+  // * Get Category Config
+  const getCategoryConfig = () => {
+    props.URL.lists
+      .getByTitle("CaterogyConfig")
+      .items.get()
+      .then((res) => {
+        arrCatConfig = res.map((row) => ({ Title: row.Title, Icon: row.Icon }));
+      });
+  };
   /* Get practiceConfig list all datas */
   const getPracticeConfig = (): void => {
     props.URL.lists
@@ -252,6 +266,19 @@ const App = (props: any): JSX.Element => {
             return lastID.Order;
           })[0];
         getPractice();
+      })
+      .then(() => {
+        props.URL.lists
+          .getByTitle("PhasesConfig")
+          .items.select("*,Next/Title, Previous/Title")
+          .expand("Next, Previous")
+          .get()
+          .then((res) => {
+            let categories = res.map((row) => row.Category);
+            arrCategory = categories.filter(function (item, pos, self) {
+              return self.indexOf(item) == pos;
+            });
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -324,6 +351,19 @@ const App = (props: any): JSX.Element => {
             return lastID.Order;
           })[0];
         getPhases();
+      })
+      .then(() => {
+        props.URL.lists
+          .getByTitle("PracticeConfig")
+          .items.select("*,Next/Title, Previous/Title")
+          .expand("Next, Previous")
+          .get()
+          .then((res) => {
+            let categories = res.map((row) => row.Category);
+            arrCategory = categories.filter(function (item, pos, self) {
+              return self.indexOf(item) == pos;
+            });
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -787,6 +827,7 @@ const App = (props: any): JSX.Element => {
             <Loader />
           ) : (
             <>
+              <NavHeader />
               <Header
                 context={props.context}
                 sp={props.sp}
@@ -824,6 +865,8 @@ const App = (props: any): JSX.Element => {
                 sp={props.sp}
                 URL={props.URL}
                 pageType={pageType}
+                Category={arrCategory}
+                catConfig={arrCatConfig}
               />
             </>
           )}
