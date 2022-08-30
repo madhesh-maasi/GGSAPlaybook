@@ -179,8 +179,8 @@ const App = (props: any): JSX.Element => {
             lastValSplit = lastValue.split("");
             valueOfFirstLetter = firstValSplit[0];
             valueOfLastLetter = lastValSplit[0];
-            pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
             getCategoryConfig();
+            pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
           })
           .catch((err) => {
             console.log(err);
@@ -191,15 +191,6 @@ const App = (props: any): JSX.Element => {
       });
   };
 
-  // * Get Category Config
-  const getCategoryConfig = () => {
-    props.URL.lists
-      .getByTitle("CaterogyConfig")
-      .items.get()
-      .then((res) => {
-        arrCatConfig = res.map((row) => ({ Title: row.Title, Icon: row.Icon }));
-      });
-  };
   /* Get practiceConfig list all datas */
   const getPracticeConfig = (): void => {
     props.URL.lists
@@ -814,6 +805,24 @@ const App = (props: any): JSX.Element => {
     }, 1000);
   };
 
+  /* footer Navigation function */
+  const footerNavigation = (Url, type, cat) => {
+    window.location.href = `${
+      Url.split("?")[0]
+    }?type=${type}`;
+    getCategoryConfig();
+  }
+
+  /* Get Category Config */
+  const getCategoryConfig = () => {
+    props.URL.lists
+      .getByTitle("CaterogyConfig")
+      .items.get()
+      .then((res) => {
+        arrCatConfig = res.map((row) => ({ Title: row.Title, Icon: row.Icon }));
+      });
+  };
+
   /* life cycle of onload */
   useEffect(() => {
     getCurrentUserDetail();
@@ -821,7 +830,7 @@ const App = (props: any): JSX.Element => {
 
   return (
     <>
-      {/* {primarySteps.length > 0 && (
+      {primarySteps.length > 0 && (
         <>
           {loader ? (
             <Loader />
@@ -864,6 +873,7 @@ const App = (props: any): JSX.Element => {
                 context={props.context}
                 sp={props.sp}
                 URL={props.URL}
+                footerNavigation={footerNavigation}
                 pageType={pageType}
                 Category={arrCategory}
                 catConfig={arrCatConfig}
@@ -871,9 +881,9 @@ const App = (props: any): JSX.Element => {
             </>
           )}
         </>
-      )} */}
+      )}
       {/* <Patheay /> */}
-      <HelpGuide />
+      {/* <HelpGuide /> */}
     </>
   );
 };

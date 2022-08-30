@@ -43,45 +43,35 @@
 }
 
 .listItemCom{
-    width: 400px;
-    border: 2px solid #f99d26;
-    padding: 7px 30px;
+    width: 446px;
+    border: 2px solid #00859c;
+    padding: 7px;
     margin-bottom: 5px;
     position: relative;
     list-style-type: none;
     font-size: 12px;
     background-color: #55555510;
-    &::before{
-        content: '';
-        position: absolute;
-        top: 16px;
-        transform: translateY(-48%);
-        left: 3%;
-        width: 8px;
-        height: 8px;
-        background-color: #f99d26;
-        border-radius: 2px;
+    .listComItem {
+      padding-right: 10px;
+      font-weight: bold;
+      color: #00859c;
+      font-size: 14px;
     }
 }
 
 .phaseListItemCom{
-    width: 400px;
-    border: 2px solid #00859c;
-    padding: 7px 30px;
+    width: 446px;
+    border: 2px solid #f99d26;
+    padding: 7px;
     margin-bottom: 5px;
     position: relative;
     list-style-type: none;
     font-size: 12px;
     background-color: #55555510;
-    &::before{
-        content: '';
-        position: absolute;
-        top: 16px;
-        transform: translateY(-48%);
-        left: 3%;
-        width: 8px;
-        height: 8px;
-        background-color: #00859c;
-        border-radius: 2px;
+    .phasesListComItem {
+      padding-right: 10px;
+      font-weight: bold;
+      color: #f99d26;
+      font-size: 14px;
     }
 }
