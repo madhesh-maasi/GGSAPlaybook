@@ -821,7 +821,7 @@ const App = (props: any): JSX.Element => {
 
   return (
     <>
-      {primarySteps.length > 0 && (
+      {/* {primarySteps.length > 0 && (
         <>
           {loader ? (
             <Loader />
@@ -871,9 +871,9 @@ const App = (props: any): JSX.Element => {
             </>
           )}
         </>
-      )}
+      )} */}
       {/* <Patheay /> */}
-      {/* <HelpGuide /> */}
+      <HelpGuide />
     </>
   );
 };
