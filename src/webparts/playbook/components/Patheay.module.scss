@@ -56,7 +56,7 @@
         margin: 10px;
         @extend .flex;
         justify-content: flex-start;
-        align-items: flex-start;
+        align-items: center;
         .img {
           width: 45%;
           height: 100%;
@@ -133,8 +133,19 @@
         .contentBlue {
           background-color: #94cadd;
         }
-       
       }
     }
   }
-  
+
+  // media queries for responsive
+  @media (min-width:1600px) {
+    .PathwayWrapper .pathwayContent .pathwayCard .contentBlue,
+      .PathwayWrapper .pathwayContent .pathwayCard .contentYellow{
+      p{
+        font-size: 16px !important;
+      }
+      span{
+        font-size: 12px !important;
+      }
+    }
+  }

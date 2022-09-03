@@ -35,9 +35,9 @@ img {
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translateX(-50%) translateY(214px);
+    transform: translateX(-50%) translateY(212px);
     width: 1103px;
-    height: 8px;
+    height: 12px;
     background-color: #cdcdcd60;
     border-radius: 50px;
   }
@@ -231,9 +231,9 @@ img {
         padding: 20px 40px !important;
         .textContent {
           li {
-            font-size: 11px !important;
+            font-size: 11px;
             span {
-              font-size: 11px !important;
+              font-size: 11px;
             }
           }
         }
@@ -273,7 +273,7 @@ img {
       .cardBlueSm {
         width: 360px;
         .tab4Cont {
-          min-height: 300px;
+          min-height: 350px;
         }
       }
     }
@@ -748,4 +748,39 @@ img {
 
 .closeMapPopup {
   display: none;
+}
+
+// media queries for responsive
+@media (min-width: 1920px) {
+  .tabInfoText h1 span,
+  .tabInfoText p,li {
+    font-size: 14px !important;
+  }
+
+  .tab4Cont {
+    min-height: 400px !important;
+  }
+
+  .heading p {
+    font-size: 15px !important;
+  }
+
+  .textContent {
+    margin-top: 10px !important;
+  }
+
+  .textContent p {
+    font-size: 20px !important;
+  }
+
+  .textContent span {
+    font-size: 14px !important;
+  }
+
+  .textContent li {
+    font-size: 15px !important;
+  }
+  .textContent li span {
+    font-size: 14px !important;
+  }
 }
