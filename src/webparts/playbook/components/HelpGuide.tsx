@@ -83,7 +83,7 @@ const pivotStyles: Partial<IStyleSet<IPivotStyles>> = {
       },
       ":before": {
         borderRadius: "50px",
-        height: "13px",
+        height: "12px",
         transform: "translateY(20px)",
         background: "linear-gradient(18deg,#F99D26,#FCB427 )",
         boxShadow: "0px 2px 10px #F99D2680",
