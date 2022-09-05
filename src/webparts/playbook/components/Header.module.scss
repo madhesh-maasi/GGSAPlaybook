@@ -139,7 +139,7 @@
   }
 }
 
-.phaseModalSet{
+.phaseModalSet {
   width: 56px;
   height: 56px;
   font-size: 30px;
@@ -167,4 +167,17 @@
     left: 70px;
     color: #00859c;
   }
+}
+
+.managerCount {
+  background-color: #e4e4e4;
+  color: #f99d26;
+  border-radius: 50%;
+  height: 44px;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
 }

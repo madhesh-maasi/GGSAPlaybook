@@ -8,11 +8,13 @@ import "../../../ExternalRef/css/style.scss";
 /*development URL */
 const webURL = "https://ggsaus.sharepoint.com/sites/Intranet_Test";
 const masterAnnualPlan = "Annual Plan Test";
+const deliveryPlan = "Delivery Plan Phase List";
 
 
 /*Production URL */
 // const webURL = "https://ggsaus.sharepoint.com";
 // const masterAnnualPlan = "Annual Plan";
+// const deliveryPlan = "Delivery Plan Phase List";
 
 export default class Playbook extends React.Component<IPlaybookProps, {}> {
   constructor(prop: IPlaybookProps, state: {}) {
@@ -31,6 +33,7 @@ export default class Playbook extends React.Component<IPlaybookProps, {}> {
           sp={sp}
           URL={_web}
           masterAnnualPlan={masterAnnualPlan}
+          deliveryPlan={deliveryPlan}
         />
       </>
     );

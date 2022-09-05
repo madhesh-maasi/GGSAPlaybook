@@ -6,6 +6,7 @@ import AllQuestions from "./AllQuestions";
 import styles from "./Questions.module.scss";
 import { useState, useEffect } from "react";
 import { Icon } from "@fluentui/react";
+import Label from "./Label";
 
 let arrAllPrctice = [];
 let lastStepID;
@@ -126,10 +127,14 @@ const Questions = (props) => {
   /* life cycle of render */
   useEffect(() => {
     getArrangedSteps();
+    console.log(props.arrDelSec);
   }, [render]);
 
   return (
     <>
+      {props.arrDelSec.usersRoles && props.arrDelSec.usersRoles.length > 0 && (
+        <Label arrDelSec={props.arrDelSec} />
+      )}
       {TLData.length > 0 && (
         <Timeline
           context={props.context}

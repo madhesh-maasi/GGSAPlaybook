@@ -38,12 +38,11 @@ const FooterCategories = (props) => {
                   marginRight: "1rem",
                 }}
                 onClick={() => {
-                  let currUrl = window.location.href;
                   let reDirectTo =
-                    props.pageType.toLowerCase() == "phases"
+                  props.pageType == "phases"
                       ? "practice"
                       : "phases";
-                  props.footerNavigation(currUrl, reDirectTo, cat)
+                  props.footerNavigation(reDirectTo, cat)
                 }}
               >
                 {" "}

@@ -25,6 +25,8 @@ interface IListConfig {
   UserId?: number;
   Order?: number;
   isInComplete?: boolean;
+  TOD?: string[];
+  usersRoles?: string[];
 }
 
 interface IListFooter {
@@ -105,7 +107,9 @@ let valueOfFirstLetter: string;
 let valueOfLastLetter: string;
 let arrCategory;
 let arrCatConfig;
-// let pageURL:string;
+let curProject;
+let curProjectTOD;
+let arrCurProject;
 
 const App = (props: any): JSX.Element => {
   /* All States */
@@ -118,75 +122,89 @@ const App = (props: any): JSX.Element => {
 
   /* Get current user details */
   const getCurrentUserDetail = (): void => {
-    pageURL = new URLSearchParams(window.location.search);
-    pageType = pageURL.get("type") == "phases" ? "phases" : "practice";
-    // pageType = "practice";
-    // pageType = "phases";
-    // console.log(pageURL);
-    // console.log(pageType);
-    // props.URL.lists
-    //   .getByTitle(props.masterAnnualPlan)
-    //   .items.get()
-    //   .then(async (datas) => {
-    //     // console.log(datas);
-    //     arrMasterAnnual = datas.map((objects) => {
-    //       return {
-    //         Project: objects.Title,
-    //         ID: objects.ID,
-    //         TOD: objects.TypeofProject,
-    //       };
-    //     });
-    //     // console.log(arrMasterAnnual);
-    //     await props.URL.lists
-    //       .getByTitle("Delivery Plan Phase List")
-    //       .items.get()
-    //       .then((values) => {
-    //         // console.log(values);
-    //       })
-    //       .catch((err) => {
-    //         // console.log(err);
-    //       });
-    //   })
-    //   .catch((err: string) => {
-    //     // console.log(err);
-    //   });
-    // Current user mail get
-    props.URL.currentUser()
-      .then(async (res) => {
-        UserId = res.Id;
-        setUserName(res.Title);
-        /* Current user details */
-        await props.sp.profiles
-          .getPropertiesFor(res.LoginName)
-          .then(async (event) => {
-            firstName = event.UserProfileProperties.filter(
-              (val) => val.Key == "FirstName"
-            );
-            lastName = event.UserProfileProperties.filter(
-              (val) => val.Key == "LastName"
-            );
-            firstValue = firstName
-              .map((firstVal) => {
-                return firstVal.Value;
+    curProject = 37;
+    pageType = curProject == null ? "practice" : "phases";
+    props.URL.lists
+      .getByTitle(props.masterAnnualPlan)
+      .items.select(
+        "*, ProjectOwner/Title, ProjectOwner/EMail, ProjectOwner/Name, ProjectOwner/ID, ProjectLead/Title, ProjectLead/EMail, ProjectLead/Name, ProjectOwner/ID"
+      )
+      .expand("ProjectOwner, ProjectLead")
+      .top(4000)
+      .get()
+      .then(async (datas) => {
+        console.log(datas);
+        arrMasterAnnual = datas.map((objects) => {
+          let proManager = !objects.ProjectOwnerId
+            ? ""
+            : {
+                Title: objects.ProjectOwner.Title,
+                Name: objects.ProjectOwner.Name,
+              };
+          let proDeveloper = [];
+          proDeveloper = !objects.ProjectLeadId
+            ? []
+            : objects.ProjectLead.map((data) => {
+                return {
+                  Title: data.Title,
+                  Name: data.Name,
+                };
+              });
+          return {
+            Project: objects.Title,
+            ID: objects.ID,
+            TOD: objects.ProjectType,
+            Manager: proManager,
+            Developer: proDeveloper,
+          };
+        });
+        curProjectTOD = arrMasterAnnual.filter(
+          (proId) => proId.ID == curProject
+        )[0].TOD;
+        console.log(curProjectTOD);
+        // Current user mail get
+        await props.URL.currentUser()
+          .then(async (res) => {
+            UserId = res.Id;
+            setUserName(res.Title);
+            /* Current user details */
+            await props.sp.profiles
+              .getPropertiesFor(res.LoginName)
+              .then(async (event) => {
+                console.log(event);
+                firstName = event.UserProfileProperties.filter(
+                  (val) => val.Key == "FirstName"
+                );
+                lastName = event.UserProfileProperties.filter(
+                  (val) => val.Key == "LastName"
+                );
+                firstValue = firstName
+                  .map((firstVal) => {
+                    return firstVal.Value;
+                  })
+                  .toString();
+                lastValue = lastName
+                  .map((lastVal) => {
+                    return lastVal.Value;
+                  })
+                  .toString();
+                firstValSplit = firstValue.split("");
+                lastValSplit = lastValue.split("");
+                valueOfFirstLetter = firstValSplit[0];
+                valueOfLastLetter = lastValSplit[0];
+                getCategoryConfig();
+                getDliverPlan(curProject, curProjectTOD);
               })
-              .toString();
-            lastValue = lastName
-              .map((lastVal) => {
-                return lastVal.Value;
-              })
-              .toString();
-            firstValSplit = firstValue.split("");
-            lastValSplit = lastValue.split("");
-            valueOfFirstLetter = firstValSplit[0];
-            valueOfLastLetter = lastValSplit[0];
-            getCategoryConfig();
-            pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
+              .catch((err) => {
+                console.log(err);
+              });
+            console.log(arrMasterAnnual);
           })
           .catch((err) => {
             console.log(err);
           });
       })
-      .catch((err) => {
+      .catch((err: string) => {
         console.log(err);
       });
   };
@@ -197,8 +215,10 @@ const App = (props: any): JSX.Element => {
       .getByTitle("PracticeConfig")
       .items.select("*,Next/Title, Previous/Title")
       .expand("Next, Previous")
+      .top(4000)
       .get()
       .then((res) => {
+        console.log(res);
         let arrJSON;
         arrListConfig = res;
         moduleArr = arrListConfig.map((head) => {
@@ -211,6 +231,7 @@ const App = (props: any): JSX.Element => {
             Previous:
               head.Previous != undefined ? head.Previous.Title : undefined,
             ID: head.ID,
+            usersRoles: head.usersRoles && head.usersRoles.length > 0 ? head.usersRoles : []
           };
         });
         footerContent = arrListConfig.map((footer) => {
@@ -243,6 +264,7 @@ const App = (props: any): JSX.Element => {
             Previous: row.Previous,
             ID: row.ID,
             Order: i + 1,
+            usersRoles: row.usersRoles,
           };
         });
         moduleHead = arrArrangedModules.length > 0 && arrArrangedModules;
@@ -263,6 +285,7 @@ const App = (props: any): JSX.Element => {
           .getByTitle("PhasesConfig")
           .items.select("*,Next/Title, Previous/Title")
           .expand("Next, Previous")
+          .top(4000)
           .get()
           .then((res) => {
             let categories = res.map((row) => row.Category);
@@ -282,10 +305,12 @@ const App = (props: any): JSX.Element => {
       .getByTitle("PhasesConfig")
       .items.select("*,Next/Title, Previous/Title")
       .expand("Next, Previous")
+      .top(4000)
       .get()
       .then((res) => {
         let arrJSON;
         arrListConfig = res;
+        console.log(arrListConfig);
         moduleArr = arrListConfig.map((head) => {
           arrJSON = JSON.parse(head.Deliverable.slice(1, -1));
           return {
@@ -296,8 +321,11 @@ const App = (props: any): JSX.Element => {
             Previous:
               head.Previous != undefined ? head.Previous.Title : undefined,
             ID: head.ID,
+            TOD: head.TOD.length > 0 ? head.TOD : [],
+            usersRoles: head.usersRoles.length > 0 ? head.usersRoles : []
           };
         });
+        console.log(moduleArr);
         footerContent = arrListConfig.map((footer) => {
           return {
             Title: footer.Title,
@@ -328,8 +356,15 @@ const App = (props: any): JSX.Element => {
             Previous: row.Previous,
             ID: row.ID,
             Order: i + 1,
+            TOD: row.TOD,
+            usersRoles: row.usersRoles
+            
           };
-        });
+        })
+        // .filter((row) => row.Title == arrCurProject.map((data) => data.Phases));
+        // let tempArr = arrArrangedModules.filter((row)=>row)
+       
+        console.log(arrArrangedModules);
         moduleHead = arrArrangedModules.length > 0 && arrArrangedModules;
         firstModOrdNo = moduleHead
           .filter((ordNo) => ordNo.Previous == undefined)
@@ -348,6 +383,7 @@ const App = (props: any): JSX.Element => {
           .getByTitle("PracticeConfig")
           .items.select("*,Next/Title, Previous/Title")
           .expand("Next, Previous")
+          .top(4000)
           .get()
           .then((res) => {
             let categories = res.map((row) => row.Category);
@@ -367,6 +403,7 @@ const App = (props: any): JSX.Element => {
       .getByTitle("Practice")
       .items.select("*,Practice/Title, Next/ID, Previous/ID")
       .expand("Practice, Next, Previous")
+      .top(4000)
       .get()
       .then((val) => {
         setLoader(true);
@@ -404,6 +441,7 @@ const App = (props: any): JSX.Element => {
       .getByTitle("Phases")
       .items.select("*,Phases/Title, Next/ID, Previous/ID")
       .expand("Phases, Next, Previous")
+      .top(4000)
       .get()
       .then((val) => {
         setLoader(true);
@@ -441,6 +479,7 @@ const App = (props: any): JSX.Element => {
       .getByTitle("PracticeSubSteps")
       .items.select("*, Practice/ID")
       .expand("Practice")
+      .top(4000)
       .get()
       .then((SubSteps) => {
         arrSubSteps = SubSteps.map((obj) => {
@@ -479,6 +518,7 @@ const App = (props: any): JSX.Element => {
             Previous: startSteps.Previous,
             ID: startSteps.ID,
             Order: startSteps.Order,
+            usersRoles: startSteps.usersRoles,
             isInComplete: isArrSteps
               .filter((step) => step.stepsHeading == startSteps.Title)
               .some((step) => step.isRead == false),
@@ -519,6 +559,7 @@ const App = (props: any): JSX.Element => {
       .getByTitle("PhasesSubSteps")
       .items.select("*, Phases/ID")
       .expand("Phases")
+      .top(4000)
       .get()
       .then((SubSteps) => {
         arrSubSteps = SubSteps.map((obj) => {
@@ -557,6 +598,8 @@ const App = (props: any): JSX.Element => {
             Previous: startSteps.Previous,
             ID: startSteps.ID,
             Order: startSteps.Order,
+            usersRoles: startSteps.usersRoles,
+            TOD: startSteps.TOD,
             isInComplete: isArrSteps
               .filter((step) => step.stepsHeading == startSteps.Title)
               .some((step) => step.isRead == false),
@@ -806,21 +849,74 @@ const App = (props: any): JSX.Element => {
   };
 
   /* footer Navigation function */
-  const footerNavigation = (Url, type, cat) => {
-    window.location.href = `${
-      Url.split("?")[0]
-    }?type=${type}`;
+  const footerNavigation = (type, cat) => {
+    pageType = type;
     getCategoryConfig();
-  }
+    pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
+  };
 
   /* Get Category Config */
   const getCategoryConfig = () => {
     props.URL.lists
       .getByTitle("CaterogyConfig")
-      .items.get()
+      .items
+      .top(4000)
+      .get()
       .then((res) => {
         arrCatConfig = res.map((row) => ({ Title: row.Title, Icon: row.Icon }));
       });
+  };
+
+  /* get delivery plan phase list */
+  const getDliverPlan = (proId, type) => {
+    console.log(type);
+    props.URL.lists
+      .getByTitle(props.deliveryPlan)
+      .items.select("*, Phases/Title, Phases/ID")
+      .expand("Phases")
+      .top(4000)
+      .get()
+      .then((values) => {
+        console.log(values);
+        let arrProject = values
+          .map((arr) => {
+            return {
+              Title: arr.Title,
+              delPlan: arr.DeliveryPlanCategory,
+              DelTOD: arr.DeliverPlanTypeOfWork.filter((tod) => tod == type)[0],
+              Hours: arr.Hours,
+              Phases: arr.PhasesId == null ? "" : arr.Phases.Title,
+            };
+          })
+          .filter((event) => event.DelTOD != undefined);
+        let totObj = arrProject.length - 1;
+        console.log(arrProject);
+        console.log(totObj);
+        arrCurProject = arrProject.map((e, i) => {
+          return {
+            Title: e.Title,
+            delPlan: e.delPlan,
+            DelTOD: e.DelTOD,
+            Hours: e.Hours,
+            Phases: e.Phases,
+            Order: i + 1,
+            Previous: i == 0 ? null : i,
+            Next: i < totObj ? 2 + i : null
+          };
+        });
+        console.log(arrCurProject);
+        pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  /* get current project Id */
+  const getCurrProjectData = (Id, type) => {
+    curProject = null;
+    curProject = Id;
+    getDliverPlan(Id, type);
   };
 
   /* life cycle of onload */
@@ -830,13 +926,13 @@ const App = (props: any): JSX.Element => {
 
   return (
     <>
+      <NavHeader />
       {primarySteps.length > 0 && (
         <>
           {loader ? (
             <Loader />
           ) : (
             <>
-              <NavHeader />
               <Header
                 context={props.context}
                 sp={props.sp}
@@ -846,6 +942,9 @@ const App = (props: any): JSX.Element => {
                 userName={userName}
                 valueOfFirstLetter={valueOfFirstLetter}
                 valueOfLastLetter={valueOfLastLetter}
+                arrMasterAnnual={arrMasterAnnual}
+                ProjectID={curProject}
+                getCurrProjectData={getCurrProjectData}
               />
               <Questions
                 context={props.context}
