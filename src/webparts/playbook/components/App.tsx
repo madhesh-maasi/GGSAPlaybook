@@ -119,6 +119,8 @@ const App = (props: any): JSX.Element => {
   const [arrFooter, setArrFooter] = useState<IListFooter[]>([]);
   const [loader, setLoader] = useState<boolean>(true);
   const [userName, setUserName] = useState<string>("");
+  const [navLink, setNavLink] = useState("");
+  const [page, setPage] = useState("")
 
   /* Get current user details */
   const getCurrentUserDetail = (): void => {
@@ -192,7 +194,6 @@ const App = (props: any): JSX.Element => {
                 lastValSplit = lastValue.split("");
                 valueOfFirstLetter = firstValSplit[0];
                 valueOfLastLetter = lastValSplit[0];
-                getCategoryConfig();
                 getDliverPlan(curProject, curProjectTOD);
               })
               .catch((err) => {
@@ -231,7 +232,10 @@ const App = (props: any): JSX.Element => {
             Previous:
               head.Previous != undefined ? head.Previous.Title : undefined,
             ID: head.ID,
-            usersRoles: head.usersRoles && head.usersRoles.length > 0 ? head.usersRoles : []
+            usersRoles:
+              head.usersRoles && head.usersRoles.length > 0
+                ? head.usersRoles
+                : [],
           };
         });
         footerContent = arrListConfig.map((footer) => {
@@ -322,7 +326,7 @@ const App = (props: any): JSX.Element => {
               head.Previous != undefined ? head.Previous.Title : undefined,
             ID: head.ID,
             TOD: head.TOD.length > 0 ? head.TOD : [],
-            usersRoles: head.usersRoles.length > 0 ? head.usersRoles : []
+            usersRoles: head.usersRoles.length > 0 ? head.usersRoles : [],
           };
         });
         console.log(moduleArr);
@@ -357,13 +361,12 @@ const App = (props: any): JSX.Element => {
             ID: row.ID,
             Order: i + 1,
             TOD: row.TOD,
-            usersRoles: row.usersRoles
-            
+            usersRoles: row.usersRoles,
           };
-        })
+        });
         // .filter((row) => row.Title == arrCurProject.map((data) => data.Phases));
         // let tempArr = arrArrangedModules.filter((row)=>row)
-       
+
         console.log(arrArrangedModules);
         moduleHead = arrArrangedModules.length > 0 && arrArrangedModules;
         firstModOrdNo = moduleHead
@@ -823,7 +826,7 @@ const App = (props: any): JSX.Element => {
         (latestOrderNO = moduleHead[0].Order),
         (latestModOrdNo = moduleHead[moduleHead.length - 1].Order),
         comAllModule())
-      : pageType == "phases"
+      : page == "phases"
       ? getPhases()
       : getPractice();
   };
@@ -851,19 +854,23 @@ const App = (props: any): JSX.Element => {
   /* footer Navigation function */
   const footerNavigation = (type, cat) => {
     pageType = type;
-    getCategoryConfig();
-    pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
+    getCategoryConfig(pageType);
+    // pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
   };
 
   /* Get Category Config */
-  const getCategoryConfig = () => {
+  const getCategoryConfig = (link) => {
     props.URL.lists
       .getByTitle("CaterogyConfig")
-      .items
-      .top(4000)
+      .items.top(4000)
       .get()
       .then((res) => {
         arrCatConfig = res.map((row) => ({ Title: row.Title, Icon: row.Icon }));
+        setPage(link);
+        link == "phases" ? getPhasesConfig() : getPracticeConfig();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -901,11 +908,11 @@ const App = (props: any): JSX.Element => {
             Phases: e.Phases,
             Order: i + 1,
             Previous: i == 0 ? null : i,
-            Next: i < totObj ? 2 + i : null
+            Next: i < totObj ? 2 + i : null,
           };
         });
         console.log(arrCurProject);
-        pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
+        getNavigationLink(pageType);
       })
       .catch((err) => {
         console.log(err);
@@ -919,6 +926,12 @@ const App = (props: any): JSX.Element => {
     getDliverPlan(Id, type);
   };
 
+  /* function of navigation */
+  const getNavigationLink = (nav) => {
+    setNavLink(nav);
+    getCategoryConfig(nav);
+  };
+
   /* life cycle of onload */
   useEffect(() => {
     getCurrentUserDetail();
@@ -926,63 +939,130 @@ const App = (props: any): JSX.Element => {
 
   return (
     <>
-      <NavHeader />
-      {primarySteps.length > 0 && (
+      <NavHeader
+        getNavigationLink={getNavigationLink}
+        navLink={navLink}
+      />
+      {navLink == "phases" ? (
         <>
-          {loader ? (
-            <Loader />
-          ) : (
+          {primarySteps.length > 0 && (
             <>
-              <Header
-                context={props.context}
-                sp={props.sp}
-                URL={props.URL}
-                pageType={pageType}
-                arrDelSec={arrDelSec}
-                userName={userName}
-                valueOfFirstLetter={valueOfFirstLetter}
-                valueOfLastLetter={valueOfLastLetter}
-                arrMasterAnnual={arrMasterAnnual}
-                ProjectID={curProject}
-                getCurrProjectData={getCurrProjectData}
-              />
-              <Questions
-                context={props.context}
-                sp={props.sp}
-                URL={props.URL}
-                pageType={pageType}
-                PrimarySteps={primarySteps}
-                arrDelSec={arrDelSec}
-                reRunning={reRunning}
-                BeforeModule={BeforeModule}
-                AfterModule={AfterModule}
-                firstModOrdNo={firstModOrdNo}
-                lastModOrdNo={lastModOrdNo}
-                latestOrderNO={latestOrderNO}
-                latestModOrdNo={latestModOrdNo}
-              />
-              <Footerimg
-                context={props.context}
-                sp={props.sp}
-                URL={props.URL}
-                arrFooter={arrFooter}
-                pageType={pageType}
-              />
-              <FooterCategories
-                context={props.context}
-                sp={props.sp}
-                URL={props.URL}
-                footerNavigation={footerNavigation}
-                pageType={pageType}
-                Category={arrCategory}
-                catConfig={arrCatConfig}
-              />
+              {loader ? (
+                <Loader />
+              ) : (
+                <>
+                  <Header
+                    context={props.context}
+                    sp={props.sp}
+                    URL={props.URL}
+                    pageType={page}
+                    arrDelSec={arrDelSec}
+                    userName={userName}
+                    valueOfFirstLetter={valueOfFirstLetter}
+                    valueOfLastLetter={valueOfLastLetter}
+                    arrMasterAnnual={arrMasterAnnual}
+                    ProjectID={curProject}
+                    getCurrProjectData={getCurrProjectData}
+                  />
+                  <Questions
+                    context={props.context}
+                    sp={props.sp}
+                    URL={props.URL}
+                    pageType={page}
+                    PrimarySteps={primarySteps}
+                    arrDelSec={arrDelSec}
+                    reRunning={reRunning}
+                    BeforeModule={BeforeModule}
+                    AfterModule={AfterModule}
+                    firstModOrdNo={firstModOrdNo}
+                    lastModOrdNo={lastModOrdNo}
+                    latestOrderNO={latestOrderNO}
+                    latestModOrdNo={latestModOrdNo}
+                  />
+                  <Footerimg
+                    context={props.context}
+                    sp={props.sp}
+                    URL={props.URL}
+                    arrFooter={arrFooter}
+                    pageType={page}
+                  />
+                  <FooterCategories
+                    context={props.context}
+                    sp={props.sp}
+                    URL={props.URL}
+                    footerNavigation={footerNavigation}
+                    pageType={page}
+                    Category={arrCategory}
+                    catConfig={arrCatConfig}
+                  />
+                </>
+              )}
             </>
           )}
         </>
+      ) : navLink == "practice" ? (
+        <>
+          {primarySteps.length > 0 && (
+            <>
+              {loader ? (
+                <Loader />
+              ) : (
+                <>
+                  <Header
+                    context={props.context}
+                    sp={props.sp}
+                    URL={props.URL}
+                    pageType={page}
+                    arrDelSec={arrDelSec}
+                    userName={userName}
+                    valueOfFirstLetter={valueOfFirstLetter}
+                    valueOfLastLetter={valueOfLastLetter}
+                    arrMasterAnnual={arrMasterAnnual}
+                    ProjectID={curProject}
+                    getCurrProjectData={getCurrProjectData}
+                  />
+                  <Questions
+                    context={props.context}
+                    sp={props.sp}
+                    URL={props.URL}
+                    pageType={page}
+                    PrimarySteps={primarySteps}
+                    arrDelSec={arrDelSec}
+                    reRunning={reRunning}
+                    BeforeModule={BeforeModule}
+                    AfterModule={AfterModule}
+                    firstModOrdNo={firstModOrdNo}
+                    lastModOrdNo={lastModOrdNo}
+                    latestOrderNO={latestOrderNO}
+                    latestModOrdNo={latestModOrdNo}
+                  />
+                  <Footerimg
+                    context={props.context}
+                    sp={props.sp}
+                    URL={props.URL}
+                    arrFooter={arrFooter}
+                    pageType={page}
+                  />
+                  <FooterCategories
+                    context={props.context}
+                    sp={props.sp}
+                    URL={props.URL}
+                    footerNavigation={footerNavigation}
+                    pageType={page}
+                    Category={arrCategory}
+                    catConfig={arrCatConfig}
+                  />
+                </>
+              )}
+            </>
+          )}
+        </>
+      ) : navLink == "patheay" ? (
+        <Patheay />
+        // <></>
+      ) : (
+        <HelpGuide />
       )}
-      {/* <Patheay /> */}
-      {/* <HelpGuide /> */}
     </>
   );
 };
