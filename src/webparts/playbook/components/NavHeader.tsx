@@ -22,7 +22,9 @@ const NavHeader = (props) => {
   return (
     <div>
       <div className={styles.headerSection}>
-        <img src={`${headerLogo}`} alt="logo" />
+        <div className={styles.headerLogo}>
+          <img src={`${headerLogo}`} alt="logo" width={300} />
+        </div>
         <img
           className={styles.navMenu}
           src={`${menu}`}
@@ -45,7 +47,9 @@ const NavHeader = (props) => {
           >
             <div className={styles.navWrapper}>
               <div
-                className={props.navLink == "phases" ? styles.linkActive : styles.navbtn}
+                className={
+                  props.navLink == "phases" ? styles.linkActive : styles.navbtn
+                }
                 onClick={() => {
                   props.getNavigationLink("phases");
                 }}
@@ -53,7 +57,11 @@ const NavHeader = (props) => {
                 Phases
               </div>
               <div
-                className={props.navLink == "practice" ? styles.linkActive : styles.navbtn}
+                className={
+                  props.navLink == "practice"
+                    ? styles.linkActive
+                    : styles.navbtn
+                }
                 onClick={() => {
                   props.getNavigationLink("practice");
                 }}
@@ -61,7 +69,9 @@ const NavHeader = (props) => {
                 Practice
               </div>
               <div
-                className={props.navLink == "patheay" ? styles.linkActive : styles.navbtn}
+                className={
+                  props.navLink == "patheay" ? styles.linkActive : styles.navbtn
+                }
                 onClick={() => {
                   props.getNavigationLink("patheay");
                 }}
@@ -69,7 +79,11 @@ const NavHeader = (props) => {
                 Pathway
               </div>
               <div
-                className={props.navLink == "helpguid" ? styles.linkActive : styles.navbtn}
+                className={
+                  props.navLink == "helpguid"
+                    ? styles.linkActive
+                    : styles.navbtn
+                }
                 onClick={() => {
                   props.getNavigationLink("helpguid");
                 }}
