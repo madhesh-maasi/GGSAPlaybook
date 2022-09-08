@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { IPlaybookProps } from './IPlaybookProps';
-import App from './App';
+import * as React from "react";
+import { IPlaybookProps } from "./IPlaybookProps";
+import App from "./App";
 import { sp } from "@pnp/pnpjs";
 import { Web } from "@pnp/sp/webs";
 import "../../../ExternalRef/css/style.scss";
@@ -9,7 +9,7 @@ import "../../../ExternalRef/css/style.scss";
 const webURL = "https://ggsaus.sharepoint.com/sites/Intranet_Test";
 const masterAnnualPlan = "Annual Plan Test";
 const deliveryPlan = "Delivery Plan Phase List";
-
+const deliverPlanList = "Delivery Plan";
 
 /*Production URL */
 // const webURL = "https://ggsaus.sharepoint.com";
@@ -34,6 +34,7 @@ export default class Playbook extends React.Component<IPlaybookProps, {}> {
           URL={_web}
           masterAnnualPlan={masterAnnualPlan}
           deliveryPlan={deliveryPlan}
+          deliveryPlanList={deliverPlanList}
         />
       </>
     );

@@ -1,4 +1,4 @@
-.listItem{
+.listItem {
     width: 400px;
     border: 2px solid #00859c;
     padding: 7px 30px;
@@ -7,7 +7,7 @@
     list-style-type: none;
     font-size: 12px;
     background-color: #55555510;
-    &::before{
+    &::before {
         content: '';
         position: absolute;
         top: 16px;
@@ -20,7 +20,7 @@
     }
 }
 
-.phaseListItem{
+.phaseListItem {
     width: 400px;
     border: 2px solid #f99d26;
     padding: 7px 30px;
@@ -29,7 +29,7 @@
     list-style-type: none;
     font-size: 12px;
     background-color: #55555510;
-    &::before{
+    &::before {
         content: '';
         position: absolute;
         top: 16px;
@@ -42,7 +42,7 @@
     }
 }
 
-.listItemCom{
+.listItemCom {
     width: 446px;
     border: 2px solid #00859c;
     padding: 7px;
@@ -52,14 +52,14 @@
     font-size: 12px;
     background-color: #55555510;
     .listComItem {
-      padding-right: 10px;
-      font-weight: bold;
-      color: #00859c;
-      font-size: 14px;
+        padding-right: 10px;
+        font-weight: bold;
+        color: #00859c;
+        font-size: 14px;
     }
 }
 
-.phaseListItemCom{
+.phaseListItemCom {
     width: 446px;
     border: 2px solid #f99d26;
     padding: 7px;
@@ -69,9 +69,9 @@
     font-size: 12px;
     background-color: #55555510;
     .phasesListComItem {
-      padding-right: 10px;
-      font-weight: bold;
-      color: #f99d26;
-      font-size: 14px;
+        padding-right: 10px;
+        font-weight: bold;
+        color: #f99d26;
+        font-size: 14px;
     }
 }

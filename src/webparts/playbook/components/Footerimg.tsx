@@ -15,9 +15,11 @@ const Footerimg = (props) => {
               className={styles.footerImg}
               style={{
                 backgroundImage: `url(https://ggsaus.sharepoint.com${
-                  JSON.parse(
-                    footerList.filter((row) => row.isActive)[0].FooterImage
-                  ).serverRelativeUrl
+                  footerList.filter((row) => row.isActive)[0].FooterImage
+                    ? JSON.parse(
+                        footerList.filter((row) => row.isActive)[0].FooterImage
+                      ).serverRelativeUrl
+                    : ""
                 })`,
               }}
             >
@@ -112,9 +114,11 @@ const Footerimg = (props) => {
               className={styles.footerImg}
               style={{
                 backgroundImage: `url(https://ggsaus.sharepoint.com${
-                  JSON.parse(
-                    footerList.filter((row) => row.isActive)[0].FooterImage
-                  ).serverRelativeUrl
+                  footerList.filter((row) => row.isActive)[0].FooterImage
+                    ? JSON.parse(
+                        footerList.filter((row) => row.isActive)[0].FooterImage
+                      ).serverRelativeUrl
+                    : ""
                 })`,
               }}
             >

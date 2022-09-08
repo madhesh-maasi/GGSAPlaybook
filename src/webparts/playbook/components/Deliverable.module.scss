@@ -1,77 +1,84 @@
 .deliverOpenWrapper {
-  img {
-    filter: invert(100%);
-  }
-}
-.deliverOpen {
-  position: relative;
-  list-style-type: none;
-  font-size: 12px;
-  color: white;
-  cursor: pointer;
-  width: 100%;
-  padding-left: 40px;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 8px;
-    transform: translateY(-48%);
-    left: 11%;
-    width: 8px;
-    height: 8px;
-    background-color: white;
-    border-radius: 2px;
-  }
-}
-.cardImg {
-  width: 20px;
-  height: 20px;
-  padding: 15px;
-  background-color: #f99d26;
-  border-radius: 50%;
-  margin-bottom: 20px;
-  position: relative;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: invert(100%);
-  }
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 108%;
-    height: 108%;
-    border: 4px solid;
-    border-radius: 50%;
-  }
+    img {
+        filter: invert(100%);
+    }
 }
 
-.phaseCardImg{
-  width: 20px;
-  height: 20px;
-  padding: 15px;
-  background-color: #00859c;
-  border-radius: 50%;
-  margin-bottom: 20px;
-  position: relative;
-  img {
+.deliverOpen {
+    position: relative;
+    list-style-type: none;
+    font-size: 12px;
+    color: white;
+    cursor: pointer;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: invert(100%);
-  }
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 108%;
-    height: 108%;
-    border: 4px solid;
+    padding-left: 40px;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        transform: translateY(-48%);
+        left: 11%;
+        width: 8px;
+        height: 8px;
+        background-color: white;
+        border-radius: 2px;
+    }
+}
+
+.cardImg {
+    width: 20px;
+    height: 20px;
+    padding: 15px;
+    background-color: #f99d26;
     border-radius: 50%;
-  }}
+    margin-bottom: 20px;
+    position: relative;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: invert(100%);
+    }
+    &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 108%;
+        height: 108%;
+        border: 4px solid;
+        border-radius: 50%;
+        box-sizing: unset !important;
+    }
+}
+
+.phaseCardImg {
+    width: 20px;
+    height: 20px;
+    padding: 15px;
+    background-color: #00859c;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    position: relative;
+    box-sizing: unset !important;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: invert(100%);
+        box-sizing: unset !important;
+    }
+    &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 108%;
+        height: 108%;
+        border: 4px solid;
+        border-radius: 50%;
+        box-sizing: unset !important;
+    }
+}
