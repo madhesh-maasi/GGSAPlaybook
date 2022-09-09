@@ -46,7 +46,7 @@ const Deliverable = (props) => {
                       alignItems: "center",
                       justifyContent: "center",
                       flexDirection: "column",
-                      height: "126px",
+                      minHeight: "126px",
                       width: "200px",
                       backgroundColor:
                         props.pageType.toLowerCase() == "phases"
@@ -58,6 +58,7 @@ const Deliverable = (props) => {
                       cursor: "pointer",
                       marginTop: "46px",
                       boxSizing: "border-box",
+                      paddingTop: "50px",
                     }}
                     className={style.deliverOpenWrapper}
                     onClick={() => {
@@ -101,16 +102,18 @@ const Deliverable = (props) => {
                             color: "white",
                             fontSize: "20px",
                             position: "absolute",
-                            top: "8%",
-                            left: "46%",
-                            transform: "rotate(90deg)",
+                            top: "15%",
+                            left: "50%",
+                            transform: " translate(-50%, -50%) rotate(90deg)",
                           }}
                         />
                         {item.Details.length > 0 ? (
                           item.Details.map((row) => {
                             return (
-                              <div className={style.deliverOpen}>
-                                <li>{row}</li>
+                              <div>
+                                <div className={style.deliverOpen}>
+                                  <li>{row}</li>
+                                </div>
                               </div>
                             );
                           })
@@ -190,6 +193,7 @@ const Deliverable = (props) => {
                           style={{
                             color: "white",
                             fontSize: "20px",
+                            // transform: "translateY(-4px)",
                           }}
                         />
                       ) : item.Title == "Development" ? (
@@ -198,7 +202,7 @@ const Deliverable = (props) => {
                           style={{
                             color: "white",
                             fontSize: "20px",
-                            transform: "rotate(90deg)",
+                            transform: "translate(-50%, -50%) rotate(90deg)",
                           }}
                         />
                       ) : (
@@ -208,6 +212,7 @@ const Deliverable = (props) => {
                             style={{
                               color: "white",
                               fontSize: "20px",
+                              // transform: "translateY(-4px)",
                             }}
                           />
                         )
