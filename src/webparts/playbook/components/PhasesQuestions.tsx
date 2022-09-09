@@ -9,6 +9,7 @@ import { Icon } from "@fluentui/react";
 import Label from "./Label";
 
 let arrAllPrctice = [];
+let arrAllPhases = [];
 let lastStepID;
 let UserId;
 let readQuestions;
@@ -16,8 +17,9 @@ let objUnreadQuestions;
 let arRearrangedSteps = [];
 let arrTimeline = [];
 let curObjValue;
+let curPhase;
 
-const Questions = (props) => {
+const PhasesQuestions = (props) => {
   /* All States */
   const [question, setQuestion] = useState([]);
   const [currQus, setCurrQus] = useState();
@@ -27,7 +29,10 @@ const Questions = (props) => {
 
   /* function of arranged Steps */
   const getArrangedSteps = () => {
-    arrAllPrctice = props.PrimarySteps;
+    let allActivities = props.phasesSteps;
+    curPhase = allActivities.filter((act) => act.isSelected)[0].PhaseSteps;
+    arrAllPrctice = curPhase;
+    console.log(arrAllPrctice);
     lastStepID = arrAllPrctice[arrAllPrctice.length - 1].ID;
     UserId = arrAllPrctice.map((e) => e.UserId)[0].toString();
     arrTimeline = arrAllPrctice.map((item) => {
@@ -61,7 +66,11 @@ const Questions = (props) => {
     setTimelineRender(true);
     setRender(false);
   };
-
+  //   const getArrangedSteps = () => {
+  //     let allActivities = props.phasesSteps;
+  //     curPhase = allActivities.filter((act) => act.isSelected)[0].PhaseSteps;
+  //     console.log(curPhase);
+  //   };
   /* function of complete steps */
   const completeQus = (Id, completeValues) => {
     arrAllPrctice.filter((row) => row.ID == Id)[0].isRead = true;
@@ -127,7 +136,6 @@ const Questions = (props) => {
   /* life cycle of render */
   useEffect(() => {
     getArrangedSteps();
-    console.log(props.phasesSteps);
   }, [render]);
 
   return (
@@ -227,4 +235,4 @@ const Questions = (props) => {
   );
 };
 
-export default Questions;
+export default PhasesQuestions;
