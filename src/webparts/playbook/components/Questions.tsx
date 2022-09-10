@@ -67,7 +67,9 @@ const Questions = (props) => {
     arrAllPrctice.filter((row) => row.ID == Id)[0].isRead = true;
     addUserId(Id, completeValues);
   };
-
+// Update also in list
+// Update appray also
+// 
   /* update the complete steps */
   const addUserId = (Id, completeValues) => {
     let currCompleteValue = !completeValues
@@ -82,7 +84,7 @@ const Questions = (props) => {
           })
           .then(() => {
             if (Id == lastStepID) {
-              props.reRunning(props.arrDelSec.Order);
+              props.reRunning(props.arrDelSec.Order, props.arrDelSec.Next);
             } else {
               setTimelineRender(false);
               setRender(true);
@@ -99,7 +101,7 @@ const Questions = (props) => {
           })
           .then(() => {
             if (Id == lastStepID) {
-              props.reRunning(props.arrDelSec.Order);
+              props.reRunning(props.arrDelSec.Order, props.arrDelSec.Next);
             } else {
               setTimelineRender(false);
               setRender(true);
@@ -118,7 +120,7 @@ const Questions = (props) => {
   /* function of after module */
   const lastOrderNo = (orderNo) => {
     orderNo != ""
-      ? props.latestModOrdNo > orderNo
+      ? props.latestModOrdNo >= orderNo
         ? props.AfterModule(orderNo)
         : ""
       : "";

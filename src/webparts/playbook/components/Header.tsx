@@ -1,7 +1,12 @@
 import * as React from "react";
 import styles from "./Header.module.scss";
 import { useState, useEffect } from "react";
-import { Icon, Dropdown, IDropdownStyles, IDropdownOption } from "@fluentui/react";
+import {
+  Icon,
+  Dropdown,
+  IDropdownStyles,
+  IDropdownOption,
+} from "@fluentui/react";
 
 const closeIcon = require("../../../ExternalRef/img/close-button.png");
 
@@ -187,7 +192,7 @@ const Header = (props: any) => {
   /* Life cycle of Onload */
   useEffect(() => {
     getHeaderDetail();
-  }, []);
+  }, [props.arrDelSec]);
 
   return (
     <div style={{ padding: "16px" }}>

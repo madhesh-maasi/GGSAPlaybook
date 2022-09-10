@@ -10,6 +10,8 @@ const cardImage3 = require("../../../ExternalRef/img/groupConference.jpg");
 const cardImage4 = require("../../../ExternalRef/img/usingSystem.jpg");
 
 const Pathway = (props) => {
+  console.log(props);
+
   return (
     <div className={`${styles.PathwayWrapper} container`}>
       <div className={styles.Pathwayheader}>
@@ -17,8 +19,11 @@ const Pathway = (props) => {
           Select the pathway for your deliverable
         </h1>
         <div className={styles.profile}>
-          <p>Log in</p>
-          <div className={styles.avatar}></div>
+          <p style={{ fontSize: 18, fontWeight: "bold" }}>{props.userName}</p>
+          <div className={styles.avatar}>
+            {props.firstName}
+            {props.lastName}
+          </div>
         </div>
       </div>
       <div className={styles.infoText}>
