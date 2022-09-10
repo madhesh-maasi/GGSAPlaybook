@@ -31,6 +31,7 @@ interface IListConfig {
   activity?: string;
   nextActivity?: string;
   FooterImage?: string;
+  Category?: string;
 }
 
 interface IListFooter {
@@ -121,7 +122,8 @@ let curActivity;
 let arrModules = [];
 let arrMainConfig = [];
 let arrActiveSelected = [];
-
+let arrAllPhasesSteps = [];
+let strSelectedCategory = "";
 const App = (props: any): JSX.Element => {
   /* All States */
   const [allSteps, setAllSteps] = useState<IListStep[]>(arrSteps);
@@ -132,9 +134,9 @@ const App = (props: any): JSX.Element => {
   const [userName, setUserName] = useState<string>("");
   const [navLink, setNavLink] = useState("");
   const [page, setPage] = useState("");
-  const [isPhaseSelected, setIsPhaseSelected] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(0);
-
+  const [allPhasesSteps, setAllPhasesSteps] = useState(arrAllPhasesSteps);
+  const [selectedCategory, setSelectedCategory] = useState("");
   /* Get current user details */
   const getCurrentUserDetail = async () => {
     const paramsString = window.location.href.split("?")[1].toLowerCase();
@@ -337,6 +339,7 @@ const App = (props: any): JSX.Element => {
 
   /* Get phasesConfig list all datas */
   const getPhasesConfig = (): void => {
+    setSelectedCategory("");
     props.URL.lists
       .getByTitle("PhasesConfig")
       .items.select("*,Next/Title, Previous/Title")
@@ -483,6 +486,7 @@ const App = (props: any): JSX.Element => {
         //     arrMainConfig.filter((row) => row.Title == nextAct)[0]
         //   );
         // });
+
         console.log(arrMainConfig);
         // arrMainConfig = arrMainConfig.map((row, i) => {
         //   return {
@@ -744,83 +748,52 @@ const App = (props: any): JSX.Element => {
             isSelected: obj.activity == curActivity,
             nextActivity: obj.nextActivity,
             FooterImage: obj.FooterImage,
+            Category: obj.Category,
           };
         });
 
         console.log(arrActiveSelected);
 
-        // arrPhasesSteps = arrPhasesConfig.map((phase) => {
-        //   return {
-        //     Title: phase.Title,
-        //     deliver: phase.deliver,
-        //     About: phase.About,
-        //     ID: phase.ID,
-        //     TOD: phase.TOD,
-        //     usersRoles: phase.usersRoles,
-        //     activity: phase.activity,
-        //     nextActivity: phase.nextActivity,
-        //     Previous: phase.Previous,
-        //     Next: phase.Next,
-        //     FooterImage: phase.FooterImage,
-        //     Category: phase.Category,
-        //     PhaseSteps: isArrSteps.filter(
-        //       (step) => step.stepsHeading == phase.Title
-        //     ),
-        //     isSelected: phase.activity == curActivity,
-        //   };
-        // });
+        console.log(arrActiveSelected);
 
-        // getActiveModule();
-
-        // let startSteps = moduleHead.filter(
-        //   (firstModule) => firstModule.Previous == undefined
-        // )[0];
-        // curSteps = [
-        //   {
-        //     Title: startSteps.Title,
-        //     About: startSteps.About,
-        //     deliver: startSteps.deliver,
-        //     Next: startSteps.Next,
-        //     Previous: startSteps.Previous,
-        //     ID: startSteps.ID,
-        //     Order: startSteps.Order,
-        //     usersRoles: startSteps.usersRoles,
-        //     TOD: startSteps.TOD,
-        //     isInComplete: isArrSteps
-        //       .filter((step) => step.stepsHeading == startSteps.Title)
-        //       .some((step) => step.isRead == false),
-        //   },
-        // ].filter((phases) => phases.isInComplete == true)[0];
-        // curSteps != undefined
-        //   ? ((arrDeliver = moduleHead.filter(
-        //       (DeliSec) => DeliSec.Title == curSteps.Title
-        //     )[0]),
-        //     (arrPrimarySteps = isArrSteps.filter(
-        //       (step) => step.stepsHeading == curSteps.Title
-        //     )),
-        //     (footerArr =
-        //       footerContent.length > 0 &&
-        //       footerContent.map((row) => {
-        //         return {
-        //           Title: row.Title,
-        //           Category: row.Category,
-        //           FooterImage: row.FooterImage,
-        //           Order: row.Order,
-        //           isActive: row.Title == arrDeliver.Title ? true : false,
-        //         };
-        //       })),
-        //     (latestModOrdNo = arrDeliver.Order),
-        //     arrPrimarySteps.length > 0 &&
-        //       ((nextModuleTitle = arrDeliver.Next),
-        //       reArrange(arrPrimarySteps, footerArr, arrDeliver)))
-        //   : moduleRerunning(startSteps.Next);
+        strSelectedCategory != ""
+          ? (arrActiveSelected.forEach((li, i) => {
+              arrActiveSelected[i].isSelected = false;
+            }),
+            (arrActiveSelected.filter(
+              (row) =>
+                row.Category.toLowerCase() == strSelectedCategory.toLowerCase()
+            )[0].isSelected = true))
+          : "";
+        footerArr =
+          arrActiveSelected.length > 0 &&
+          arrActiveSelected.map((row) => {
+            return {
+              Title: row.Title,
+              Category: row.Category,
+              FooterImage: row.FooterImage,
+              Order: row.Order,
+              isActive: false,
+            };
+          });
+        arrActiveSelected.some((row) => row.isSelected)
+          ? arrActiveSelected
+          : (arrActiveSelected[0].isSelected = true);
+        footerArr.filter(
+          (row) =>
+            row.Title ==
+            arrActiveSelected.filter((li) => li.isSelected)[0].Title
+        )[0].isActive = true;
+        setAllPhasesSteps([...arrActiveSelected]);
+        setArrDelSec(arrActiveSelected.filter((row) => row.isSelected)[0]);
+        setArrFooter(footerArr);
+        setLoader(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  // Got All the data from list
-  // want selected item from arr
+
   ////First -> Complete ->
   /* current active module filter functions */
   const getActiveModule = () => {
@@ -1116,13 +1089,6 @@ const App = (props: any): JSX.Element => {
     }, 1000);
   };
 
-  /* footer Navigation function */
-  const footerNavigation = (type, cat) => {
-    pageType = type;
-    getCategoryConfig(pageType);
-    // pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
-  };
-
   /* Get Category Config */
   const getCategoryConfig = (link) => {
     props.URL.lists
@@ -1201,8 +1167,28 @@ const App = (props: any): JSX.Element => {
     setLoader(true);
     setNavLink(nav);
     getCategoryConfig(nav);
+    setSelectedCategory("");
   };
-
+  /* footer Navigation function */
+  const footerNavigation = (type, cat) => {
+    pageType = type;
+    setNavLink(pageType);
+    setPage(pageType);
+    getCategoryConfig(pageType);
+    strSelectedCategory = cat;
+    // pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
+  };
+  const changeHeaderHandler = (selectedPhase) => {
+    setArrDelSec(undefined);
+    setArrDelSec({ ...selectedPhase });
+  };
+  const changeFooterHandler = (selectedTitle) => {
+    footerArr.forEach((li, i) => {
+      footerArr[i].isActive = false;
+    });
+    footerArr.filter((row) => row.Title == selectedTitle)[0].isActive = true;
+    setArrFooter([...footerArr]);
+  };
   /* life cycle of onload */
   useEffect(() => {
     getCurrentUserDetail();
@@ -1213,25 +1199,27 @@ const App = (props: any): JSX.Element => {
       <NavHeader getNavigationLink={getNavigationLink} navLink={navLink} />
       {navLink == "phases" ? (
         <>
-          {primarySteps.length > 0 && (
+          {allPhasesSteps.length > 0 && (
             <>
               {loader ? (
                 <Loader />
               ) : (
                 <>
-                  <Header
-                    context={props.context}
-                    sp={props.sp}
-                    URL={props.URL}
-                    pageType={page}
-                    arrDelSec={arrDelSec}
-                    userName={userName}
-                    valueOfFirstLetter={valueOfFirstLetter}
-                    valueOfLastLetter={valueOfLastLetter}
-                    arrMasterAnnual={arrMasterAnnual}
-                    ProjectID={curProject}
-                    getCurrProjectData={getCurrProjectData}
-                  />
+                  {arrDelSec && (
+                    <Header
+                      context={props.context}
+                      sp={props.sp}
+                      URL={props.URL}
+                      pageType={page}
+                      arrDelSec={arrDelSec}
+                      userName={userName}
+                      valueOfFirstLetter={valueOfFirstLetter}
+                      valueOfLastLetter={valueOfLastLetter}
+                      arrMasterAnnual={arrMasterAnnual}
+                      ProjectID={curProject}
+                      getCurrProjectData={getCurrProjectData}
+                    />
+                  )}
                   <PhaseQuestion
                     context={props.context}
                     sp={props.sp}
@@ -1246,6 +1234,9 @@ const App = (props: any): JSX.Element => {
                     lastModOrdNo={lastModOrdNo}
                     latestOrderNO={latestOrderNO}
                     latestModOrdNo={latestModOrdNo}
+                    allPhasesSteps={allPhasesSteps}
+                    changeheaderHandler={changeHeaderHandler}
+                    changeFooterHandler={changeFooterHandler}
                   />
                   <Footerimg
                     context={props.context}
@@ -1326,7 +1317,11 @@ const App = (props: any): JSX.Element => {
           )}
         </>
       ) : navLink == "patheay" ? (
-        <Patheay />
+        <Patheay
+          userName={userName}
+          firstName={valueOfFirstLetter}
+          lastName={valueOfLastLetter}
+        />
       ) : // <></>
       navLink == "helpguid" ? (
         <HelpGuide />

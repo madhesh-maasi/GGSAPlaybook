@@ -2,9 +2,15 @@ import * as React from "react";
 import styles from "./Footerimg.module.scss";
 
 let footerList = [];
-
+let footerCategories = [];
 const Footerimg = (props) => {
   footerList = props.arrFooter;
+  footerCategories = footerList
+    .filter(
+      (v, i, a) => a["findIndex"]((v2) => v2.Category === v.Category) === i
+    )
+    .map((row) => row.Category);
+  console.log(footerCategories);
 
   return (
     <>
@@ -26,78 +32,34 @@ const Footerimg = (props) => {
               <div className={styles.overlayer}></div>
             </div>
             <div className={styles.footerContent}>
-              <div className={styles.routineOperationList}>
-                <h2 className={styles.phaseRoutineTitle}>Design</h2>
-                {footerList.map((row) => {
+              {footerCategories.length > 0 &&
+                footerCategories.map((li) => {
                   return (
-                    <>
-                      <div
-                        className={
-                          row.isActive == true
-                            ? styles.phaseListActive
-                            : styles.phaseList
-                        }
+                    <div className={styles.routineOperationList}>
+                      <h2
+                        className={styles.phaseRoutineTitle}
+                        style={{ textTransform: "capitalize" }}
                       >
-                        {row.Category == "design" && <li>{row.Title}</li>}
-                      </div>
-                    </>
+                        {li}
+                      </h2>
+                      {footerList
+                        .filter((fLi) => fLi.Category == li)
+                        .map((row) => (
+                          <>
+                            <div
+                              className={
+                                row.isActive == true
+                                  ? styles.phaseListActive
+                                  : styles.phaseList
+                              }
+                            >
+                              {<li>{row.Title}</li>}
+                            </div>
+                          </>
+                        ))}
+                    </div>
                   );
                 })}
-              </div>
-              <div className={styles.routineInnovationList}>
-                <h2 className={styles.phaseRoutineTitle}>Build</h2>
-                {footerList.map((row) => {
-                  return (
-                    <>
-                      <div
-                        className={
-                          row.isActive == true
-                            ? styles.phaseListActive
-                            : styles.phaseList
-                        }
-                      >
-                        {row.Category == "build" && <li>{row.Title}</li>}
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
-              <div className={styles.routineInnovationList}>
-                <h2 className={styles.phaseRoutineTitle}>Implement</h2>
-                {footerList.map((row) => {
-                  return (
-                    <>
-                      <div
-                        className={
-                          row.isActive == true
-                            ? styles.phaseListActive
-                            : styles.phaseList
-                        }
-                      >
-                        {row.Category == "implement" && <li>{row.Title}</li>}
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
-              <div className={styles.routineInnovationList}>
-                <h2 className={styles.phaseRoutineTitle}>Operate</h2>
-                {footerList.map((row) => {
-                  return (
-                    <>
-                      <div
-                        className={
-                          row.isActive == true
-                            ? styles.phaseListActive
-                            : styles.phaseList
-                        }
-                      >
-                        {row.Category == "operate" && <li>{row.Title}</li>}
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
             </div>
           </div>
         </>
@@ -125,70 +87,34 @@ const Footerimg = (props) => {
               <div className={styles.overlayer}></div>
             </div>
             <div className={styles.footerContent}>
-              <div className={styles.routineOperationList}>
-                <h2
-                  className={
-                    props.pageType.toLowerCase() == "phases"
-                      ? styles.phaseRoutineTitle
-                      : styles.routineTitle
-                  }
-                >
-                  Routine Operations Practices
-                </h2>
-                {footerList.map((row) => {
+              {footerCategories.length > 0 &&
+                footerCategories.map((li) => {
                   return (
-                    <>
-                      <div
-                        className={
-                          props.pageType.toLowerCase() == "phases"
-                            ? row.isActive == true
-                              ? styles.phaseListActive
-                              : styles.phaseList
-                            : row.isActive == true
-                            ? styles.listActive
-                            : styles.list
-                        }
+                    <div className={styles.routineOperationList}>
+                      <h2
+                        className={styles.phaseRoutineTitle}
+                        style={{ textTransform: "capitalize" }}
                       >
-                        {row.Category == "routine operations practices" && (
-                          <li>{row.Title}</li>
-                        )}
-                      </div>
-                    </>
+                        {li}
+                      </h2>
+                      {footerList
+                        .filter((fLi) => fLi.Category == li)
+                        .map((row) => (
+                          <>
+                            <div
+                              className={
+                                row.isActive == true
+                                  ? styles.phaseListActive
+                                  : styles.phaseList
+                              }
+                            >
+                              {<li>{row.Title}</li>}
+                            </div>
+                          </>
+                        ))}
+                    </div>
                   );
                 })}
-              </div>
-              <div className={styles.routineInnovationList}>
-                <h2
-                  className={
-                    props.pageType.toLowerCase() == "phases"
-                      ? styles.phaseRoutineTitle
-                      : styles.routineTitle
-                  }
-                >
-                  Routine Innovation Practices
-                </h2>
-                {footerList.map((row) => {
-                  return (
-                    <>
-                      <div
-                        className={
-                          props.pageType.toLowerCase() == "phases"
-                            ? row.isActive == true
-                              ? styles.phaseListActive
-                              : styles.phaseList
-                            : row.isActive == true
-                            ? styles.listActive
-                            : styles.list
-                        }
-                      >
-                        {row.Category == "routine innovation practices" && (
-                          <li>{row.Title}</li>
-                        )}
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
             </div>
           </div>
         </>

@@ -11,7 +11,10 @@ const Deliverable = (props) => {
 
   /* function of Deliverable */
   const getDeliverableDetails = () => {
-    arrDlble = props.arrDelSec.deliver;
+    arrDlble =
+      props.pageType.toLowerCase() == "phases"
+        ? props.arrDelSec
+        : props.arrDelSec.deliver;
     arrDlble = arrDlble.map((li) => ({
       Title: li.title,
       Details: li.details,
