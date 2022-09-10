@@ -16,8 +16,9 @@ let objUnreadQuestions;
 let arRearrangedSteps = [];
 let arrTimeline = [];
 let curObjValue;
+let array = [{Title:"",Activity:"",isStetcted:true,steps:[]},{Title:"",Activity:"",isStetcted:true,steps:[]},{Title:"",Activity:"",isStetcted:true,steps:[]}];
 
-const Questions = (props) => {
+const PhaseQuestion = (props) => {
   /* All States */
   const [question, setQuestion] = useState([]);
   const [currQus, setCurrQus] = useState();
@@ -229,4 +230,4 @@ const Questions = (props) => {
   );
 };
 
-export default Questions;
+export default PhaseQuestion;

@@ -149,7 +149,7 @@ const Footerimg = (props) => {
                             : styles.list
                         }
                       >
-                        {row.Category == "routine operations practice" && (
+                        {row.Category == "routine operations practices" && (
                           <li>{row.Title}</li>
                         )}
                       </div>
@@ -181,7 +181,7 @@ const Footerimg = (props) => {
                             : styles.list
                         }
                       >
-                        {row.Category == "routine innovation practice" && (
+                        {row.Category == "routine innovation practices" && (
                           <li>{row.Title}</li>
                         )}
                       </div>
