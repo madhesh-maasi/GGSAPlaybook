@@ -71,3 +71,10 @@
       }
     }}
 }
+
+// responsive
+@media (min-width:1920px) {
+  .phaseFooterContent{
+    margin-top: -8px !important;
+  }
+}

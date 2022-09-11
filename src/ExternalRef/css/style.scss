@@ -1,6 +1,11 @@
 #workbenchPageContent {
     max-width: 100%;
 }
+.ms-Panel-content{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    overflow-x: hidden;
+}
 
 .content_3f3fd3c2,
 .CanvasZone {
