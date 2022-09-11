@@ -192,7 +192,7 @@ const Header = (props: any) => {
   /* Life cycle of Onload */
   useEffect(() => {
     getHeaderDetail();
-  }, []);
+  }, [props.arrDelSec]);
 
   return (
     <div style={{ padding: "16px" }}>
