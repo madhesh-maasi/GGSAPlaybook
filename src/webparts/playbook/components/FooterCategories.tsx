@@ -35,14 +35,13 @@ const FooterCategories = (props) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
+                  margin: "auto",
                   marginRight: "1rem",
                 }}
                 onClick={() => {
                   let reDirectTo =
-                  props.pageType == "phases"
-                      ? "practice"
-                      : "phases";
-                  props.footerNavigation(reDirectTo, cat)
+                    props.pageType == "phases" ? "practice" : "phases";
+                  props.footerNavigation(reDirectTo, cat);
                 }}
               >
                 {" "}
