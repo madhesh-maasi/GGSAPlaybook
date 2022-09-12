@@ -327,15 +327,16 @@ const App = (props: any): JSX.Element => {
       .then(() => {
         props.URL.lists
           .getByTitle("PhasesConfig")
-          .items.select("*,Next/Title, Previous/Title")
-          .expand("Next, Previous")
-          .top(4000)
+          .items.top(4000)
           .get()
           .then((res) => {
             let categories = res.map((row) => row.Category);
             arrCategory = categories.filter(function (item, pos, self) {
               return self.indexOf(item) == pos;
             });
+          })
+          .catch((err) => {
+            console.log(err);
           });
       })
       .catch((err) => {
@@ -348,9 +349,7 @@ const App = (props: any): JSX.Element => {
     setSelectedCategory("");
     props.URL.lists
       .getByTitle("PhasesConfig")
-      .items.select("*,Next/Title, Previous/Title")
-      .expand("Next, Previous")
-      .top(4000)
+      .items.top(4000)
       .get()
       .then((res) => {
         let arrJSON;
@@ -704,13 +703,11 @@ const App = (props: any): JSX.Element => {
             Previous: row.Previous,
           };
         });
-
         setAllSteps([]);
         setAllSteps([...isArrSteps]);
         let startSteps = moduleHead.filter(
           (firstModule) => firstModule.Previous == undefined
         )[0];
-
         curSteps = [
           {
             Title: startSteps.Title,
@@ -726,7 +723,6 @@ const App = (props: any): JSX.Element => {
               .some((step) => step.isRead == false),
           },
         ].filter((practice) => practice.isInComplete == true)[0];
-
         curSteps != undefined
           ? ((arrDeliver = moduleHead.filter(
               (DeliSec) => DeliSec.Title == curSteps.Title
@@ -1322,6 +1318,7 @@ const App = (props: any): JSX.Element => {
     setNavLink(nav);
     getCategoryConfig(nav);
     setSelectedCategory("");
+    strSelectedCategory=""
   };
   /* footer Navigation function */
   const footerNavigation = (type, cat) => {

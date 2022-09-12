@@ -13,6 +13,7 @@
     width: 110%;
     margin-left: -10px;
     padding-left: 60px;
+    height: 60px;
     h3 {
       font-size: 18px;
       margin: 0 10px;
@@ -45,6 +46,7 @@
     width: 110%;
     margin-left: -10px;
     padding-left: 60px;
+    height: 60px;
     h3 {
       font-size: 18px;
       margin: 0 10px;
@@ -68,4 +70,11 @@
         font-size: 13px;
       }
     }}
+}
+
+// responsive
+@media (min-width:1920px) {
+  .phaseFooterContent{
+    margin-top: -8px !important;
+  }
 }

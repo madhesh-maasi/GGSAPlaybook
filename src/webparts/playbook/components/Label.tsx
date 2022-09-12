@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import styles from "../../../webparts/playbook/components/Label.module.scss";
 
 const Label = (props) => {
   const [labelContent, setLabelContent] = useState([]);
@@ -18,6 +19,9 @@ const Label = (props) => {
     <div
       style={{
         textAlign: "right",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
       }}
     >
       {labelContent.length > 0 && (
@@ -25,7 +29,7 @@ const Label = (props) => {
           {labelContent.map((row) => {
             return (
               <>
-                <div>{row}</div>
+                <div className={styles.headerLabel}>{row}</div>
               </>
             );
           })}

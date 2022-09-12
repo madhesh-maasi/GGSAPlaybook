@@ -4,6 +4,7 @@ import { Panel } from "@fluentui/react/lib/Panel";
 import { useBoolean } from "@fluentui/react-hooks";
 import { useState, useEffect } from "react";
 import { Icon } from "@fluentui/react";
+import { PanelBase } from "office-ui-fabric-react";
 
 const menu = require("./../../../ExternalRef/img/menu.png");
 const headerLogo = require("./../../../ExternalRef/img/GGSATopLogo.png");

@@ -2,12 +2,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
+  }
 .PathwayWrapper {
     width: 100%;
     @extend .flex;
     flex-direction: column;
+    margin: 40px 0;
     .Pathwayheader {
         width: 100%;
         @extend .flex;

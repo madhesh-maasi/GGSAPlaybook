@@ -120,7 +120,7 @@ const Questions = (props) => {
   /* function of after module */
   const lastOrderNo = (orderNo) => {
     orderNo != ""
-      ? props.latestModOrdNo >= orderNo
+      ? props.latestModOrdNo > orderNo
         ? props.AfterModule(orderNo)
         : ""
       : "";

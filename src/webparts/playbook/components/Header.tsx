@@ -221,7 +221,11 @@ const Header = (props: any) => {
               <div className={styles.parentModalBox}>
                 <div className={styles.modalBox}>
                   <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
                   >
                     <div
                       className={
@@ -238,13 +242,15 @@ const Header = (props: any) => {
                         }}
                       />
                       {"      "}
-                      <div>About</div>
+                      <div style={{ transform: "translateY(5px)" }}>About</div>
                     </div>
                     <img
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                      }}
                       src={`${closeIcon}`}
-                      height={15}
-                      width={15}
+                      // height={15}
+                      // width={"20px"}
                       onClick={() => {
                         modHeading.isShow = false;
                         setModHeading({ ...modHeading });

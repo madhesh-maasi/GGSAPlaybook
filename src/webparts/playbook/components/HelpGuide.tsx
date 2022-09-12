@@ -40,6 +40,15 @@ const lineBl12 = require("../../../ExternalRef/img/Product flow michel blue line
 const lineBl13 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl13.png");
 const lineBl14 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl14.png");
 
+// cards badge images
+const productImg = require("../../../ExternalRef/img/products.png");
+const solutionsImg = require("../../../ExternalRef/img/solutions.png");
+const InnovationSysImg = require("../../../ExternalRef/img/inoSys.png");
+const DelivarablesImg = require("../../../ExternalRef/img/delivarables.png");
+const clientFuncImg = require("../../../ExternalRef/img/clientFunc.png");
+const productionBlueImg = require("../../../ExternalRef/img/productionBlue.png");
+const teamsImg = require("../../../ExternalRef/img/teams.png");
+
 const pivotStyles: Partial<IStyleSet<IPivotStyles>> = {
   root: {
     ".ms-Pivot-icon": {
@@ -148,7 +157,7 @@ const HelpGuide = (props) => {
                     <img src={`${bgImage1}`} alt="bgImage" />
                   </div>
                   <div className={styles.badge}>
-                    {/* <img src="" alt="Badge image" /> */}
+                    <img src={`${productImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
                     <h2>Products</h2>
@@ -195,7 +204,7 @@ const HelpGuide = (props) => {
                     <img src={`${bgImage2}`} alt="bgImage" />
                   </div>
                   <div className={styles.badge}>
-                    {/* <img src="" alt="Badge image" /> */}
+                    <img src={`${solutionsImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
                     <h2>Solutions</h2>
@@ -249,7 +258,7 @@ const HelpGuide = (props) => {
                     <img src={`${bgImage1}`} alt="bgImage" />
                   </div>
                   <div className={styles.badge}>
-                    {/* <img src="" alt="Badge image" /> */}
+                    <img src={`${InnovationSysImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
                     <h2>Innovation system</h2>
@@ -289,7 +298,7 @@ const HelpGuide = (props) => {
                     <img src={`${bgImage2}`} alt="bgImage" />
                   </div>
                   <div className={styles.badge}>
-                    {/* <img src="" alt="Badge image" /> */}
+                    <img src={`${DelivarablesImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
                     <h2>Deliverables</h2>
@@ -356,7 +365,7 @@ const HelpGuide = (props) => {
                     <img src={`${bgImage1}`} alt="bgImage" />
                   </div>
                   <div className={styles.badge}>
-                    {/* <img src="" alt="Badge image" /> */}
+                    <img src={`${clientFuncImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
                     <h2>Client functions</h2>
@@ -391,7 +400,7 @@ const HelpGuide = (props) => {
                     <img src={`${bgImage2}`} alt="bgImage" />
                   </div>
                   <div className={styles.badge}>
-                    {/* <img src="" alt="Badge image" /> */}
+                    <img src={`${productImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
                     <h2>
@@ -438,7 +447,7 @@ const HelpGuide = (props) => {
                     <img src={`${bgImage1}`} alt="bgImage" />
                   </div>
                   <div className={styles.badge}>
-                    {/* <img src="" alt="Badge image" /> */}
+                    <img src={`${productionBlueImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
                     <h2>Production</h2>
@@ -469,7 +478,7 @@ const HelpGuide = (props) => {
                     <img src={`${bgImage2}`} alt="bgImage" />
                   </div>
                   <div className={styles.badge}>
-                    {/* <img src="" alt="Badge image" /> */}
+                    <img src={`${teamsImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
                     <h2>Teams</h2>
@@ -504,7 +513,7 @@ const HelpGuide = (props) => {
                     <img src={`${bgImage2}`} alt="bgImage" />
                   </div>
                   <div className={styles.badge}>
-                    {/* <img src="" alt="Badge image" /> */}
+                    <img src={`${InnovationSysImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
                     <h2>Work allocations</h2>
@@ -551,6 +560,8 @@ const HelpGuide = (props) => {
               <div className={styles.mapsWrapper}>
                 <div className={styles.lMap}>
                   <div className={styles.row1}>
+                    <img src={`${lineY5}`} className={styles.lineY5} alt="" />
+
                     <div className={styles.roundCard}>
                       <p>Buisness Area Manager</p>
                       <div
@@ -580,7 +591,6 @@ const HelpGuide = (props) => {
                         <img src={`${boxYellow}`} alt="" />
                       </div>
                     </div>
-                    <img src={`${lineY5}`} className={styles.lineY5} alt="" />
                     <img src={`${lineY3}`} className={styles.lineY3} alt="" />
                     <img src={`${lineY4}`} className={styles.lineY4} alt="" />
                   </div>
@@ -630,6 +640,16 @@ const HelpGuide = (props) => {
                         className={styles.lineB2}
                         alt=""
                       />
+                      <img
+                        src={`${lineBl5}`}
+                        className={styles.lineL1}
+                        alt=""
+                      />
+                      <img
+                        src={`${lineBl1}`}
+                        className={styles.lineR1}
+                        alt=""
+                      />
                     </div>
                     <div className={styles.roundCard}>
                       <p>Product Manager</p>
@@ -657,6 +677,11 @@ const HelpGuide = (props) => {
                         alt=""
                       />
                     </div>
+                    <img
+                      src={`${lineBl14}`}
+                      className={styles.lineTopL1}
+                      alt=""
+                    />
                     <div className={styles.roundCard}>
                       <p>Product Developer</p>
                       <div
@@ -671,6 +696,7 @@ const HelpGuide = (props) => {
                         <img src={`${avatarBlue}`} alt="" />
                         <div
                           className={`MapPopup4 ${styles.MapPopup} ${styles.closeMapPopup}`}
+                          style={{ fontSize: "11px" }}
                         >
                           Curriculam, professional learning and school
                           improvement. Develops a set of allocated products
@@ -747,16 +773,10 @@ const HelpGuide = (props) => {
                         </div>
                       </div>
                     </div>
-                    <img
-                      src={`${lineBl14}`}
-                      className={styles.lineTopL1}
-                      alt=""
-                    />
-                    <img src={`${lineBl5}`} className={styles.lineL1} alt="" />
+
                     <img src={`${lineBl10}`} className={styles.lineL2} alt="" />
                     <img src={`${lineBl6}`} className={styles.lineL3} alt="" />
                     <img src={`${lineBl11}`} className={styles.lineL4} alt="" />
-                    <img src={`${lineBl1}`} className={styles.lineR1} alt="" />
                     <img src={`${lineBl2}`} className={styles.lineR2} alt="" />
                     <img src={`${lineBl3}`} className={styles.lineR3} alt="" />
                     <img src={`${lineBl4}`} className={styles.lineR4} alt="" />
