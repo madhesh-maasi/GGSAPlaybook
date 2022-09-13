@@ -207,7 +207,7 @@ const Header = (props: any) => {
   }, [props.arrDelSec]);
 
   return (
-    <div style={{ padding: "16px" }}>
+    <div style={{ padding: "16px", paddingBottom: "0" }}>
       <div className={styles.valueofHead}>
         <div className={styles.titleWrapper}>
           {props.isPhaseAvail ? (
@@ -282,7 +282,7 @@ const Header = (props: any) => {
           )}
         </div>
         {props.pageType == "phases" && (
-          <div>
+          <div style={{ transform: "translate(120px, 75px)" }}>
             <Autocomplete
               id="combo-box-demo"
               options={masterDrop}

@@ -21,7 +21,8 @@ const Label = (props) => {
         textAlign: "right",
         display: "flex",
         alignItems: "center",
-        justifyContent: "flex-end",
+        justifyContent: "flex-start",
+        marginLeft: "40px",
       }}
     >
       {labelContent.length > 0 && (

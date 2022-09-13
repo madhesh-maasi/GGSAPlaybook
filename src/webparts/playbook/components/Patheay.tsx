@@ -488,7 +488,7 @@ const Pathway = (props) => {
                         Activity Solution
                       </span>
                     </div>{" "}
-                    <span className={styles.months}>1–6 months</span>
+                    <span className={styles.months}>1-2 Week</span>
                   </button>
                 </h2>
                 <div

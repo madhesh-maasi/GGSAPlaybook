@@ -46,7 +46,7 @@ const Deliverable = (props) => {
                   <div
                     style={{
                       display: "flex",
-                      alignItems: "center",
+                      alignItems: "flex-start",
                       justifyContent: "center",
                       flexDirection: "column",
                       minHeight: "126px",

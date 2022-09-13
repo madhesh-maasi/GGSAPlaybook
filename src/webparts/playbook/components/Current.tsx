@@ -58,7 +58,7 @@ const Current = (props) => {
                     ? "3px solid #f99d26"
                     : "3px solid #007185",
                 padding: "5px 10px",
-                width: "100px",
+                // width: "100px",
                 backgroundColor: "#fff",
                 boxShadow: "0px 3px 10px rgba(0,0,0,0.2)",
                 color: props.pageType == "phases" ? "#fcb427" : "#66afc9",
@@ -82,7 +82,7 @@ const Current = (props) => {
                     ? "3px solid #f99d26"
                     : "3px solid #007185",
                 padding: "5px 10px",
-                width: "100px",
+                // width: "100px",
                 backgroundColor: "#fff",
                 boxShadow: "0px 3px 10px rgba(0,0,0,0.2)",
                 color: props.pageType == "phases" ? "#fcb427" : "#66afc9",
