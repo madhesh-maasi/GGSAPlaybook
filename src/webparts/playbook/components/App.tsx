@@ -342,6 +342,7 @@ const App = (props: any): JSX.Element => {
   /* Get phasesConfig list all datas */
   const getPhasesConfig = (): void => {
     setSelectedCategory("");
+    setAllPhasesSteps([]);
     props.URL.lists
       .getByTitle("PhasesConfig")
       .items.top(4000)
@@ -357,7 +358,7 @@ const App = (props: any): JSX.Element => {
             deliver: arrJSON,
             About: head.About,
             ID: head.ID,
-            TOD: head.TOD.length > 0 ? head.TOD : [],
+            // TOD: head.TOD.length > 0 ? head.TOD : [],
             usersRoles: head.usersRoles.length > 0 ? head.usersRoles : [],
             FooterImage: head.FooterImage,
             Category: head.Category.toLowerCase(),
@@ -384,7 +385,7 @@ const App = (props: any): JSX.Element => {
             deliver: curRow.deliver,
             About: curRow.About,
             ID: curRow.ID,
-            TOD: curRow.TOD,
+            // TOD: curRow.TOD,
             usersRoles: curRow.usersRoles,
             activity: row.Title,
             indx: i,
@@ -394,7 +395,11 @@ const App = (props: any): JSX.Element => {
           };
         });
         //set orderno and prev next
-
+        if (arrDelnPhaseConf.filter((row) => row != undefined).length == 0) {
+          setIsPhaseAvail(false);
+          setLoader(false);
+          return;
+        }
         let moduleArr = arrDelnPhaseConf.map((row, i) => {
           return {
             Title: row.Title,
@@ -1181,9 +1186,9 @@ const App = (props: any): JSX.Element => {
       <NavHeader getNavigationLink={getNavigationLink} navLink={navLink} />
       {navLink == "phases" ? (
         <>
-          {allPhasesSteps.length > 0 && (
+          {
             <>
-              {arrDelSec && (
+              {
                 <Header
                   isPhaseAvail={isPhaseAvail}
                   context={props.context}
@@ -1198,58 +1203,62 @@ const App = (props: any): JSX.Element => {
                   ProjectID={curProject}
                   getCurrProjectData={getCurrProjectData}
                 />
-              )}
-              {loader ? (
-                <Loader />
-              ) : (
-                <>
-                  {isPhaseAvail ? (
-                    <>
-                      <PhaseQuestion
-                        context={props.context}
-                        sp={props.sp}
-                        URL={props.URL}
-                        pageType={page}
-                        PrimarySteps={primarySteps}
-                        arrDelSec={arrDelSec}
-                        reRunning={reRunning}
-                        BeforeModule={BeforeModule}
-                        AfterModule={AfterModule}
-                        firstModOrdNo={firstModOrdNo}
-                        lastModOrdNo={lastModOrdNo}
-                        latestOrderNO={latestOrderNO}
-                        latestModOrdNo={latestModOrdNo}
-                        allPhasesSteps={allPhasesSteps}
-                        changeheaderHandler={changeHeaderHandler}
-                        changeFooterHandler={changeFooterHandler}
-                      />
-                      <Footerimg
-                        context={props.context}
-                        sp={props.sp}
-                        URL={props.URL}
-                        arrFooter={arrFooter}
-                        pageType={page}
-                      />
-                    </>
-                  ) : (
-                    <div className={styles.noPhaseMsg}>
-                      No phases available for selected project!
-                    </div>
-                  )}
+              }
 
-                  <FooterCategories
-                    context={props.context}
-                    sp={props.sp}
-                    URL={props.URL}
-                    footerNavigation={footerNavigation}
-                    pageType={page}
-                    Category={arrCategory}
-                    catConfig={arrCatConfig}
-                  />
-                </>
+              {allPhasesSteps.length > 0 || !isPhaseAvail ? (
+                loader ? (
+                  <Loader />
+                ) : (
+                  <>
+                    {isPhaseAvail ? (
+                      <>
+                        <PhaseQuestion
+                          context={props.context}
+                          sp={props.sp}
+                          URL={props.URL}
+                          pageType={page}
+                          PrimarySteps={primarySteps}
+                          arrDelSec={arrDelSec}
+                          reRunning={reRunning}
+                          BeforeModule={BeforeModule}
+                          AfterModule={AfterModule}
+                          firstModOrdNo={firstModOrdNo}
+                          lastModOrdNo={lastModOrdNo}
+                          latestOrderNO={latestOrderNO}
+                          latestModOrdNo={latestModOrdNo}
+                          allPhasesSteps={allPhasesSteps}
+                          changeheaderHandler={changeHeaderHandler}
+                          changeFooterHandler={changeFooterHandler}
+                        />
+                        <Footerimg
+                          context={props.context}
+                          sp={props.sp}
+                          URL={props.URL}
+                          arrFooter={arrFooter}
+                          pageType={page}
+                        />
+                        <FooterCategories
+                          context={props.context}
+                          sp={props.sp}
+                          URL={props.URL}
+                          footerNavigation={footerNavigation}
+                          pageType={page}
+                          Category={arrCategory}
+                          catConfig={arrCatConfig}
+                        />
+                      </>
+                    ) : (
+                      <div className={styles.noPhaseMsg}>
+                        No phases available for selected project!
+                      </div>
+                    )}
+                  </>
+                )
+              ) : (
+                ""
               )}
             </>
-          )}
+          }
         </>
       ) : navLink == "practice" ? (
         <>
@@ -1296,6 +1305,7 @@ const App = (props: any): JSX.Element => {
                   />
 
                   <FooterCategories
+                    allPhasesSteps={allPhasesSteps}
                     context={props.context}
                     sp={props.sp}
                     URL={props.URL}

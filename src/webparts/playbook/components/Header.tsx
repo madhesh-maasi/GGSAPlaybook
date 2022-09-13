@@ -7,6 +7,8 @@ import {
   IDropdownStyles,
   IDropdownOption,
 } from "@fluentui/react";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const closeIcon = require("../../../ExternalRef/img/close-button.png");
 
@@ -40,11 +42,13 @@ let deveLasLetter;
 let curManagerName;
 let curDeveloperName;
 let arrDeveloperName;
+let arrMaster = [];
+// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 
 const Header = (props: any) => {
   /* All States */
   const [modHeading, setModHeading] = useState(headingDetails);
-  const [mosterDrop, setMasterDrop] = useState([]);
+  const [masterDrop, setMasterDrop] = useState([]);
   const [selectedKey, setSelectedKey] = useState<string | number>();
   const [managerTitle, setManagerTitle] = useState();
   const [manaFirLasLetter, setManaFirLasLetter] = useState();
@@ -52,6 +56,11 @@ const Header = (props: any) => {
   const [deveFirLasLetter, setDeveFirLasLetter] = useState();
   const [arrDeveName, setArrDeveName] = useState([]);
   const [DeveCount, setDeveCount] = useState<string | number>();
+  const [defaultSelectedValue, setDefaultSelectedValue] = useState({
+    key: 0,
+    text: "",
+    Value: null,
+  });
 
   /* function of get header details */
   const getHeaderDetail = () => {
@@ -65,18 +74,21 @@ const Header = (props: any) => {
       About: "",
       isShow: false,
     });
-    headingDetails = {
-      Title: props.arrDelSec.Title,
-      About: props.arrDelSec.About,
-      isShow: false,
-    };
-    let arrMaster = props.arrMasterAnnual.map((dropVal) => {
+    headingDetails = props.arrDelSec
+      ? {
+          Title: props.arrDelSec.Title,
+          About: props.arrDelSec.About,
+          isShow: false,
+        }
+      : headingDetails;
+    arrMaster = props.arrMasterAnnual.map((dropVal) => {
       return { key: dropVal.ID, text: dropVal.Project, Value: dropVal.TOD };
     });
+    setDefaultSelectedValue(arrMaster.filter((row) => row.key == curProId)[0]);
     getProManagerDetail();
+    setMasterDrop(arrMaster);
     setSelectedKey(curProId);
     setModHeading(headingDetails);
-    setMasterDrop(arrMaster);
   };
 
   /* get change the project */
@@ -271,8 +283,25 @@ const Header = (props: any) => {
         </div>
         {props.pageType == "phases" && (
           <div>
-            <Dropdown
-              options={mosterDrop}
+            <Autocomplete
+              id="combo-box-demo"
+              options={masterDrop}
+              defaultValue={defaultSelectedValue.text}
+              getOptionLabel={(option) =>
+                option.text || defaultSelectedValue.text
+              }
+              style={{ width: 300, marginRight: 20 }}
+              onChange={(e, value) => {
+                value && getChangeProject(value.key),
+                  setDefaultSelectedValue({ ...value });
+              }}
+              value={defaultSelectedValue.text}
+              renderInput={(params) => (
+                <TextField {...params} label="" variant="outlined" />
+              )}
+            />
+            {/* <Dropdown
+              options={masterDrop}
               styles={dropdownStyles}
               defaultSelectedKey={selectedKey}
               onChange={(key, text) => {
@@ -280,7 +309,7 @@ const Header = (props: any) => {
                 let selKey: string | number = text.key;
                 getChangeProject(selKey);
               }}
-            />
+            /> */}
           </div>
         )}
         <div className={styles.profiles}>

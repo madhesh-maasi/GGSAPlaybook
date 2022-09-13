@@ -6,7 +6,27 @@ import { Icon } from "@fluentui/react";
 const FooterCategories = (props) => {
   const [category, setCategory] = useState(props.Category);
   const [catConfig, setCatConfig] = useState(props.catConfig);
-
+  // console.log(props.allPhasesSteps);
+  // props.pageType == "phases" ?  setCategory(props.allPhasesSteps)
+  const categoryHandler = () => {
+    console.log(props.Category);
+    console.log(props.allPhasesSteps);
+    let phasesCategory =
+      props.allPhasesSteps && props.allPhasesSteps.length > 0
+        ? props.allPhasesSteps.filter(
+            (v, i, a) =>
+              a["findIndex"]((v2) => v2.Category === v.Category) === i
+          )
+        : [];
+    props.pageType.toLowerCase() != "phases"
+      ? phasesCategory.length == 0
+        ? setCategory([])
+        : setCategory(phasesCategory.map((row) => row.Category))
+      : setCategory(props.Category);
+  };
+  useEffect(() => {
+    categoryHandler();
+  }, [props]);
   return (
     <div className={styles.footerWrapper}>
       <div
@@ -47,7 +67,9 @@ const FooterCategories = (props) => {
                 {" "}
                 <Icon
                   iconName={`${
-                    catConfig.filter((row) => row.Title == cat)[0].Icon
+                    catConfig.filter(
+                      (row) => row.Title.toLowerCase() == cat.toLowerCase()
+                    )[0].Icon
                   }`}
                   style={{
                     color: "white",

@@ -1,7 +1,8 @@
 #workbenchPageContent {
     max-width: 100%;
 }
-.ms-Panel-content{
+
+.ms-Panel-content {
     padding-left: 0 !important;
     padding-right: 0 !important;
     overflow-x: hidden;
@@ -11,4 +12,9 @@
 .CanvasZone {
     padding: 0 !important;
     max-width: 100% !important;
+}
+
+.MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }

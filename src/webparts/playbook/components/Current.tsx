@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./Current.module.scss";
-
+import { Icon } from "@fluentui/react";
 let curAns;
 
 const Current = (props) => {
@@ -67,7 +67,13 @@ const Current = (props) => {
                 marginLeft: "-20px",
               }}
             >
-              {curAns.Time}
+              <div className={styles.TimeSection}>
+                <Icon
+                  iconName="Clock"
+                  style={{ fontWeight: "bold", marginRight: 8 }}
+                />
+                {curAns.Time}
+              </div>
             </div>
             <div
               style={{
