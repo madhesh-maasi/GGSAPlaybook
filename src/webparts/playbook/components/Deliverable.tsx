@@ -26,7 +26,7 @@ const Deliverable = (props) => {
   // life cycle of onload
   useEffect(() => {
     getDeliverableDetails();
-  }, []);
+  }, [props]);
 
   return (
     <div

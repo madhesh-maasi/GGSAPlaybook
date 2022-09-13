@@ -1,7 +1,6 @@
 import * as React from "react";
 import Header from "./Header";
 import Questions from "./Questions";
-import PhasesQuestions from "./PhasesQuestions";
 import Footerimg from "./Footerimg";
 import FooterCategories from "./FooterCategories";
 import { useState, useEffect } from "react";
@@ -11,6 +10,7 @@ import HelpGuide from "./HelpGuide";
 import "../../../ExternalRef/css/style.scss";
 import NavHeader from "./NavHeader";
 import PhaseQuestion from "./PhaseQuestion";
+import styles from "./Playbook.module.scss";
 
 type Detail = {
   Title: string;
@@ -18,7 +18,6 @@ type Detail = {
 };
 
 interface IListConfig {
-  stepsHeading?: string;
   Title: string;
   deliver: string;
   About: string;
@@ -65,7 +64,7 @@ interface IListStep {
   Title: string;
   ID: number;
   Step: string;
-  stepsHeading?: string;
+  stepsHeading: string;
   Time: string;
   CompletedUser: string;
   isRead: boolean;
@@ -121,16 +120,12 @@ let curProjectTOD;
 let arrCurProject;
 let dPID;
 let curActivity;
-<<<<<<< HEAD
-let arrPhasesConfig;
-let arrPhasesSteps;
-=======
 let arrModules = [];
 let arrMainConfig = [];
 let arrActiveSelected = [];
 let arrAllPhasesSteps = [];
 let strSelectedCategory = "";
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
+let strSelecetdPhase = "";
 const App = (props: any): JSX.Element => {
   /* All States */
   const [allSteps, setAllSteps] = useState<IListStep[]>(arrSteps);
@@ -141,14 +136,10 @@ const App = (props: any): JSX.Element => {
   const [userName, setUserName] = useState<string>("");
   const [navLink, setNavLink] = useState("");
   const [page, setPage] = useState("");
-<<<<<<< HEAD
-  const [isPhaseSelected, setIsPhaseSelected] = useState(true);
-  const [phasesSteps, setPhasesSteps] = useState(arrPhasesSteps);
-=======
   const [selectedOrder, setSelectedOrder] = useState(0);
   const [allPhasesSteps, setAllPhasesSteps] = useState(arrAllPhasesSteps);
   const [selectedCategory, setSelectedCategory] = useState("");
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
+  const [isPhaseAvail, setIsPhaseAvail] = useState(true);
   /* Get current user details */
   const getCurrentUserDetail = async () => {
     const paramsString = window.location.href.split("?")[1].toLowerCase();
@@ -166,7 +157,6 @@ const App = (props: any): JSX.Element => {
         curProject = res.AnnualPlanIDId;
         curActivity = res.Title;
       });
-    console.log(curActivity);
     pageType = dPID == null ? "practice" : "phases";
     await props.URL.lists
       .getByTitle(props.masterAnnualPlan)
@@ -354,12 +344,7 @@ const App = (props: any): JSX.Element => {
       .then((res) => {
         let arrJSON;
         arrListConfig = res;
-<<<<<<< HEAD
-=======
-        console.log(arrListConfig);
-        console.log(arrCurProject);
         //adding Config
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
         let arrPhaseConfig = arrListConfig.map((head, i) => {
           arrJSON = JSON.parse(head.Deliverable.slice(1, -1));
           return {
@@ -374,10 +359,17 @@ const App = (props: any): JSX.Element => {
           };
         });
         //merging delivery plan and phasesconfig
+
         let arrDelnPhaseConf = arrCurProject.map((row, i) => {
           let curRow = arrPhaseConfig.filter(
             (row2) => row.Phases == row2.Title
           )[0];
+          setIsPhaseAvail(true);
+          if (!curRow) {
+            setIsPhaseAvail(false);
+            setLoader(false);
+            return;
+          }
           let nextActivity =
             i == arrCurProject.length - 1
               ? undefined
@@ -396,11 +388,8 @@ const App = (props: any): JSX.Element => {
             Category: curRow.Category,
           };
         });
-<<<<<<< HEAD
-=======
-        console.log(arrDelnPhaseConf);
         //set orderno and prev next
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
+
         let moduleArr = arrDelnPhaseConf.map((row, i) => {
           return {
             Title: row.Title,
@@ -426,48 +415,13 @@ const App = (props: any): JSX.Element => {
             Order: i + 1,
           };
         });
-<<<<<<< HEAD
-        arrPhasesConfig = moduleArr;
-        // footerContent = arrListConfig.map((footer) => {
-        //   return {
-        //     Title: footer.Title,
-        //     Category: footer.Category.toLowerCase(),
-        //     FooterImage: footer.FooterImage,
-        //     Next: footer.Next != undefined ? footer.Next.Title : undefined,
-        //     Previous:
-        //       footer.Previous != undefined ? footer.Previous.Title : undefined,
-        //     ID: footer.ID,
-        //     Order: footer.Order,
-        //   };
-        // });
-        footerContent = moduleArr.map((footer) => {
-          return {
-            Title: footer.Title,
-            Category: footer.Category.toLowerCase(),
-            FooterImage: footer.FooterImage,
-            Next: footer.Next != undefined ? footer.Next.Title : undefined,
-            Previous:
-              footer.Previous != undefined ? footer.Previous.Title : undefined,
-            ID: footer.ID,
-            Order: footer.Order,
-          };
-        });
-        // footerContent.filter((v,i,a)=>a.findIndex(v2=>(v2.Ttile===v.Ttile))===i)
-        footerContent = footerContent.filter(
-          (v, i, a) => a["findIndex"]((v2) => v2.Title === v.Title) === i
-        );
-        let arrArrangedModules = [];
-        arrArrangedModules.push(moduleArr.filter((row) => !row.Previous)[0]);
-        moduleArr.slice(1).forEach(() => {
-          let nextAct =
-            arrArrangedModules[arrArrangedModules.length - 1].nextActivity;
-          arrArrangedModules.push(
-            moduleArr.filter((row) => row.activity == nextAct)[0]
-          );
-        });
-        arrArrangedModules = arrArrangedModules.map((row, i) => {
-=======
-        console.log(moduleArr);
+
+        strSelecetdPhase =
+          moduleArr.filter((module) => module.activity == curActivity).length >
+          0
+            ? moduleArr.filter((module) => module.activity == curActivity)[0]
+                .Title
+            : "";
         // removing duplicate here
         moduleArr = moduleArr.filter(
           (v, i, a) => a["findIndex"]((v2) => v2.Title === v.Title) === i
@@ -475,7 +429,6 @@ const App = (props: any): JSX.Element => {
         let arrPhaModule = [];
         // gte index no
         arrPhaModule = moduleArr.map((row, i) => {
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
           return {
             About: row.About,
             Title: row.Title,
@@ -491,9 +444,6 @@ const App = (props: any): JSX.Element => {
             usersRoles: row.usersRoles,
           };
         });
-<<<<<<< HEAD
-        moduleHead = arrArrangedModules.length > 0 && arrArrangedModules;
-=======
         //setin prev and next then order no again
 
         arrMainConfig = arrPhaModule.map((obj, i) => {
@@ -532,36 +482,7 @@ const App = (props: any): JSX.Element => {
             nextActivity: footer.nextActivity,
           };
         });
-        // let arrArrangedModules = [];
-        // arrArrangedModules.push(
-        //   arrMainConfig.filter((row) => !row.Previous)[0]
-        // );
-        // arrMainConfig.slice(1).forEach(() => {
-        //   let nextAct = arrArrangedModules[arrArrangedModules.length - 1].Next;
-        //   arrArrangedModules.push(
-        //     arrMainConfig.filter((row) => row.Title == nextAct)[0]
-        //   );
-        // });
-
-        console.log(arrMainConfig);
-        // arrMainConfig = arrMainConfig.map((row, i) => {
-        //   return {
-        //     Title: row.Title,
-        //     deliver: row.deliver,
-        //     About: row.About,
-        //     Next: row.Next,
-        //     Previous: row.Previous,
-        //     ID: row.ID,
-        //     Order: i + 1,
-        //     TOD: row.TOD,
-        //     usersRoles: row.usersRoles,
-        //     activity: row.activity,
-        //     nextActivity: row.nextActivity,
-        //   };
-        // });
-        // console.log(arrArrangedModules);
         moduleHead = arrMainConfig.length > 0 && arrMainConfig;
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
         firstModOrdNo = moduleHead
           .filter((ordNo) => ordNo.Previous == undefined)
           .map((firstID) => {
@@ -572,8 +493,6 @@ const App = (props: any): JSX.Element => {
           .map((lastID) => {
             return lastID.Order;
           })[0];
-        console.log(firstModOrdNo);
-        console.log(lastModOrdNo);
         getPhases();
       })
       .then(() => {
@@ -664,7 +583,6 @@ const App = (props: any): JSX.Element => {
             Previous: row.PreviousId,
           };
         });
-
         getPhasesSubSteps();
       })
       .catch((err) => {
@@ -785,90 +703,6 @@ const App = (props: any): JSX.Element => {
         });
         setAllSteps([]);
         setAllSteps([...isArrSteps]);
-<<<<<<< HEAD
-        arrPhasesSteps = arrPhasesConfig.map((phase) => {
-          return {
-            Title: phase.Title,
-            deliver: phase.deliver,
-            About: phase.About,
-            ID: phase.ID,
-            TOD: phase.TOD,
-            usersRoles: phase.usersRoles,
-            activity: phase.activity,
-            nextActivity: phase.nextActivity,
-            Previous: phase.Previous,
-            Next: phase.Next,
-            FooterImage: phase.FooterImage,
-            Category: phase.Category,
-            PhaseSteps: isArrSteps.filter(
-              (step) => step.stepsHeading == phase.Title
-            ),
-            isSelected: phase.activity == curActivity,
-          };
-        });
-        console.log(arrPhasesSteps);
-        setPhasesSteps([...arrPhasesSteps]);
-        let startSteps = moduleHead.filter(
-          (firstModule) => firstModule.Previous == undefined
-        )[0];
-        curSteps = arrPhasesSteps.filter((activity) => activity.isSelected)[0]
-          .PhaseSteps[0];
-        // curSteps = [
-        //   {
-        //     Title: startSteps.Title,
-        //     About: startSteps.About,
-        //     deliver: startSteps.deliver,
-        //     Next: startSteps.Next,
-        //     Previous: startSteps.Previous,
-        //     ID: startSteps.ID,
-        //     Order: startSteps.Order,
-        //     usersRoles: startSteps.usersRoles,
-        //     TOD: startSteps.TOD,
-        //     isInComplete: isArrSteps
-        //       .filter((step) => step.stepsHeading == startSteps.Title)
-        //       .some((step) => step.isRead == false),
-        //   },
-        // ].filter((phases) => phases.isInComplete == true)[0];
-        // curSteps = [
-        //   {
-        //     Title: startSteps.Title,
-        //     About: startSteps.About,
-        //     deliver: startSteps.deliver,
-        //     Next: startSteps.Next,
-        //     Previous: startSteps.Previous,
-        //     ID: startSteps.ID,
-        //     Order: startSteps.Order,
-        //     usersRoles: startSteps.usersRoles,
-        //     TOD: startSteps.TOD,
-        //     isInComplete: isArrSteps
-        //       .filter((step) => step.stepsHeading == startSteps.Title)
-        //       .some((step) => step.isRead == false),
-        //   },
-        // ].filter((phases) => phases.isInComplete == true)[0];
-        curSteps != undefined
-          ? ((arrDeliver = moduleHead.filter(
-              (DeliSec) => DeliSec.Title == curSteps.stepsHeading
-            )[0]),
-            (arrPrimarySteps = isArrSteps.filter(
-              (step) => step.stepsHeading == curSteps.stepsHeading
-            )),
-            (footerArr =
-              footerContent.length > 0 &&
-              footerContent.map((row) => {
-                return {
-                  Title: row.Title,
-                  Category: row.Category,
-                  FooterImage: row.FooterImage,
-                  Order: row.Order,
-                  isActive: row.Title == arrDeliver.Title ? true : false,
-                };
-              })),
-            (latestModOrdNo = arrDeliver.Order),
-            arrPrimarySteps.length > 0 &&
-              ((nextModuleTitle = arrDeliver.Next),
-              reArrange(arrPrimarySteps, footerArr, arrDeliver)))
-          : moduleRerunning(startSteps.nextActivity);
-=======
         arrActiveSelected = moduleHead.map((obj) => {
           return {
             Title: obj.Title,
@@ -884,17 +718,12 @@ const App = (props: any): JSX.Element => {
             PhaseSteps: isArrSteps.filter(
               (step) => step.stepsHeading == obj.Title
             ),
-            isSelected: obj.activity == curActivity,
+            isSelected: obj.Title == strSelecetdPhase,
             nextActivity: obj.nextActivity,
             FooterImage: obj.FooterImage,
             Category: obj.Category,
           };
         });
-
-        console.log(arrActiveSelected);
-
-        console.log(arrActiveSelected);
-
         strSelectedCategory != ""
           ? (arrActiveSelected.forEach((li, i) => {
               arrActiveSelected[i].isSelected = false;
@@ -927,96 +756,14 @@ const App = (props: any): JSX.Element => {
         setArrDelSec(arrActiveSelected.filter((row) => row.isSelected)[0]);
         setArrFooter(footerArr);
         setLoader(false);
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  ////First -> Complete ->
-  /* current active module filter functions */
-  const getActiveModule = () => {
-    // [{Activity:"".Steps:[],isSelected:true}]
-    let startSteps;
-    selectedOrder == 0
-      ? (curSteps = moduleHead
-          .map((obj) => {
-            return {
-              Title: obj.Title,
-              About: obj.About,
-              deliver: obj.deliver,
-              Next: obj.Next,
-              Previous: obj.Previous,
-              ID: obj.ID,
-              Order: obj.Order,
-              usersRoles: obj.usersRoles,
-              activity: obj.activity,
-              TOD: obj.TOD,
-              isInComplete: isArrSteps
-                .filter((step) => step.stepsHeading == obj.Title)
-                .some((step) => step.isRead == false),
-            };
-          })
-          .filter((val) => val.activity == curActivity)[0])
-      : ((startSteps = moduleHead.filter(
-          (firstModule) => firstModule.Previous == undefined
-        )[0]),
-        (curSteps = [
-          {
-            Title: startSteps.Title,
-            About: startSteps.About,
-            deliver: startSteps.deliver,
-            Next: startSteps.Next,
-            Previous: startSteps.Previous,
-            ID: startSteps.ID,
-            Order: startSteps.Order,
-            usersRoles: startSteps.usersRoles,
-            TOD: startSteps.TOD,
-            isInComplete: isArrSteps
-              .filter((step) => step.stepsHeading == startSteps.Title)
-              .some((step) => step.isRead == false),
-          },
-        ].filter((phases) => phases.isInComplete == true)[0]));
-    console.log(curSteps);
-    let curObjOrder;
-    curSteps != undefined
-      ? ((arrDeliver = moduleHead.filter(
-          (DeliSec) => DeliSec.Title == curSteps.Title
-        )[0]),
-        (arrPrimarySteps = isArrSteps.filter(
-          (step) => step.stepsHeading == curSteps.Title
-        )),
-        (footerArr =
-          footerContent.length > 0 &&
-          footerContent.map((row) => {
-            return {
-              Title: row.Title,
-              Category: row.Category,
-              FooterImage: row.FooterImage,
-              Order: row.Order,
-              isActive: row.Title == arrDeliver.Title ? true : false,
-            };
-          })),
-        (curObjOrder = moduleHead[0].Order),
-        (latestModOrdNo =
-          curObjOrder == arrDeliver.Order
-            ? arrDeliver.Order + 1
-            : arrDeliver.Order),
-        console.log(latestModOrdNo),
-        arrPrimarySteps.length > 0 &&
-          ((nextModuleTitle = arrDeliver.Next),
-          reArrange(arrPrimarySteps, footerArr, arrDeliver)))
-      : moduleRerunning(curSteps.Next);
-  };
-
   /* All modules Rerunning */
   const moduleRerunning = (nextQus): void => {
-<<<<<<< HEAD
-    // !Arrange SelectedPhases here
-    // if (pageType == "practice") {
-=======
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
     nextQus != undefined
       ? ((PrimaryQus = moduleHead.filter(
           (currentObj) => currentObj.Title == nextQus
@@ -1059,7 +806,6 @@ const App = (props: any): JSX.Element => {
                 reArrange(arrPrimarySteps, footerArr, arrDeliver)))
             : moduleRerunning(PrimaryQus.Next)))
       : comAllModule();
-    // }
   };
 
   /* All Values Rearrangeing */
@@ -1089,7 +835,6 @@ const App = (props: any): JSX.Element => {
       };
     });
     latestOrderNO = DeliverableObj.Order;
-    console.log(latestOrderNO);
     setArrFooter(footerArr);
     setArrDelSec(DeliverableObj);
     setPrimarySteps([]);
@@ -1260,11 +1005,7 @@ const App = (props: any): JSX.Element => {
       .top(4000)
       .get()
       .then((values) => {
-<<<<<<< HEAD
-=======
-        console.log(values);
         // Get items filtered ny TOD
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
         let arrProject = values
           .map((arr) => {
             return {
@@ -1279,12 +1020,7 @@ const App = (props: any): JSX.Element => {
         // filter completion
 
         let totObj = arrProject.length - 1;
-<<<<<<< HEAD
-=======
-        console.log(arrProject);
-        console.log(totObj);
         //Set Prevs and Next to Activities
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
         arrCurProject = arrProject.map((e, i) => {
           return {
             Title: e.Title,
@@ -1309,6 +1045,8 @@ const App = (props: any): JSX.Element => {
     curProject = null;
     curProject = Id;
     // curActivity = type;
+    curActivity = "";
+    strSelecetdPhase = "";
     getDliverPlan(Id, type);
   };
 
@@ -1318,7 +1056,7 @@ const App = (props: any): JSX.Element => {
     setNavLink(nav);
     getCategoryConfig(nav);
     setSelectedCategory("");
-    strSelectedCategory=""
+    strSelectedCategory = "";
   };
   /* footer Navigation function */
   const footerNavigation = (type, cat) => {
@@ -1352,71 +1090,60 @@ const App = (props: any): JSX.Element => {
         <>
           {allPhasesSteps.length > 0 && (
             <>
+              {arrDelSec && (
+                <Header
+                  isPhaseAvail={isPhaseAvail}
+                  context={props.context}
+                  sp={props.sp}
+                  URL={props.URL}
+                  pageType={page}
+                  arrDelSec={arrDelSec}
+                  userName={userName}
+                  valueOfFirstLetter={valueOfFirstLetter}
+                  valueOfLastLetter={valueOfLastLetter}
+                  arrMasterAnnual={arrMasterAnnual}
+                  ProjectID={curProject}
+                  getCurrProjectData={getCurrProjectData}
+                />
+              )}
               {loader ? (
                 <Loader />
               ) : (
                 <>
-<<<<<<< HEAD
-                  <Header
-                    context={props.context}
-                    sp={props.sp}
-                    URL={props.URL}
-                    pageType={page}
-                    arrDelSec={arrDelSec}
-                    userName={userName}
-                    valueOfFirstLetter={valueOfFirstLetter}
-                    valueOfLastLetter={valueOfLastLetter}
-                    arrMasterAnnual={arrMasterAnnual}
-                    ProjectID={curProject}
-                    getCurrProjectData={getCurrProjectData}
-                  />
-                  <PhasesQuestions
-=======
-                  {arrDelSec && (
-                    <Header
-                      context={props.context}
-                      sp={props.sp}
-                      URL={props.URL}
-                      pageType={page}
-                      arrDelSec={arrDelSec}
-                      userName={userName}
-                      valueOfFirstLetter={valueOfFirstLetter}
-                      valueOfLastLetter={valueOfLastLetter}
-                      arrMasterAnnual={arrMasterAnnual}
-                      ProjectID={curProject}
-                      getCurrProjectData={getCurrProjectData}
-                    />
+                  {isPhaseAvail ? (
+                    <>
+                      <PhaseQuestion
+                        context={props.context}
+                        sp={props.sp}
+                        URL={props.URL}
+                        pageType={page}
+                        PrimarySteps={primarySteps}
+                        arrDelSec={arrDelSec}
+                        reRunning={reRunning}
+                        BeforeModule={BeforeModule}
+                        AfterModule={AfterModule}
+                        firstModOrdNo={firstModOrdNo}
+                        lastModOrdNo={lastModOrdNo}
+                        latestOrderNO={latestOrderNO}
+                        latestModOrdNo={latestModOrdNo}
+                        allPhasesSteps={allPhasesSteps}
+                        changeheaderHandler={changeHeaderHandler}
+                        changeFooterHandler={changeFooterHandler}
+                      />
+                      <Footerimg
+                        context={props.context}
+                        sp={props.sp}
+                        URL={props.URL}
+                        arrFooter={arrFooter}
+                        pageType={page}
+                      />
+                    </>
+                  ) : (
+                    <div className={styles.noPhaseMsg}>
+                      No phases available for selected project!
+                    </div>
                   )}
-                  <PhaseQuestion
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
-                    context={props.context}
-                    sp={props.sp}
-                    URL={props.URL}
-                    pageType={page}
-                    PrimarySteps={primarySteps}
-                    arrDelSec={arrDelSec}
-                    reRunning={reRunning}
-                    BeforeModule={BeforeModule}
-                    AfterModule={AfterModule}
-                    firstModOrdNo={firstModOrdNo}
-                    lastModOrdNo={lastModOrdNo}
-                    latestOrderNO={latestOrderNO}
-                    latestModOrdNo={latestModOrdNo}
-<<<<<<< HEAD
-                    phasesSteps={phasesSteps}
-=======
-                    allPhasesSteps={allPhasesSteps}
-                    changeheaderHandler={changeHeaderHandler}
-                    changeFooterHandler={changeFooterHandler}
->>>>>>> 91eab115d792e8df42f6d9fc67ceee2dcd4408f5
-                  />
-                  <Footerimg
-                    context={props.context}
-                    sp={props.sp}
-                    URL={props.URL}
-                    arrFooter={arrFooter}
-                    pageType={page}
-                  />
+
                   <FooterCategories
                     context={props.context}
                     sp={props.sp}
@@ -1474,6 +1201,7 @@ const App = (props: any): JSX.Element => {
                     arrFooter={arrFooter}
                     pageType={page}
                   />
+
                   <FooterCategories
                     context={props.context}
                     sp={props.sp}

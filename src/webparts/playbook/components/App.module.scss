@@ -1,4 +1,4 @@
-.Spinner{
+.Spinner {
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -6,4 +6,12 @@
     left: 0;
     background: #fff;
     z-index: 10;
+}
+
+.noPhaseMsg {
+    height: calc(100vh - 370px);
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+    color: #00859c;
 }
