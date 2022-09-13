@@ -1,31 +1,36 @@
 .CurrentCover {
-  padding: 10px 10px 26px;
-  width: 500px;
-  min-height: 80px;
-  color: #fff;
-  background-color: #00859c;
+    padding: 10px 10px 26px;
+    width: 500px;
+    min-height: 80px;
+    color: #fff;
+    background-color: #00859c;
 }
 
-.phaseCurrentCover{
-  padding: 10px 10px 26px;
-  width: 500px;
-  min-height: 80px;
-  color: #fff;
-  background-color: #f99d26;
+.phaseCurrentCover {
+    padding: 10px 10px 26px;
+    width: 500px;
+    min-height: 80px;
+    color: #fff;
+    background-color: #f99d26;
 }
 
 .currentCompleteQuestionsHead {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  padding: 26px 0px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 26px 0px;
 }
 
 .currentQuestionsHead {
-  font-size: 20px;
-  font-weight: bold;
-  display: inline-block;
-  border-bottom: 2px solid;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    border-bottom: 2px solid;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.TimeSection {
+    display: flex;
+    align-items: center;
 }

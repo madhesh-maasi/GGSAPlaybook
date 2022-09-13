@@ -126,6 +126,8 @@ let arrActiveSelected = [];
 let arrAllPhasesSteps = [];
 let strSelectedCategory = "";
 let strSelecetdPhase = "";
+let navComplete: boolean;
+
 const App = (props: any): JSX.Element => {
   /* All States */
   const [allSteps, setAllSteps] = useState<IListStep[]>(arrSteps);
@@ -140,6 +142,7 @@ const App = (props: any): JSX.Element => {
   const [allPhasesSteps, setAllPhasesSteps] = useState(arrAllPhasesSteps);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isPhaseAvail, setIsPhaseAvail] = useState(true);
+
   /* Get current user details */
   const getCurrentUserDetail = async () => {
     const paramsString = window.location.href.split("?")[1].toLowerCase();
@@ -266,6 +269,7 @@ const App = (props: any): JSX.Element => {
               head.usersRoles && head.usersRoles.length > 0
                 ? head.usersRoles
                 : [],
+            Category: head.Category,
           };
         });
         footerContent = arrListConfig.map((footer) => {
@@ -299,6 +303,7 @@ const App = (props: any): JSX.Element => {
             ID: row.ID,
             Order: i + 1,
             usersRoles: row.usersRoles,
+            Category: row.Category,
           };
         });
         moduleHead = arrArrangedModules.length > 0 && arrArrangedModules;
@@ -337,6 +342,7 @@ const App = (props: any): JSX.Element => {
   /* Get phasesConfig list all datas */
   const getPhasesConfig = (): void => {
     setSelectedCategory("");
+    setAllPhasesSteps([]);
     props.URL.lists
       .getByTitle("PhasesConfig")
       .items.top(4000)
@@ -352,7 +358,7 @@ const App = (props: any): JSX.Element => {
             deliver: arrJSON,
             About: head.About,
             ID: head.ID,
-            TOD: head.TOD.length > 0 ? head.TOD : [],
+            // TOD: head.TOD.length > 0 ? head.TOD : [],
             usersRoles: head.usersRoles.length > 0 ? head.usersRoles : [],
             FooterImage: head.FooterImage,
             Category: head.Category.toLowerCase(),
@@ -379,7 +385,7 @@ const App = (props: any): JSX.Element => {
             deliver: curRow.deliver,
             About: curRow.About,
             ID: curRow.ID,
-            TOD: curRow.TOD,
+            // TOD: curRow.TOD,
             usersRoles: curRow.usersRoles,
             activity: row.Title,
             indx: i,
@@ -389,7 +395,11 @@ const App = (props: any): JSX.Element => {
           };
         });
         //set orderno and prev next
-
+        if (arrDelnPhaseConf.filter((row) => row != undefined).length == 0) {
+          setIsPhaseAvail(false);
+          setLoader(false);
+          return;
+        }
         let moduleArr = arrDelnPhaseConf.map((row, i) => {
           return {
             Title: row.Title,
@@ -623,24 +633,35 @@ const App = (props: any): JSX.Element => {
         });
         setAllSteps([]);
         setAllSteps([...isArrSteps]);
-        let startSteps = moduleHead.filter(
-          (firstModule) => firstModule.Previous == undefined
-        )[0];
-        curSteps = [
-          {
-            Title: startSteps.Title,
-            About: startSteps.About,
-            deliver: startSteps.deliver,
-            Next: startSteps.Next,
-            Previous: startSteps.Previous,
-            ID: startSteps.ID,
-            Order: startSteps.Order,
-            usersRoles: startSteps.usersRoles,
-            isInComplete: isArrSteps
-              .filter((step) => step.stepsHeading == startSteps.Title)
-              .some((step) => step.isRead == false),
-          },
-        ].filter((practice) => practice.isInComplete == true)[0];
+        let startSteps;
+        strSelectedCategory == "routine operations practices"
+          ? ((curSteps = moduleHead.filter(
+              (obj) => obj.Category.toLowerCase() == strSelectedCategory
+            )[0]),
+            console.log(curSteps))
+          : strSelectedCategory == "routine innovation practices"
+          ? ((curSteps = moduleHead.filter(
+              (obj) => obj.Category.toLowerCase() == strSelectedCategory
+            )[0]),
+            console.log(curSteps))
+          : ((startSteps = moduleHead.filter(
+              (firstModule) => firstModule.Previous == undefined
+            )[0]),
+            (curSteps = [
+              {
+                Title: startSteps.Title,
+                About: startSteps.About,
+                deliver: startSteps.deliver,
+                Next: startSteps.Next,
+                Previous: startSteps.Previous,
+                ID: startSteps.ID,
+                Order: startSteps.Order,
+                usersRoles: startSteps.usersRoles,
+                isInComplete: isArrSteps
+                  .filter((step) => step.stepsHeading == startSteps.Title)
+                  .some((step) => step.isRead == false),
+              },
+            ].filter((practice) => practice.isInComplete == true)[0]));
         curSteps != undefined
           ? ((arrDeliver = moduleHead.filter(
               (DeliSec) => DeliSec.Title == curSteps.Title
@@ -659,10 +680,17 @@ const App = (props: any): JSX.Element => {
                   isActive: row.Title == arrDeliver.Title ? true : false,
                 };
               })),
-            (latestModOrdNo = arrDeliver.Order),
-            arrPrimarySteps.length > 0 &&
-              ((nextModuleTitle = arrDeliver.Next),
-              reArrange(arrPrimarySteps, footerArr, arrDeliver)))
+            strSelectedCategory == ""
+              ? ((latestModOrdNo = arrDeliver.Order),
+                arrPrimarySteps.length > 0 &&
+                  ((nextModuleTitle = arrDeliver.Next),
+                  reArrange(arrPrimarySteps, footerArr, arrDeliver)))
+              : getLatestOrderNo(
+                  curSteps.Title,
+                  arrPrimarySteps,
+                  footerArr,
+                  arrDeliver
+                ))
           : moduleRerunning(startSteps.Next);
       })
       .catch((err) => {
@@ -760,6 +788,68 @@ const App = (props: any): JSX.Element => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  /* get latest order number function */
+  const getLatestOrderNo = (
+    nextQus,
+    arrPrimarySteps,
+    footerArr,
+    arrDeliver
+  ) => {
+    nextQus != undefined
+      ? ((PrimaryQus = moduleHead.filter(
+          (currentObj) => currentObj.Title == nextQus
+        )[0]),
+        PrimaryQus != undefined &&
+          ((curSteps = [
+            {
+              Title: PrimaryQus.Title,
+              About: PrimaryQus.About,
+              deliver: PrimaryQus.deliver,
+              Next: PrimaryQus.Next,
+              Previous: PrimaryQus.Previous,
+              ID: PrimaryQus.ID,
+              Order: PrimaryQus.Order,
+              isInComplete: isArrSteps
+                .filter((step) => step.stepsHeading == PrimaryQus.Title)
+                .some((step) => step.isRead == false),
+            },
+          ].filter((isStep) => isStep.isInComplete == true)[0]),
+          curSteps != undefined
+            ? navComplete == true
+              ? ((arrDeliver = moduleHead.filter(
+                  (deliver) => deliver.Title == curSteps.Title
+                )[0]),
+                (arrPrimarySteps = isArrSteps.filter(
+                  (step) => step.stepsHeading == curSteps.Title
+                )),
+                (footerArr =
+                  footerContent.length > 0 &&
+                  footerContent.map((row) => {
+                    return {
+                      Title: row.Title,
+                      Category: row.Category,
+                      FooterImage: row.FooterImage,
+                      Order: row.Order,
+                      isActive: row.Title == arrDeliver.Title ? true : false,
+                    };
+                  })),
+                (latestModOrdNo = arrDeliver.Order),
+                arrPrimarySteps.length > 0 &&
+                  ((nextModuleTitle = arrDeliver.Next),
+                  (navComplete = false),
+                  reArrange(arrPrimarySteps, footerArr, arrDeliver)))
+              : ((latestModOrdNo = curSteps.Order),
+                reArrange(arrPrimarySteps, footerArr, arrDeliver))
+            : getLatestOrderNo(
+                PrimaryQus.Next,
+                arrPrimarySteps,
+                footerArr,
+                arrDeliver
+              )))
+      : ((latestModOrdNo = moduleHead[moduleHead.length - 1].Order),
+        reArrange(arrPrimarySteps, footerArr, arrDeliver));
   };
 
   /* All modules Rerunning */
@@ -948,6 +1038,7 @@ const App = (props: any): JSX.Element => {
   /* next module running */
   const reRunning = (curModOrdNo, nextTitle): void => {
     setSelectedOrder(1);
+    navComplete = true;
     lastModOrdNo == curModOrdNo
       ? (setLoader(true),
         (latestOrderNO = moduleHead[0].Order),
@@ -1058,19 +1149,25 @@ const App = (props: any): JSX.Element => {
     setSelectedCategory("");
     strSelectedCategory = "";
   };
+
   /* footer Navigation function */
   const footerNavigation = (type, cat) => {
     pageType = type;
     setNavLink(pageType);
     setPage(pageType);
     getCategoryConfig(pageType);
-    strSelectedCategory = cat;
+    navComplete = false;
+    strSelectedCategory = "";
+    strSelectedCategory = cat.toLowerCase();
+    console.log(strSelectedCategory);
     // pageType == "phases" ? getPhasesConfig() : getPracticeConfig();
   };
+
   const changeHeaderHandler = (selectedPhase) => {
     setArrDelSec(undefined);
     setArrDelSec({ ...selectedPhase });
   };
+
   const changeFooterHandler = (selectedTitle) => {
     footerArr.forEach((li, i) => {
       footerArr[i].isActive = false;
@@ -1078,6 +1175,7 @@ const App = (props: any): JSX.Element => {
     footerArr.filter((row) => row.Title == selectedTitle)[0].isActive = true;
     setArrFooter([...footerArr]);
   };
+
   /* life cycle of onload */
   useEffect(() => {
     getCurrentUserDetail();
@@ -1088,9 +1186,9 @@ const App = (props: any): JSX.Element => {
       <NavHeader getNavigationLink={getNavigationLink} navLink={navLink} />
       {navLink == "phases" ? (
         <>
-          {allPhasesSteps.length > 0 && (
+          {
             <>
-              {arrDelSec && (
+              {
                 <Header
                   isPhaseAvail={isPhaseAvail}
                   context={props.context}
@@ -1105,58 +1203,62 @@ const App = (props: any): JSX.Element => {
                   ProjectID={curProject}
                   getCurrProjectData={getCurrProjectData}
                 />
-              )}
-              {loader ? (
-                <Loader />
-              ) : (
-                <>
-                  {isPhaseAvail ? (
-                    <>
-                      <PhaseQuestion
-                        context={props.context}
-                        sp={props.sp}
-                        URL={props.URL}
-                        pageType={page}
-                        PrimarySteps={primarySteps}
-                        arrDelSec={arrDelSec}
-                        reRunning={reRunning}
-                        BeforeModule={BeforeModule}
-                        AfterModule={AfterModule}
-                        firstModOrdNo={firstModOrdNo}
-                        lastModOrdNo={lastModOrdNo}
-                        latestOrderNO={latestOrderNO}
-                        latestModOrdNo={latestModOrdNo}
-                        allPhasesSteps={allPhasesSteps}
-                        changeheaderHandler={changeHeaderHandler}
-                        changeFooterHandler={changeFooterHandler}
-                      />
-                      <Footerimg
-                        context={props.context}
-                        sp={props.sp}
-                        URL={props.URL}
-                        arrFooter={arrFooter}
-                        pageType={page}
-                      />
-                    </>
-                  ) : (
-                    <div className={styles.noPhaseMsg}>
-                      No phases available for selected project!
-                    </div>
-                  )}
+              }
 
-                  <FooterCategories
-                    context={props.context}
-                    sp={props.sp}
-                    URL={props.URL}
-                    footerNavigation={footerNavigation}
-                    pageType={page}
-                    Category={arrCategory}
-                    catConfig={arrCatConfig}
-                  />
-                </>
+              {allPhasesSteps.length > 0 || !isPhaseAvail ? (
+                loader ? (
+                  <Loader />
+                ) : (
+                  <>
+                    {isPhaseAvail ? (
+                      <>
+                        <PhaseQuestion
+                          context={props.context}
+                          sp={props.sp}
+                          URL={props.URL}
+                          pageType={page}
+                          PrimarySteps={primarySteps}
+                          arrDelSec={arrDelSec}
+                          reRunning={reRunning}
+                          BeforeModule={BeforeModule}
+                          AfterModule={AfterModule}
+                          firstModOrdNo={firstModOrdNo}
+                          lastModOrdNo={lastModOrdNo}
+                          latestOrderNO={latestOrderNO}
+                          latestModOrdNo={latestModOrdNo}
+                          allPhasesSteps={allPhasesSteps}
+                          changeheaderHandler={changeHeaderHandler}
+                          changeFooterHandler={changeFooterHandler}
+                        />
+                        <Footerimg
+                          context={props.context}
+                          sp={props.sp}
+                          URL={props.URL}
+                          arrFooter={arrFooter}
+                          pageType={page}
+                        />
+                        <FooterCategories
+                          context={props.context}
+                          sp={props.sp}
+                          URL={props.URL}
+                          footerNavigation={footerNavigation}
+                          pageType={page}
+                          Category={arrCategory}
+                          catConfig={arrCatConfig}
+                        />
+                      </>
+                    ) : (
+                      <div className={styles.noPhaseMsg}>
+                        No phases available for selected project!
+                      </div>
+                    )}
+                  </>
+                )
+              ) : (
+                ""
               )}
             </>
-          )}
+          }
         </>
       ) : navLink == "practice" ? (
         <>
@@ -1203,6 +1305,7 @@ const App = (props: any): JSX.Element => {
                   />
 
                   <FooterCategories
+                    allPhasesSteps={allPhasesSteps}
                     context={props.context}
                     sp={props.sp}
                     URL={props.URL}
