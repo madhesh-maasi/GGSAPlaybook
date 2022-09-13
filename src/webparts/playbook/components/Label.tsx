@@ -7,13 +7,13 @@ const Label = (props) => {
 
   // get Label content
   const getLabelSec = () => {
-    setLabelContent(props.arrDelSec.usersRoles);
+    setLabelContent([...props.arrDelSec.usersRoles]);
   };
 
   // life cycle
   useEffect(() => {
     getLabelSec();
-  }, []);
+  }, [props.arrDelSec.usersRoles]);
 
   return (
     <div

@@ -198,70 +198,76 @@ const Header = (props: any) => {
     <div style={{ padding: "16px" }}>
       <div className={styles.valueofHead}>
         <div className={styles.titleWrapper}>
-          <span
-            className={
-              props.pageType == "phases" ? styles.phaseTitle : styles.title
-            }
-          >
-            {modHeading.Title}{" "}
-            <Icon
-              iconName="InfoSolid"
-              style={{ cursor: "pointer" }}
+          {props.isPhaseAvail ? (
+            <span
               className={
-                props.pageType == "phases"
-                  ? styles.phaseInfoIcon
-                  : styles.infoIcon
+                props.pageType == "phases" ? styles.phaseTitle : styles.title
               }
-              onClick={() => {
-                modHeading.isShow = true;
-                setModHeading({ ...modHeading });
-              }}
-            />
-            {modHeading.isShow == true && (
-              <div className={styles.parentModalBox}>
-                <div className={styles.modalBox}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
+            >
+              {modHeading.Title}{" "}
+              <Icon
+                iconName="InfoSolid"
+                style={{ cursor: "pointer" }}
+                className={
+                  props.pageType == "phases"
+                    ? styles.phaseInfoIcon
+                    : styles.infoIcon
+                }
+                onClick={() => {
+                  modHeading.isShow = true;
+                  setModHeading({ ...modHeading });
+                }}
+              />
+              {modHeading.isShow == true && (
+                <div className={styles.parentModalBox}>
+                  <div className={styles.modalBox}>
                     <div
-                      className={
-                        props.pageType == "phases"
-                          ? styles.phaseModalSet
-                          : styles.modalSet
-                      }
-                      style={{ display: "flex" }}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
                     >
-                      <Icon
-                        iconName="Settings"
+                      <div
+                        className={
+                          props.pageType == "phases"
+                            ? styles.phaseModalSet
+                            : styles.modalSet
+                        }
+                        style={{ display: "flex" }}
+                      >
+                        <Icon
+                          iconName="Settings"
+                          style={{
+                            color: "white",
+                          }}
+                        />
+                        {"      "}
+                        <div style={{ transform: "translateY(5px)" }}>
+                          About
+                        </div>
+                      </div>
+                      <img
                         style={{
-                          color: "white",
+                          cursor: "pointer",
+                        }}
+                        src={`${closeIcon}`}
+                        // height={15}
+                        // width={"20px"}
+                        onClick={() => {
+                          modHeading.isShow = false;
+                          setModHeading({ ...modHeading });
                         }}
                       />
-                      {"      "}
-                      <div style={{ transform: "translateY(5px)" }}>About</div>
                     </div>
-                    <img
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      src={`${closeIcon}`}
-                      // height={15}
-                      // width={"20px"}
-                      onClick={() => {
-                        modHeading.isShow = false;
-                        setModHeading({ ...modHeading });
-                      }}
-                    />
+                    <p>{modHeading.About}</p>
                   </div>
-                  <p>{modHeading.About}</p>
                 </div>
-              </div>
-            )}
-          </span>
+              )}
+            </span>
+          ) : (
+            ""
+          )}
         </div>
         {props.pageType == "phases" && (
           <div>
