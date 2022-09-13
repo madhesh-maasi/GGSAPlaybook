@@ -12,6 +12,9 @@
     cursor: pointer;
     width: 100%;
     padding-left: 13px;
+    li{
+        cursor: text !important;
+    }
     &::before {
         content: "";
         position: absolute;

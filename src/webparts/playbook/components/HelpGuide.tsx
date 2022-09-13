@@ -267,27 +267,29 @@ const HelpGuide = (props) => {
                 <div className={styles.bottomContent}>
                   <div className={styles.textContent}>
                     <li>
-                      The Annual Plan lists all the Products and Solutions that
-                      are to be developed for that calendar year.
+                      The <b>Annual Plan</b> lists all the <b>Products</b> and
+                      <b>Solutions</b> that are to be developed for that
+                      calendar year.
                     </li>
                     <li>
-                      The Delivery Plan lists all of the deliverables for that
-                      particular Product or Solution.
+                      The <b>Delivery Plan</b> lists all of the deliverables for
+                      that particular <b>Product or Solution</b>.
                     </li>
                     <li>
-                      The Production board lists the work, called Activities,
-                      that you will do for that week. All roles log their
-                      productor solution development activity on the Production
-                      Board each week. 
+                      The <b>Production board</b> lists the work, called
+                      Activities, that you will do for that week. All roles log
+                      their productor solution development <b>activity</b> on
+                      the <b>Production Board</b> each week. 
                     </li>
                     <li>
-                      The Activity Planner lists the steps that standard
-                      Activity follows and indicates when each one is completed
-                      by team members.{" "}
+                      The <b>Activity Planner</b> lists the steps that standard
+                      <b>Activity</b> follows and indicates when each one is
+                      completed by team members.{" "}
                     </li>
                     <li>
-                      The Document Review shows all the Deliverables for that
-                      week that you have submitted for review and/or sign off.
+                      The <b>Document Review</b> shows all the{" "}
+                      <b>Deliverables</b> for that week that you have submitted
+                      for review and/or sign off.
                     </li>
                   </div>
                 </div>
@@ -307,25 +309,28 @@ const HelpGuide = (props) => {
                 <div className={styles.bottomContent}>
                   <div className={styles.textContent}>
                     <li>
-                      Every piece of work associated with a Product or Solution
-                      is called a Deliverable.
+                      Every piece of work associated with a <b>Product</b> or
+                      <b>Solution</b> is called a Deliverable.
                     </li>
-                    <li>Every Deliverable belongs to a business area.</li>
                     <li>
-                      Each Deliverable is categorised as either a:
+                      Every <b>Deliverable</b> belongs to a business area.
+                    </li>
+                    <li>
+                      Each <b>Deliverable</b> is categorised as either a:
                       <span>
-                        Planning: To plan deliverables, e.g. Commencement Brief,
-                        Delivery Plan
+                        <b>Planning</b>: To plan deliverables, e.g. Commencement
+                        Brief, Delivery Plan
                       </span>
                       <span>
-                        Development: To design and build a deliverable, e.g. a
-                        strategic conversation, User Stories
+                        <b>Development</b>: To design and build a deliverable,
+                        e.g. a strategic conversation, User Stories
                       </span>
                       <span>
-                        Product/solution: The actual piece or component that is
-                        part of a product that the customer uses, e.g. Teaching
-                        Guide, Professional Learning module or a School
-                        Improvement Plan or part of the solution the team uses
+                        <b> Product/solution</b>: <b>The actual piece</b> or
+                        <b>component</b> that is part of a product that the
+                        customer uses, e.g. Teaching Guide, Professional
+                        Learning module or a School Improvement Plan or part of
+                        the <b>solution</b> the team uses
                       </span>
                     </li>
                   </div>
@@ -456,18 +461,19 @@ const HelpGuide = (props) => {
                 <div className={`${(styles.bottomContent, styles.tab4Cont)}`}>
                   <div className={styles.textContent}>
                     <li>
-                      There are 10 business areas made up of three Product
-                      Development, six Skilled Services and one school support
-                      area, being School Partnerships.{" "}
+                      There are 10 <b>business areas</b> made up of three
+                      <b>Product Development</b>, six Skilled Services and one
+                      school support area, being <b>School Partnerships.</b>{" "}
                     </li>
                     <li>
-                      Product Managers and Developers work in Curriculum,
-                      Professional Learning and School Improvement.
+                      <b>Product Managers</b> and <b>Developers</b> work in
+                      <b>Curriculum, Professional Learning</b> and{" "}
+                      <b>School Improvement.</b>
                     </li>
                     <li>
-                      Specialist Developers work in their respective Skilled
-                      Services business areas and work products and solutions as
-                      required.
+                      <b>Specialist Developers</b> work in their respective
+                      <b>Skilled Services business areas</b> and work products
+                      and solutions as required.
                     </li>
                   </div>
                 </div>
@@ -486,15 +492,17 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab4Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>Clients provide direction on all work</li>
                     <li>
-                      Product Managers support their team members to deliver
-                      work based on the Client direction.
+                      <b>Clients</b> provide direction on all work
                     </li>
                     <li>
-                      Business Area Leads get direction from Clients for their
-                      team’s work for each year which the build into the Annual
-                      Plan.{" "}
+                      <b>Product Managers</b> support their team members to
+                      deliver work based on the Client direction.
+                    </li>
+                    <li>
+                      <b>Business Area Leads</b> get direction from Clients for
+                      their team’s work for each year which the build into the
+                      <b>Annual Plan.</b>{" "}
                     </li>
                     <li>
                       They support their team members to plan so they complete

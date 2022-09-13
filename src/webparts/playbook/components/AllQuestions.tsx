@@ -38,42 +38,40 @@ const AllQuestions = (props) => {
                 )}
               </div>
             )}
-            {
-              row.isRead == true && (
-                <div
-                  className={
-                    props.pageType.toLowerCase() == "phases"
-                      ? styles.phaseListItemCom
-                      : styles.listItemCom
-                  }
-                >
-                  <div style={{ display: "flex" }}>
-                    <Icon
-                      iconName="AcceptMedium"
-                      className={
-                        props.pageType.toLowerCase() == "phases"
-                          ? styles.phasesListComItem
-                          : styles.listComItem
-                      }
-                    />
-                    <div>{row.Step}</div>
-                  </div>
-                  {row.arrSubStep.length > 0 ? (
-                    <ul>
-                      {row.arrSubStep.map((row) => {
-                        return (
-                          <div>
-                            <li>{row.SubSteps}</li>
-                          </div>
-                        );
-                      })}
-                    </ul>
-                  ) : (
-                    ""
-                  )}
+            {row.isRead == true && (
+              <div
+                className={
+                  props.pageType.toLowerCase() == "phases"
+                    ? styles.phaseListItemCom
+                    : styles.listItemCom
+                }
+              >
+                <div style={{ display: "flex" }}>
+                  <Icon
+                    iconName="AcceptMedium"
+                    className={
+                      props.pageType.toLowerCase() == "phases"
+                        ? styles.phasesListComItem
+                        : styles.listComItem
+                    }
+                  />
+                  <div>{row.Step}</div>
                 </div>
-              )
-            }
+                {row.arrSubStep.length > 0 ? (
+                  <ul>
+                    {row.arrSubStep.map((row) => {
+                      return (
+                        <div>
+                          <li>{row.SubSteps}</li>
+                        </div>
+                      );
+                    })}
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </div>
+            )}
           </>
         );
       })}
