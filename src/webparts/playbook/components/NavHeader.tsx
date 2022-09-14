@@ -67,7 +67,7 @@ const NavHeader = (props) => {
                   props.getNavigationLink("practice");
                 }}
               >
-                Practice
+                Practices
               </div>
               <div
                 className={
@@ -89,7 +89,7 @@ const NavHeader = (props) => {
                   props.getNavigationLink("helpguid");
                 }}
               >
-                Help Guide
+                Help guide
               </div>
             </div>
           </Panel>

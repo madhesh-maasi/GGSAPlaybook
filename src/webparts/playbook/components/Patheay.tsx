@@ -76,7 +76,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseOne"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>Product</span>
                     </div>{" "}
                     <span className={styles.months}>6-12 months</span>
@@ -109,7 +109,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseThree"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
                         Product initiative
                       </span>
@@ -143,7 +143,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseTwo"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
                         Organisation Solution
                       </span>
@@ -189,7 +189,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseFour"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>Product</span>
                     </div>{" "}
                     <span className={styles.months}>2-3 months</span>
@@ -223,7 +223,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseFive"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
                         Product tool
                       </span>
@@ -257,7 +257,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseSix"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
                         Project Solution
                       </span>
@@ -303,7 +303,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseSeven"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>Task</span>
                     </div>{" "}
                     <span className={styles.months}>1-6 Weeks</span>
@@ -336,7 +336,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseEight"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
                         Product related
                       </span>
@@ -370,7 +370,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseNine"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
                         Task Solution
                       </span>
@@ -416,7 +416,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseTen"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>Activity</span>
                     </div>{" "}
                     <span className={styles.months}>1-3 days</span>
@@ -449,7 +449,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseEleven"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
                         Activity planner
                       </span>
@@ -483,7 +483,7 @@ const Pathway = (props) => {
                     aria-controls="flush-collapseTwelve"
                   >
                     <div>
-                      <span>+</span>{" "}
+                      <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
                         Activity Solution
                       </span>
