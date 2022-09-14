@@ -18,3 +18,21 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
+
+* {
+    box-sizing: unset !important;
+}
+
+.sideNavImg {
+    object-fit: unset !important;
+}
+
+.accordion-button .plus {
+    transform: rotate(48deg) translateX(-10px) !important;
+    margin-top: 10px !important;
+}
+
+.accordion-button.collapsed .plus {
+    transform: rotate(0deg) translateX(-10px) !important;
+    margin-top: -5px !important;
+}

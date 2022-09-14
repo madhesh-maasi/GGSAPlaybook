@@ -210,7 +210,7 @@ const Header = (props: any) => {
     <div style={{ padding: "16px", paddingBottom: "0" }}>
       <div className={styles.valueofHead}>
         <div className={styles.titleWrapper}>
-          {props.isPhaseAvail ? (
+          {props.isPhaseAvail || props.pageType != "phases" ? (
             <span
               className={
                 props.pageType == "phases" ? styles.phaseTitle : styles.title
@@ -282,7 +282,7 @@ const Header = (props: any) => {
           )}
         </div>
         {props.pageType == "phases" && (
-          <div style={{ transform: "translate(120px, 75px)" }}>
+          <div style={{ transform: "translate(50px, 75px)" }}>
             <Autocomplete
               id="combo-box-demo"
               options={masterDrop}

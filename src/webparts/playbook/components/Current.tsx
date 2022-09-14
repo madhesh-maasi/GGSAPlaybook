@@ -2,7 +2,7 @@ import * as React from "react";
 import styles from "./Current.module.scss";
 import { Icon } from "@fluentui/react";
 let curAns;
-
+const CompletedImg = require("../../../ExternalRef/img/Completed.png");
 const Current = (props) => {
   curAns = props.currQus;
 
@@ -17,8 +17,10 @@ const Current = (props) => {
       >
         {curAns.Step != undefined ? (
           <>
-            <div className={styles.currentQuestionsHead}>{curAns.Title}</div>
-            <div>{curAns.Step}</div>
+            <div>
+              <div className={styles.currentQuestionsHead}>{curAns.Title}</div>
+            </div>
+            <div className={styles.step}>{curAns.Step}</div>
             {curAns.arrSubStep.length > 0 ? (
               <>
                 {curAns.arrSubStep.map((row) => {
@@ -35,7 +37,9 @@ const Current = (props) => {
           </>
         ) : (
           <div className={styles.currentCompleteQuestionsHead}>
-            You have completed all steps
+            <img src={`${CompletedImg}`} className={styles.completedImg} />
+            You have completed all the steps!
+            {/* <Icon iconName="Emoji2" style={{ marginLeft: 12 }} /> */}
           </div>
         )}
       </div>
@@ -65,12 +69,17 @@ const Current = (props) => {
                 fontWeight: "700",
                 textAlign: "center",
                 marginLeft: "-20px",
+                minWidth: 65,
               }}
             >
               <div className={styles.TimeSection}>
                 <Icon
                   iconName="Clock"
-                  style={{ fontWeight: "bold", marginRight: 8 }}
+                  style={{
+                    fontWeight: "bold",
+                    marginRight: 8,
+                    marginBottom: -4,
+                  }}
                 />
                 {curAns.Time}
               </div>

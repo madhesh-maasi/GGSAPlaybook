@@ -2,7 +2,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+    box-sizing: border-box !important;
+}
+
 .PathwayWrapper {
     width: 100%;
     @extend .flex;

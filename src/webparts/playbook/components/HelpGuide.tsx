@@ -138,7 +138,7 @@ const HelpGuide = (props) => {
     <div className={styles.helpWrapper}>
       {/* header */}
       <div className={styles.header}>
-        <h1>Help Guide</h1>
+        <h1>Help guide</h1>
       </div>
       {/* pivot tabs */}
       {/* progress line */}
@@ -148,7 +148,7 @@ const HelpGuide = (props) => {
         <PivotItem itemIcon="home">
           <div className={styles.pivotContainer}>
             <div className={styles.tabInfoText}>
-              <h1>Our Products and Solutions</h1>
+              <h1>Our products and solutions</h1>
             </div>
             <div className={styles.cardsSection}>
               <div className={styles.card}>
@@ -173,7 +173,7 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={styles.bottomContent}>
                   <div className={styles.textContent}>
-                    <p>School Improvement</p>
+                    <p>School improvement</p>
                     <span>
                       Our suite of school improvement tools supports schools in
                       implementing school improvement. Tools include planning,
@@ -186,7 +186,7 @@ const HelpGuide = (props) => {
                     </span>
                   </div>
                   <div className={styles.textContent}>
-                    <p>Professional Learning</p>
+                    <p>Professional learning</p>
                     <span>
                       Our professional learning online platform is for school
                       leaders and teaching teams. The suite of modules covers
@@ -243,7 +243,7 @@ const HelpGuide = (props) => {
         <PivotItem itemIcon="refresh" className={eventab.tabBlue}>
           <div className={styles.pivotContainer}>
             <div className={styles.tabInfoText}>
-              <h1>Our Innovation Hub</h1>
+              <h1>Our innovation hub</h1>
               <p>
                 All team members follow the <b>Playbook</b> to deliver their
                 work. It articulates how teams deliver{" "}
@@ -409,7 +409,7 @@ const HelpGuide = (props) => {
                   </div>
                   <div className={styles.heading}>
                     <h2>
-                      Product Manager ad <br /> Business Area Manager{" "}
+                      Product manager ad <br /> Business area manager{" "}
                     </h2>
                   </div>
                 </div>
@@ -571,7 +571,7 @@ const HelpGuide = (props) => {
                     <img src={`${lineY5}`} className={styles.lineY5} alt="" />
 
                     <div className={styles.roundCard}>
-                      <p>Buisness Area Manager</p>
+                      <p>Buisness area manager</p>
                       <div
                         className={styles.img}
                         onClick={() => {
@@ -604,7 +604,7 @@ const HelpGuide = (props) => {
                   </div>
                   <div className={styles.row3}>
                     <div className={styles.roundCard}>
-                      <p>Solution Developer</p>
+                      <p>Solution developer</p>
                       <div
                         className={styles.img}
                         onClick={() => {
@@ -623,7 +623,7 @@ const HelpGuide = (props) => {
                       </div>
                     </div>
                     <div className={styles.roundCard}>
-                      <p>Buisness Developer</p>
+                      <p>Buisness developer</p>
                       <div className={styles.img}>
                         <img src={`${avatarYellow}`} alt="" />
                       </div>
@@ -660,7 +660,7 @@ const HelpGuide = (props) => {
                       />
                     </div>
                     <div className={styles.roundCard}>
-                      <p>Product Manager</p>
+                      <p>Product manager</p>
                       <div
                         className={styles.img}
                         onClick={() => {
@@ -691,7 +691,7 @@ const HelpGuide = (props) => {
                       alt=""
                     />
                     <div className={styles.roundCard}>
-                      <p>Product Developer</p>
+                      <p>Product developer</p>
                       <div
                         className={styles.img}
                         onClick={() => {
@@ -729,7 +729,7 @@ const HelpGuide = (props) => {
                           <div className={styles.img}>
                             <img src={`${avatarWhite}`} alt="" />
                           </div>
-                          <p>Technology Developer</p>
+                          <p>Technology developer</p>
                         </div>
                       </div>
                       <div className={styles.infoCard}>
@@ -737,7 +737,7 @@ const HelpGuide = (props) => {
                           <div className={styles.img}>
                             <img src={`${avatarWhite}`} alt="" />
                           </div>
-                          <p>Data Developer</p>
+                          <p>Data developer</p>
                         </div>
                       </div>
                       <div className={styles.infoCard}>
@@ -745,7 +745,7 @@ const HelpGuide = (props) => {
                           <div className={styles.img}>
                             <img src={`${avatarWhite}`} alt="" />
                           </div>
-                          <p>Research Developer</p>
+                          <p>Research developer</p>
                         </div>
                       </div>
                       <div className={styles.infoCard}>
@@ -753,7 +753,7 @@ const HelpGuide = (props) => {
                           <div className={styles.img}>
                             <img src={`${avatarWhite}`} alt="" />
                           </div>
-                          <p>Design Developer</p>
+                          <p>Design developer</p>
                         </div>
                       </div>
                     </div>
@@ -799,7 +799,7 @@ const HelpGuide = (props) => {
                           <div className={styles.img}>
                             <img src={`${avatarWhite}`} alt="" />
                           </div>
-                          <p>Marketing Developer</p>
+                          <p>Marketing developer</p>
                         </div>
                       </div>
                       <div className={styles.infoCard}>
@@ -807,7 +807,7 @@ const HelpGuide = (props) => {
                           <div className={styles.img}>
                             <img src={`${avatarWhite}`} alt="" />
                           </div>
-                          <p>Content Curator</p>
+                          <p>Content curator</p>
                         </div>
                       </div>
                       <div className={styles.infoCard}>
@@ -815,7 +815,7 @@ const HelpGuide = (props) => {
                           <div className={styles.img}>
                             <img src={`${avatarWhite}`} alt="" />
                           </div>
-                          <p>Content Developer</p>
+                          <p>Content developer</p>
                         </div>
                       </div>
                       <div
@@ -830,7 +830,7 @@ const HelpGuide = (props) => {
                           <div className={styles.img}>
                             <img src={`${avatarWhite}`} alt="" />
                           </div>
-                          <p>Events Developer</p>
+                          <p>Events developer</p>
                         </div>
                         <div
                           className={`MapInfoPopup ${styles.infoBt} ${styles.closeMapPopup}`}

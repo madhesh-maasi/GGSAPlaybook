@@ -12,6 +12,7 @@ import NavHeader from "./NavHeader";
 import PhaseQuestion from "./PhaseQuestion";
 import styles from "./Playbook.module.scss";
 
+const SplashImage = require("../../../ExternalRef/img/SplashImage.png");
 type Detail = {
   Title: string;
   Order?: number;
@@ -142,6 +143,7 @@ const App = (props: any): JSX.Element => {
   const [allPhasesSteps, setAllPhasesSteps] = useState(arrAllPhasesSteps);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isPhaseAvail, setIsPhaseAvail] = useState(true);
+  const [isSplash, setIsSplash] = useState(true);
 
   /* Get current user details */
   const getCurrentUserDetail = async () => {
@@ -1179,157 +1181,168 @@ const App = (props: any): JSX.Element => {
   /* life cycle of onload */
   useEffect(() => {
     getCurrentUserDetail();
+    setTimeout(() => {
+      setIsSplash(false);
+    }, 3000);
   }, []);
 
   return (
     <>
-      <NavHeader getNavigationLink={getNavigationLink} navLink={navLink} />
-      {navLink == "phases" ? (
+      {isSplash ? (
+        <div className={styles.splashContainer}>
+          <img src={`${SplashImage}`} style={{ width: 500, height: 500 }} />
+        </div>
+      ) : (
         <>
-          {
+          <NavHeader getNavigationLink={getNavigationLink} navLink={navLink} />
+          {navLink == "phases" ? (
             <>
               {
-                <Header
-                  isPhaseAvail={isPhaseAvail}
-                  context={props.context}
-                  sp={props.sp}
-                  URL={props.URL}
-                  pageType={page}
-                  arrDelSec={arrDelSec}
-                  userName={userName}
-                  valueOfFirstLetter={valueOfFirstLetter}
-                  valueOfLastLetter={valueOfLastLetter}
-                  arrMasterAnnual={arrMasterAnnual}
-                  ProjectID={curProject}
-                  getCurrProjectData={getCurrProjectData}
-                />
-              }
-
-              {allPhasesSteps.length > 0 || !isPhaseAvail ? (
-                loader ? (
-                  <Loader />
-                ) : (
-                  <>
-                    {isPhaseAvail ? (
-                      <>
-                        <PhaseQuestion
-                          context={props.context}
-                          sp={props.sp}
-                          URL={props.URL}
-                          pageType={page}
-                          PrimarySteps={primarySteps}
-                          arrDelSec={arrDelSec}
-                          reRunning={reRunning}
-                          BeforeModule={BeforeModule}
-                          AfterModule={AfterModule}
-                          firstModOrdNo={firstModOrdNo}
-                          lastModOrdNo={lastModOrdNo}
-                          latestOrderNO={latestOrderNO}
-                          latestModOrdNo={latestModOrdNo}
-                          allPhasesSteps={allPhasesSteps}
-                          changeheaderHandler={changeHeaderHandler}
-                          changeFooterHandler={changeFooterHandler}
-                        />
-                        <Footerimg
-                          context={props.context}
-                          sp={props.sp}
-                          URL={props.URL}
-                          arrFooter={arrFooter}
-                          pageType={page}
-                        />
-                        <FooterCategories
-                          context={props.context}
-                          sp={props.sp}
-                          URL={props.URL}
-                          footerNavigation={footerNavigation}
-                          pageType={page}
-                          Category={arrCategory}
-                          catConfig={arrCatConfig}
-                        />
-                      </>
-                    ) : (
-                      <div className={styles.noPhaseMsg}>
-                        No phases available for selected project!
-                      </div>
-                    )}
-                  </>
-                )
-              ) : (
-                ""
-              )}
-            </>
-          }
-        </>
-      ) : navLink == "practice" ? (
-        <>
-          {primarySteps.length > 0 && (
-            <>
-              {loader ? (
-                <Loader />
-              ) : (
                 <>
-                  <Header
-                    context={props.context}
-                    sp={props.sp}
-                    URL={props.URL}
-                    pageType={page}
-                    arrDelSec={arrDelSec}
-                    userName={userName}
-                    valueOfFirstLetter={valueOfFirstLetter}
-                    valueOfLastLetter={valueOfLastLetter}
-                    arrMasterAnnual={arrMasterAnnual}
-                    ProjectID={curProject}
-                    getCurrProjectData={getCurrProjectData}
-                  />
-                  <Questions
-                    context={props.context}
-                    sp={props.sp}
-                    URL={props.URL}
-                    pageType={page}
-                    PrimarySteps={primarySteps}
-                    arrDelSec={arrDelSec}
-                    reRunning={reRunning}
-                    BeforeModule={BeforeModule}
-                    AfterModule={AfterModule}
-                    firstModOrdNo={firstModOrdNo}
-                    lastModOrdNo={lastModOrdNo}
-                    latestOrderNO={latestOrderNO}
-                    latestModOrdNo={latestModOrdNo}
-                  />
-                  <Footerimg
-                    context={props.context}
-                    sp={props.sp}
-                    URL={props.URL}
-                    arrFooter={arrFooter}
-                    pageType={page}
-                  />
+                  {
+                    <Header
+                      isPhaseAvail={isPhaseAvail}
+                      context={props.context}
+                      sp={props.sp}
+                      URL={props.URL}
+                      pageType={page}
+                      arrDelSec={arrDelSec}
+                      userName={userName}
+                      valueOfFirstLetter={valueOfFirstLetter}
+                      valueOfLastLetter={valueOfLastLetter}
+                      arrMasterAnnual={arrMasterAnnual}
+                      ProjectID={curProject}
+                      getCurrProjectData={getCurrProjectData}
+                    />
+                  }
 
-                  <FooterCategories
-                    allPhasesSteps={allPhasesSteps}
-                    context={props.context}
-                    sp={props.sp}
-                    URL={props.URL}
-                    footerNavigation={footerNavigation}
-                    pageType={page}
-                    Category={arrCategory}
-                    catConfig={arrCatConfig}
-                  />
+                  {allPhasesSteps.length > 0 || !isPhaseAvail ? (
+                    loader ? (
+                      <Loader />
+                    ) : (
+                      <>
+                        {isPhaseAvail ? (
+                          <>
+                            <PhaseQuestion
+                              context={props.context}
+                              sp={props.sp}
+                              URL={props.URL}
+                              pageType={page}
+                              PrimarySteps={primarySteps}
+                              arrDelSec={arrDelSec}
+                              reRunning={reRunning}
+                              BeforeModule={BeforeModule}
+                              AfterModule={AfterModule}
+                              firstModOrdNo={firstModOrdNo}
+                              lastModOrdNo={lastModOrdNo}
+                              latestOrderNO={latestOrderNO}
+                              latestModOrdNo={latestModOrdNo}
+                              allPhasesSteps={allPhasesSteps}
+                              changeheaderHandler={changeHeaderHandler}
+                              changeFooterHandler={changeFooterHandler}
+                            />
+                            <Footerimg
+                              context={props.context}
+                              sp={props.sp}
+                              URL={props.URL}
+                              arrFooter={arrFooter}
+                              pageType={page}
+                            />
+                            <FooterCategories
+                              context={props.context}
+                              sp={props.sp}
+                              URL={props.URL}
+                              footerNavigation={footerNavigation}
+                              pageType={page}
+                              Category={arrCategory}
+                              catConfig={arrCatConfig}
+                            />
+                          </>
+                        ) : (
+                          <div className={styles.noPhaseMsg}>
+                            No phases available for selected project!
+                          </div>
+                        )}
+                      </>
+                    )
+                  ) : (
+                    ""
+                  )}
+                </>
+              }
+            </>
+          ) : navLink == "practice" ? (
+            <>
+              {primarySteps.length > 0 && (
+                <>
+                  {loader ? (
+                    <Loader />
+                  ) : (
+                    <>
+                      <Header
+                        context={props.context}
+                        sp={props.sp}
+                        URL={props.URL}
+                        pageType={page}
+                        arrDelSec={arrDelSec}
+                        userName={userName}
+                        valueOfFirstLetter={valueOfFirstLetter}
+                        valueOfLastLetter={valueOfLastLetter}
+                        arrMasterAnnual={arrMasterAnnual}
+                        ProjectID={curProject}
+                        getCurrProjectData={getCurrProjectData}
+                      />
+                      <Questions
+                        context={props.context}
+                        sp={props.sp}
+                        URL={props.URL}
+                        pageType={page}
+                        PrimarySteps={primarySteps}
+                        arrDelSec={arrDelSec}
+                        reRunning={reRunning}
+                        BeforeModule={BeforeModule}
+                        AfterModule={AfterModule}
+                        firstModOrdNo={firstModOrdNo}
+                        lastModOrdNo={lastModOrdNo}
+                        latestOrderNO={latestOrderNO}
+                        latestModOrdNo={latestModOrdNo}
+                      />
+                      <Footerimg
+                        context={props.context}
+                        sp={props.sp}
+                        URL={props.URL}
+                        arrFooter={arrFooter}
+                        pageType={page}
+                      />
+
+                      <FooterCategories
+                        allPhasesSteps={allPhasesSteps}
+                        context={props.context}
+                        sp={props.sp}
+                        URL={props.URL}
+                        footerNavigation={footerNavigation}
+                        pageType={page}
+                        Category={arrCategory}
+                        catConfig={arrCatConfig}
+                      />
+                    </>
+                  )}
                 </>
               )}
             </>
+          ) : navLink == "patheay" ? (
+            <Patheay
+              userName={userName}
+              firstName={valueOfFirstLetter}
+              lastName={valueOfLastLetter}
+            />
+          ) : // <></>
+          navLink == "helpguid" ? (
+            <HelpGuide />
+          ) : (
+            ""
           )}
         </>
-      ) : navLink == "patheay" ? (
-        <Patheay
-          userName={userName}
-          firstName={valueOfFirstLetter}
-          lastName={valueOfLastLetter}
-        />
-      ) : // <></>
-      navLink == "helpguid" ? (
-        <HelpGuide />
-      ) : (
-        ""
       )}
     </>
   );
