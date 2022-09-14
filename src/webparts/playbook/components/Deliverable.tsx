@@ -36,6 +36,7 @@ const Deliverable = (props) => {
         justifyContent: "space-between",
         height: "100px",
         margin: "15px 0",
+        marginTop: "30px",
       }}
     >
       {currDeliver.length > 0
@@ -181,6 +182,7 @@ const Deliverable = (props) => {
                       justifyContent: "center",
                       flexDirection: "column",
                       width: 100,
+                      fontSize: "18px",
                     }}
                   >
                     <div

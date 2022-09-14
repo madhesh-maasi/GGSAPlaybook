@@ -77,7 +77,7 @@
                 }
             }
             .accordion {
-                width: 50%;
+                width: 53%;
                 @extend .flex;
                 transform: translateX(15px);
                 .accordianHeader,
@@ -94,7 +94,7 @@
                     div {
                         @extend .flex;
                         .accordianTitle {
-                            font-size: 16px;
+                            font-size: 18px;
                             font-weight: 600;
                         }
                     }
@@ -104,7 +104,7 @@
                         margin-top: -5px;
                     }
                     .months {
-                        font-size: 11px;
+                        font-size: 13px;
                         color: #000;
                         font-weight: normal;
                     }
@@ -126,13 +126,13 @@
                 align-items: flex-start;
                 padding: 0 41px;
                 span {
-                    font-size: 10px;
+                    font-size: 13px;
                     line-height: 17px;
                     margin-top: 8px;
                 }
                 p {
                     margin-top: -10px;
-                    font-size: 14px;
+                    font-size: 18px;
                     padding: 0;
                     margin: 0;
                     font-weight: 600;
@@ -150,10 +150,10 @@
     .PathwayWrapper .pathwayContent .pathwayCard .contentBlue,
     .PathwayWrapper .pathwayContent .pathwayCard .contentYellow {
         p {
-            font-size: 16px !important;
+            font-size: 20px !important;
         }
         span {
-            font-size: 12px !important;
+            font-size: 14px !important;
         }
     }
 }

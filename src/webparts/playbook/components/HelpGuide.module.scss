@@ -60,10 +60,10 @@ img {
         .tabInfoText {
             width: 100%;
             h1 {
-                font-size: 24px;
+                font-size: 28px;
                 font-weight: 700;
                 span {
-                    font-size: 12px;
+                    font-size: 15px;
                     font-weight: 600;
                     margin-left: 50px;
                 }
@@ -76,7 +76,7 @@ img {
                 }
                 li {
                     margin-top: 20px;
-                    font-size: 12px;
+                    font-size: 15px;
                     font-weight: 600;
                     margin-right: 20px;
                     width: 560px;
@@ -169,7 +169,7 @@ img {
                             margin-top: 50px;
                         }
                         p {
-                            font-size: 13px;
+                            font-size: 15px;
                             line-height: 18px;
                             margin: 10px;
                             margin-top: 14px;
@@ -210,13 +210,14 @@ img {
                         max-height: 200px;
                         p {
                             font-weight: 700;
+                            font-size: 17px;
                         }
                         span {
                             margin-top: -8px;
-                            font-size: 12px;
+                            font-size: 14px;
                         }
                         li {
-                            font-size: 13px;
+                            font-size: 15px;
                             margin-bottom: 15px;
                             span {
                                 display: block;
@@ -242,9 +243,9 @@ img {
                 padding: 20px 40px !important;
                 .textContent {
                     li {
-                        font-size: 11px;
+                        font-size: 13px;
                         span {
-                            font-size: 11px;
+                            font-size: 13px;
                         }
                     }
                 }
@@ -346,12 +347,12 @@ img {
                             }
                             p {
                                 position: absolute;
-                                width: 150px;
-                                top: -90%;
+                                width: 250px;
+                                top: -100%;
                                 left: 50%;
                                 transform: translateX(-50%);
                                 text-align: center;
-                                font-size: 13px;
+                                font-size: 16px;
                                 color: #f99d26;
                                 font-weight: 600;
                             }
@@ -450,12 +451,12 @@ img {
                             }
                             p {
                                 position: absolute;
-                                width: 150px;
+                                width: 250px;
                                 top: -90%;
                                 left: 50%;
                                 transform: translateX(-50%);
                                 text-align: center;
-                                font-size: 13px;
+                                font-size: 16px;
                                 color: #0580a1;
                                 font-weight: 600;
                             }
@@ -596,7 +597,7 @@ img {
                                     display: none;
                                 }
                                 p {
-                                    font-size: 13px;
+                                    font-size: 16px;
                                     color: #0580a1;
                                     font-weight: 600;
                                     margin: auto !important;
@@ -683,7 +684,7 @@ img {
                                 }
                             }
                             p {
-                                font-size: 14px;
+                                font-size: 16px;
                                 color: #0580a1;
                                 font-weight: 600;
                                 margin: auto !important;
@@ -713,7 +714,7 @@ img {
     @extend .flex;
     align-items: flex-start;
     flex-direction: column;
-    font-size: 12px;
+    font-size: 14px;
     z-index: 8;
 }
 
@@ -726,13 +727,13 @@ img {
     .tabInfoText h1 span,
     .tabInfoText p,
     li {
-        font-size: 14px !important;
+        font-size: 16px !important;
     }
     .tab4Cont {
         min-height: 450px !important;
     }
     .heading p {
-        font-size: 15px !important;
+        font-size: 17px !important;
     }
     .textContent {
         margin-top: 10px !important;

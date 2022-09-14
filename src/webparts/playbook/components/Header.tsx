@@ -282,7 +282,7 @@ const Header = (props: any) => {
           )}
         </div>
         {props.pageType == "phases" && (
-          <div style={{ transform: "translate(50px, 75px)" }}>
+          <div style={{ transform: "translate(50px, 80px)" }}>
             <Autocomplete
               id="combo-box-demo"
               options={masterDrop}

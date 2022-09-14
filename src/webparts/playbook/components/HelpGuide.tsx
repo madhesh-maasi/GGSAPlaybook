@@ -704,7 +704,7 @@ const HelpGuide = (props) => {
                         <img src={`${avatarBlue}`} alt="" />
                         <div
                           className={`MapPopup4 ${styles.MapPopup} ${styles.closeMapPopup}`}
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "12px" }}
                         >
                           Curriculam, professional learning and school
                           improvement. Develops a set of allocated products

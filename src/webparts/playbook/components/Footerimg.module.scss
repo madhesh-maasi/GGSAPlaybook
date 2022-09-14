@@ -40,6 +40,7 @@
       flex-direction: column;
       width: 50%;
       margin-bottom: 20px;
+      margin-right: 10px;
       // transform: translate(20px, 45px);
     }
   }
@@ -79,6 +80,7 @@
     justify-content: center;
     width: 50%;
     margin-left: 20px;
+    margin-top: 20px;
     // height: 624px;
     .routineOperationList,
     .routineInnovationList {
@@ -88,13 +90,14 @@
       flex-direction: column;
       width: 50%;
       margin-bottom: 20px;
+      margin-right: 10px;
       // transform: translate(20px, 45px);
     }
   }
 }
 
 .routineTitle {
-  font-size: 18px;
+  font-size: 20px;
   color: #f99d26;
   position: relative;
   margin-bottom: 30px;
@@ -110,7 +113,7 @@
 }
 
 .phaseRoutineTitle {
-  font-size: 18px;
+  font-size: 20px;
   color: #f99d26;
   position: relative;
   margin-bottom: 30px;
@@ -131,7 +134,7 @@
   align-items: flex-start;
   justify-content: center;
   li {
-    font-size: 12px;
+    font-size: 14px;
     color: #000;
     position: relative;
     padding: 2px 20px;
@@ -156,7 +159,7 @@
   align-items: flex-start;
   justify-content: center;
   li {
-    font-size: 12px;
+    font-size: 14px;
     color: #000;
     position: relative;
     padding: 2px 20px;
@@ -185,7 +188,7 @@
   margin: 5px 0px;
   border-radius: 2px;
   li {
-    font-size: 12px;
+    font-size: 14px;
     color: #000;
     position: relative;
     list-style-type: none;
@@ -215,7 +218,7 @@
   margin: 5px 0px;
   border-radius: 2px;
   li {
-    font-size: 12px;
+    font-size: 14px;
     color: #000;
     position: relative;
     list-style-type: none;
