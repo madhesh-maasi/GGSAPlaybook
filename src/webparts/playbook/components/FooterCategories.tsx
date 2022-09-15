@@ -38,9 +38,7 @@ const FooterCategories = (props) => {
       >
         <h3>
           {" "}
-          {props.pageType.toLowerCase() == "phases"
-            ? `Pracitice :`
-            : `Phases :`}
+          {props.pageType.toLowerCase() == "phases" ? `Practice :` : `Phases :`}
         </h3>
         <>
           {category.map((cat) => (
