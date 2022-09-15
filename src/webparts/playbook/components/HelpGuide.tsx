@@ -173,7 +173,18 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={styles.bottomContent}>
                   <div className={styles.textContent}>
-                    <p>School improvement</p>
+                    <p>Professional Learning</p>
+                    <span>
+                      Our professional learning online platform is for school
+                      leaders and teaching teams. The suite of modules covers
+                      effective teaching techniques and practices and subject
+                      specific programs. It enables school teams to achieve
+                      mastery accreditation with certification to national
+                      standards.
+                    </span>
+                  </div>
+                  <div className={styles.textContent}>
+                    <p>School Improvement</p>
                     <span>
                       Our suite of school improvement tools supports schools in
                       implementing school improvement. Tools include planning,
@@ -183,17 +194,6 @@ const HelpGuide = (props) => {
                       schools to store team development, implementation
                       delivery, student testing to manage improvement
                       implementation.
-                    </span>
-                  </div>
-                  <div className={styles.textContent}>
-                    <p>Professional learning</p>
-                    <span>
-                      Our professional learning online platform is for school
-                      leaders and teaching teams. The suite of modules covers
-                      effective teaching techniques and practices and subject
-                      specific programs. It enables school teams to achieve
-                      mastery accreditation with certification to national
-                      standards.
                     </span>
                   </div>
                 </div>
@@ -243,7 +243,7 @@ const HelpGuide = (props) => {
         <PivotItem itemIcon="refresh" className={eventab.tabBlue}>
           <div className={styles.pivotContainer}>
             <div className={styles.tabInfoText}>
-              <h1>Our innovation hub</h1>
+              <h1>Our Innovation Hub</h1>
               <p>
                 All team members follow the <b>Playbook</b> to deliver their
                 work. It articulates how teams deliver{" "}
@@ -268,7 +268,7 @@ const HelpGuide = (props) => {
                   <div className={styles.textContent}>
                     <li>
                       The <b>Annual Plan</b> lists all the <b>Products</b> and
-                      <b>Solutions</b> that are to be developed for that
+                      <b> Solutions</b> that are to be developed for that
                       calendar year.
                     </li>
                     <li>
@@ -277,13 +277,13 @@ const HelpGuide = (props) => {
                     </li>
                     <li>
                       The <b>Production board</b> lists the work, called
-                      Activities, that you will do for that week. All roles log
-                      their productor solution development <b>activity</b> on
-                      the <b>Production Board</b> each week. 
+                      <b> Activities</b>, that you will do for that week. All
+                      roles log their productor solution development{" "}
+                      <b>activity</b> on the <b>Production Board</b> each week. 
                     </li>
                     <li>
                       The <b>Activity Planner</b> lists the steps that standard
-                      <b>Activity</b> follows and indicates when each one is
+                      <b> Activity</b> follows and indicates when each one is
                       completed by team members.{" "}
                     </li>
                     <li>
@@ -310,7 +310,7 @@ const HelpGuide = (props) => {
                   <div className={styles.textContent}>
                     <li>
                       Every piece of work associated with a <b>Product</b> or
-                      <b>Solution</b> is called a Deliverable.
+                      <b> Solution</b> is called a <b>Deliverable</b>.
                     </li>
                     <li>
                       Every <b>Deliverable</b> belongs to a business area.
@@ -327,7 +327,7 @@ const HelpGuide = (props) => {
                       </span>
                       <span>
                         <b> Product/solution</b>: <b>The actual piece</b> or
-                        <b>component</b> that is part of a product that the
+                        <b> component</b> that is part of a product that the
                         customer uses, e.g. Teaching Guide, Professional
                         Learning module or a School Improvement Plan or part of
                         the <b>solution</b> the team uses
@@ -344,10 +344,10 @@ const HelpGuide = (props) => {
           <div className={styles.pivotContainer}>
             <div className={styles.tabInfoText}>
               <h1>
-                Our leadership{" "}
+                Client and team relationship{" "}
                 <span>
-                  Developers are supported by leadership and management to be
-                  successful in their roles.
+                  Developers are supported by leadership to successfully produce
+                  deliverables in their roles.
                 </span>
               </h1>
               <p>
@@ -356,10 +356,9 @@ const HelpGuide = (props) => {
                   for the product and directs the team on product development.
                 </li>
                 <li>
-                  The manager provides management support to developers to
-                  ensure they confidently plan and carry out their work, resolve
-                  process issues as they arise, and deliver the work to agreed
-                  timelines.
+                  The developer ensures they confidently plan and carry out
+                  their work, resolve process issues as they arise, and deliver
+                  the work to agreed timelines.
                 </li>
               </p>
             </div>
@@ -373,7 +372,7 @@ const HelpGuide = (props) => {
                     <img src={`${clientFuncImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
-                    <h2>Client functions</h2>
+                    <h2>Client</h2>
                   </div>
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab3Cont)}`}>
@@ -388,12 +387,12 @@ const HelpGuide = (props) => {
                       underway and work about to commence.
                     </li>
                     <li>
-                      Inform Product Manager of emerging issues regarding
-                      quality and timelines of deliverables.
+                      Inform Developer of emerging issues regarding quality and
+                      timelines of deliverables.
                     </li>
                     <li>
-                      Provide Product Managers feedback to support weekly
-                      process debriefs.
+                      Provide Developers feedback to support weekly process
+                      debriefs.
                     </li>
                     <li>Sign off on deliverables.</li>
                   </div>
@@ -408,26 +407,17 @@ const HelpGuide = (props) => {
                     <img src={`${productImg}`} alt="Badge image" />
                   </div>
                   <div className={styles.heading}>
-                    <h2>
-                      Product manager ad <br /> Business area manager{" "}
-                    </h2>
+                    <h2>Scheduler </h2>
                   </div>
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab3Cont)}`}>
                   <div className={styles.textContent}>
+                    <li>Oversee timelines, resourcing and budget.</li>
+                    <li>Advise team on following work practices.</li>
                     <li>
-                      Understand work practice and manage teams to deliver to
-                      Delivery Plan timelines.
+                      Support developers to manage work to agreed timelines.
                     </li>
-                    <li>
-                      Sign off on Product timelines, resourcing and budget
-                      (client endorsement).
-                    </li>
-                    <li>
-                      Attend Client innovation meetings to support developers to
-                      manage the production of work to agreed timelines.
-                    </li>
-                    <li>Facilitate production stand-ups with Business Area.</li>
+                    <li>Ensure teams schedule advised stand-ups.</li>
                     <li>Address productivity issues impacting on delivery.</li>
                     <li>
                       Facilitate weekly debriefs on process and implement
@@ -462,17 +452,18 @@ const HelpGuide = (props) => {
                   <div className={styles.textContent}>
                     <li>
                       There are 10 <b>business areas</b> made up of three
-                      <b>Product Development</b>, six Skilled Services and one
-                      school support area, being <b>School Partnerships.</b>{" "}
+                      <b> Product Development</b>, six <b>Skilled Services</b>{" "}
+                      and one school support area, being{" "}
+                      <b>School Partnerships.</b>{" "}
                     </li>
                     <li>
-                      <b>Product Managers</b> and <b>Developers</b> work in
-                      <b>Curriculum, Professional Learning</b> and{" "}
+                      <b>Developers</b> work in
+                      <b> Curriculum, Professional Learning</b> and{" "}
                       <b>School Improvement.</b>
                     </li>
                     <li>
                       <b>Specialist Developers</b> work in their respective
-                      <b>Skilled Services business areas</b> and work products
+                      <b> Skilled Services business areas</b> and work products
                       and solutions as required.
                     </li>
                   </div>
@@ -496,13 +487,13 @@ const HelpGuide = (props) => {
                       <b>Clients</b> provide direction on all work
                     </li>
                     <li>
-                      <b>Product Managers</b> support their team members to
-                      deliver work based on the Client direction.
+                      <b>Scheduler</b> supports team members to deliver work
+                      based on the Client direction.
                     </li>
                     <li>
                       <b>Business Area Leads</b> get direction from Clients for
                       their team’s work for each year which the build into the
-                      <b>Annual Plan.</b>{" "}
+                      <b> Annual Plan.</b>{" "}
                     </li>
                     <li>
                       They support their team members to plan so they complete
@@ -542,14 +533,14 @@ const HelpGuide = (props) => {
                       </span>
                       <span>
                         Development roles spend 80–90 per cent of their time on
-                        innovation activity (managers 60–80) which I all done
-                        using the Innovation Hub.
+                        innovation activity which I all done using the
+                        Innovation Hub.
                       </span>
                     </li>
                     <li>
                       Every role has an administration allocation of two hours
-                      per week or eight hours per month pre-set activity for
-                      role management, etc.{" "}
+                      per week or eight hours per month pre-set time to role
+                      management.{" "}
                     </li>
                   </div>
                 </div>

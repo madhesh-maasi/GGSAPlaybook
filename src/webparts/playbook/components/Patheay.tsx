@@ -27,9 +27,10 @@ const Pathway = (props) => {
         </div>
       </div>
       <div className={styles.infoText}>
-        There are 8 discrete pathways to deliver a Product and 4 to deliver a
-        Solution.  Your Deliverable defines which pathway to take. Read the
-        examples to identify your deliverable and select your pathway.
+        There are 8 discrete pathways to deliver a <b>Product</b> and 4 to
+        deliver a<b> Solution.</b>   Your <b> Deliverable</b> defines which
+        pathway to take. Read the examples to identify your deliverable and
+        select your pathway.
       </div>
       <div className={styles.pathwayContent}>
         <div className={styles.pathwayCard}>
@@ -77,7 +78,7 @@ const Pathway = (props) => {
                   >
                     <div>
                       <span className="plus">+</span>{" "}
-                      <span className={styles.accordianTitle}>Product</span>
+                      <span className={styles.accordianTitle}>Product:</span>
                     </div>{" "}
                     <span className={styles.months}>6-12 months</span>
                   </button>
@@ -91,9 +92,10 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <p>Examples:</p>
                     <span>
-                      Oz-e-science F–6, Music For Learning F–6, Mastery Teaching
-                      Pathway, 8 Cycles of School Practice, School Improvement
-                      Framework, Teaching and Learning Platform, Playschool
+                      Oz-e-science F–6… Music For Learning F–6… Mastery Teaching
+                      Pathway Courses… 8 Cycles of School Practice… School
+                      Improvement Framework… PlayschoolFlight Path… Coaching
+                      Model…
                     </span>
                   </div>
                 </div>
@@ -111,7 +113,7 @@ const Pathway = (props) => {
                     <div>
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
-                        Product initiative
+                        New initiative:
                       </span>
                     </div>{" "}
                     <span className={styles.months}>3–6 months</span>
@@ -126,8 +128,9 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <p>Examples:</p>
                     <span>
-                      Discovery Trail, CYAAA Cape York Expansion, National
-                      School Improvement
+                      Discovery Trail… CYAAA Cape York Expansion… National
+                      School Improvement…Funding proposal for major initiative…
+                      Investment Campaign
                     </span>
                   </div>
                 </div>
@@ -145,7 +148,7 @@ const Pathway = (props) => {
                     <div>
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
-                        Organisation Solution
+                        Organisation solution:
                       </span>
                     </div>{" "}
                     <span className={styles.months}>1–6 months</span>
@@ -159,10 +162,7 @@ const Pathway = (props) => {
                 >
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <p>Examples:</p>
-                    <span>
-                      Setting up new office, Building Infrastructure, Investment
-                      Campaign
-                    </span>
+                    <span>Setting up new office… Building Infrastructure</span>
                   </div>
                 </div>
               </div>
@@ -190,7 +190,7 @@ const Pathway = (props) => {
                   >
                     <div>
                       <span className="plus">+</span>{" "}
-                      <span className={styles.accordianTitle}>Product</span>
+                      <span className={styles.accordianTitle}>Project:</span>
                     </div>{" "}
                     <span className={styles.months}>2-3 months</span>
                   </button>
@@ -204,10 +204,9 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <p>Examples:</p>
                     <span>
-                      Oz-e-science F–3 Biology, Oz-e-English Writing F–6,
-                      Mastery Teaching Pathway Platform, Spelling Mastery
-                      professional learning module, Flight Path, Coaching Model,
-                      Leading Mate
+                      Oz-e-science F–3 Biology… Oz-e-English Writing F–6…
+                      Spelling Mastery professional learning module…Effective
+                      teaching module…Signals Practice Lesson
                     </span>
                   </div>
                 </div>
@@ -224,9 +223,7 @@ const Pathway = (props) => {
                   >
                     <div>
                       <span className="plus">+</span>{" "}
-                      <span className={styles.accordianTitle}>
-                        Product tool
-                      </span>
+                      <span className={styles.accordianTitle}>Technology:</span>
                     </div>{" "}
                     <span className={styles.months}>1–3 months</span>
                   </button>
@@ -240,8 +237,9 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <p>Examples:</p>
                     <span>
-                      Discovery Trail, CYAAA Cape York Expansion, National
-                      School Improvement
+                      Teaching and Learning Platform… MTP Learning
+                      portal…Leading Mate…8 cycles of school practice web
+                      application… Effective teaching web application
                     </span>
                   </div>
                 </div>
@@ -259,7 +257,7 @@ const Pathway = (props) => {
                     <div>
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
-                        Project Solution
+                        System solution:
                       </span>
                     </div>{" "}
                     <span className={styles.months}>1–3 months</span>
@@ -274,8 +272,7 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <p>Examples:</p>
                     <span>
-                      Setting up new office, Building Infrastructure, Investment
-                      Campaign
+                      Contracts Register… Digital Database… HR Database…
                     </span>
                   </div>
                 </div>
@@ -304,7 +301,7 @@ const Pathway = (props) => {
                   >
                     <div>
                       <span className="plus">+</span>{" "}
-                      <span className={styles.accordianTitle}>Task</span>
+                      <span className={styles.accordianTitle}>Task:</span>
                     </div>{" "}
                     <span className={styles.months}>1-6 Weeks</span>
                   </button>
@@ -318,9 +315,8 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <p>Examples:</p>
                     <span>
-                      Oz-e-science F–6, Music For Learning F–6, Mastery Teaching
-                      Pathway, 8 Cycles of School Practice, School Improvement
-                      Framework, Teaching and Learning Platform, Playschool
+                      Maths of Science research… Playschool Professional
+                      Learning Framework… Oz-e-English Unit 1 Year 5 Poster Set…
                     </span>
                   </div>
                 </div>
@@ -337,9 +333,7 @@ const Pathway = (props) => {
                   >
                     <div>
                       <span className="plus">+</span>{" "}
-                      <span className={styles.accordianTitle}>
-                        Product related
-                      </span>
+                      <span className={styles.accordianTitle}>Strategy:</span>
                     </div>{" "}
                     <span className={styles.months}>1-6 Weeks</span>
                   </button>
@@ -353,8 +347,8 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <p>Examples:</p>
                     <span>
-                      Discovery Trail, CYAAA Cape York Expansion, National
-                      School Improvement
+                      Investors Policy Paper… Annual Marketing
+                      Strategy…Marketing Campaign
                     </span>
                   </div>
                 </div>
@@ -372,7 +366,7 @@ const Pathway = (props) => {
                     <div>
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
-                        Task Solution
+                        Task Solution:
                       </span>
                     </div>{" "}
                     <span className={styles.months}>1–6 Weeks</span>
@@ -386,10 +380,7 @@ const Pathway = (props) => {
                 >
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <p>Examples:</p>
-                    <span>
-                      Setting up new office, Building Infrastructure, Investment
-                      Campaign
-                    </span>
+                    <span>HR strategy or policies…Board meeting…</span>
                   </div>
                 </div>
               </div>
@@ -417,7 +408,7 @@ const Pathway = (props) => {
                   >
                     <div>
                       <span className="plus">+</span>{" "}
-                      <span className={styles.accordianTitle}>Activity</span>
+                      <span className={styles.accordianTitle}>Activity:</span>
                     </div>{" "}
                     <span className={styles.months}>1-3 days</span>
                   </button>
@@ -431,9 +422,10 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <p>Examples:</p>
                     <span>
-                      Oz-e-science F–6, Music For Learning F–6, Mastery Teaching
-                      Pathway, 8 Cycles of School Practice, School Improvement
-                      Framework, Teaching and Learning Platform, Playschool
+                      Planning document: Delivery Plan… Commencement Brief… ABCD
+                      on a Page… User Stories…Science Exhibition Flyer to
+                      Parents… Observation Form… Research Brief… Requirements
+                      Brief…School Review Report…
                     </span>
                   </div>
                 </div>
@@ -451,10 +443,10 @@ const Pathway = (props) => {
                     <div>
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
-                        Activity planner
+                        Activity planner:
                       </span>
                     </div>{" "}
-                    <span className={styles.months}>1-2 Weeks</span>
+                    <span className={styles.months}>1-6 Weeks</span>
                   </button>
                 </h2>
                 <div
@@ -466,8 +458,9 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <p>Examples:</p>
                     <span>
-                      Discovery Trail, CYAAA Cape York Expansion, National
-                      School Improvement
+                      Oz-e-maths lesson… Playschool Lesson… Teach Spelling
+                      Mastery Lesson… Marketing Campaign Copy… Event… Produce a
+                      video clip…Make a graphic illustration…Host a Band camp
                     </span>
                   </div>
                 </div>
@@ -485,10 +478,10 @@ const Pathway = (props) => {
                     <div>
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>
-                        Activity Solution
+                        Activity Solution:
                       </span>
                     </div>{" "}
-                    <span className={styles.months}>1-2 Week</span>
+                    <span className={styles.months}>1-2 Weeks</span>
                   </button>
                 </h2>
                 <div
@@ -500,8 +493,8 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <p>Examples:</p>
                     <span>
-                      Setting up new office, Building Infrastructure, Investment
-                      Campaign
+                      Purchasing Brief… Business Area Report to CEO… Weekly
+                      Production Report……GGSA Annual Plan…
                     </span>
                   </div>
                 </div>
