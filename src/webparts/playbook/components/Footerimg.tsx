@@ -38,7 +38,15 @@ const Footerimg = (props) => {
                     <div className={styles.routineOperationList}>
                       <h2
                         className={styles.phaseRoutineTitle}
-                        style={{ textTransform: "capitalize" }}
+                        style={{
+                          textTransform: "capitalize",
+                          color:
+                            props.pageType == "phases"
+                              ? "#00859c"
+                              : props.pageType == "practice"
+                              ? "#f99d26"
+                              : "",
+                        }}
                       >
                         {li}
                       </h2>
@@ -53,7 +61,20 @@ const Footerimg = (props) => {
                                   : styles.phaseList
                               }
                             >
-                              {<li>{row.Title}</li>}
+                              {
+                                <li>
+                                  <div
+                                    className={styles.bulletPoint}
+                                    style={{
+                                      background:
+                                        props.pageType == "phases"
+                                          ? "#f99d26"
+                                          : "#00859c",
+                                    }}
+                                  ></div>
+                                  {row.Title}
+                                </li>
+                              }
                             </div>
                           </>
                         ))}
@@ -90,9 +111,11 @@ const Footerimg = (props) => {
               {footerCategories.length > 0 &&
                 footerCategories.map((li) => {
                   return (
-                    <div className={styles.routineOperationList}>
+                    <div
+                      className={`${styles.routineOperationList} ${styles.list}`}
+                    >
                       <h2
-                        className={styles.phaseRoutineTitle}
+                        className={styles.practiceRoutineTitle}
                         style={{ textTransform: "capitalize" }}
                       >
                         {li}
@@ -108,7 +131,12 @@ const Footerimg = (props) => {
                                   : styles.phaseList
                               }
                             >
-                              {<li>{row.Title}</li>}
+                              {
+                                <li>
+                                  <div className={styles.bulletPoint}></div>
+                                  {row.Title}
+                                </li>
+                              }
                             </div>
                           </>
                         ))}
