@@ -10,13 +10,14 @@ const cardImage2 = require("../../../ExternalRef/img/computing.jpg");
 const cardImage3 = require("../../../ExternalRef/img/groupConference.jpg");
 const cardImage4 = require("../../../ExternalRef/img/usingSystem.jpg");
 
-const annualPlanURL = "https://ggsaus.sharepoint.com/sites/Intranet_dev/SitePages/InnovationHub.aspx?Page=AP";
+const annualPlanURL =
+  "https://ggsaus.sharepoint.com/sites/Intranet_dev/SitePages/InnovationHub.aspx?Page=AP";
 
 const Pathway = (props) => {
   /* add the new type of delivery */
   const addNewTOD = (type) => {
-    type != "" && window.open(annualPlanURL+"&TOD="+type);
-  }
+    type != "" && window.open(annualPlanURL + "&TOD=" + type);
+  };
 
   return (
     <div className={`${styles.PathwayWrapper} container`}>
@@ -87,12 +88,16 @@ const Pathway = (props) => {
                       <span className={styles.accordianTitle}>Product:</span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#f99d26" }}
                         onClick={() => {
                           addNewTOD("PT");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" />
+                        Add
+                      </div>
                       <span className={styles.months}>6-12 months</span>
                     </div>
                   </button>
@@ -106,7 +111,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("PT")}>open</button>
+                      <button
+                        style={{ color: "#f99d26" }}
+                        onClick={() => props.getTODType("PT")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>
                       Oz-e-science F–6… Music For Learning F–6… Mastery Teaching
@@ -134,12 +144,17 @@ const Pathway = (props) => {
                       </span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#f99d26" }}
                         onClick={() => {
                           addNewTOD("NI");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" />
+                        Add
+                      </div>
+
                       <span className={styles.months}>3–6 months</span>
                     </div>
                   </button>
@@ -153,7 +168,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("NI")}>open</button>
+                      <button
+                        style={{ color: "#f99d26" }}
+                        onClick={() => props.getTODType("NI")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>
                       Discovery Trail… CYAAA Cape York Expansion… National
@@ -180,12 +200,17 @@ const Pathway = (props) => {
                       </span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#f99d26" }}
                         onClick={() => {
                           addNewTOD("OS");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" />
+                        Add
+                      </div>
+
                       <span className={styles.months}>1–6 months</span>
                     </div>
                   </button>
@@ -199,7 +224,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("OS")}>open</button>
+                      <button
+                        style={{ color: "#f99d26" }}
+                        onClick={() => props.getTODType("OS")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>Setting up new office… Building Infrastructure</span>
                   </div>
@@ -232,12 +262,17 @@ const Pathway = (props) => {
                       <span className={styles.accordianTitle}>Project:</span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#2289ae" }}
                         onClick={() => {
                           addNewTOD("PR");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" />
+                        Add
+                      </div>
+
                       <span className={styles.months}>2-3 months</span>
                     </div>
                   </button>
@@ -251,7 +286,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("PR")}>open</button>
+                      <button
+                        style={{ color: "#2289ae" }}
+                        onClick={() => props.getTODType("PR")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>
                       Oz-e-science F–3 Biology… Oz-e-English Writing F–6…
@@ -276,12 +316,16 @@ const Pathway = (props) => {
                       <span className={styles.accordianTitle}>Technology:</span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#2289ae" }}
                         onClick={() => {
                           addNewTOD("TEC");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" /> Add
+                      </div>
+
                       <span className={styles.months}>1–3 months</span>
                     </div>
                   </button>
@@ -295,7 +339,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("TEC")}>open</button>
+                      <button
+                        style={{ color: "#2289ae" }}
+                        onClick={() => props.getTODType("TEC")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>
                       Teaching and Learning Platform… MTP Learning
@@ -322,12 +371,17 @@ const Pathway = (props) => {
                       </span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#2289ae" }}
                         onClick={() => {
                           addNewTOD("SS");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" />
+                        Add
+                      </div>
+
                       <span className={styles.months}>1–3 months</span>
                     </div>
                   </button>
@@ -341,7 +395,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("SS")}>open</button>
+                      <button
+                        style={{ color: "#2289ae" }}
+                        onClick={() => props.getTODType("SS")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>
                       Contracts Register… Digital Database… HR Database…
@@ -376,12 +435,17 @@ const Pathway = (props) => {
                       <span className={styles.accordianTitle}>Task:</span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#2289ae" }}
                         onClick={() => {
                           addNewTOD("T");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" />
+                        Add
+                      </div>
+
                       <span className={styles.months}>1-6 Weeks</span>
                     </div>
                   </button>
@@ -395,7 +459,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("T")}>open</button>
+                      <button
+                        style={{ color: "#2289ae" }}
+                        onClick={() => props.getTODType("T")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>
                       Maths of Science research… Playschool Professional
@@ -419,12 +488,15 @@ const Pathway = (props) => {
                       <span className={styles.accordianTitle}>Strategy:</span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#2289ae" }}
                         onClick={() => {
                           addNewTOD("S");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" /> Add
+                      </div>
                       <span className={styles.months}>1-6 Weeks</span>
                     </div>
                   </button>
@@ -438,7 +510,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("S")}>open</button>
+                      <button
+                        style={{ color: "#2289ae" }}
+                        onClick={() => props.getTODType("S")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>
                       Investors Policy Paper… Annual Marketing
@@ -464,12 +541,17 @@ const Pathway = (props) => {
                       </span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#2289ae" }}
                         onClick={() => {
                           addNewTOD("TS");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" />
+                        Add
+                      </div>
+
                       <span className={styles.months}>1-6 Weeks</span>
                     </div>
                   </button>
@@ -483,7 +565,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentBlue} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("TS")}>open</button>
+                      <button
+                        style={{ color: "#2289ae" }}
+                        onClick={() => props.getTODType("TS")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>HR strategy or policies…Board meeting…</span>
                   </div>
@@ -516,12 +603,17 @@ const Pathway = (props) => {
                       <span className={styles.accordianTitle}>Activity:</span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#f99d26" }}
                         onClick={() => {
                           addNewTOD("A");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" />
+                        Add
+                      </div>
+
                       <span className={styles.months}>1-3 days</span>
                     </div>
                   </button>
@@ -535,7 +627,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("A")}>open</button>
+                      <button
+                        style={{ color: "#f99d26" }}
+                        onClick={() => props.getTODType("A")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>
                       Planning document: Delivery Plan… Commencement Brief… ABCD
@@ -563,12 +660,17 @@ const Pathway = (props) => {
                       </span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#f99d26" }}
                         onClick={() => {
                           addNewTOD("AP");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" />
+                        Add
+                      </div>
+
                       <span className={styles.months}>1-6 Weeks</span>
                     </div>
                   </button>
@@ -582,7 +684,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("AP")}>open</button>
+                      <button
+                        style={{ color: "#f99d26" }}
+                        onClick={() => props.getTODType("AP")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>
                       Oz-e-maths lesson… Playschool Lesson… Teach Spelling
@@ -609,12 +716,16 @@ const Pathway = (props) => {
                       </span>
                     </div>{" "}
                     <div>
-                      <Icon
-                        iconName="Add"
+                      <div
+                        className={styles.ribbonBtn}
+                        style={{ backgroundColor: "#f99d26" }}
                         onClick={() => {
                           addNewTOD("AS");
                         }}
-                      />
+                      >
+                        <Icon iconName="Add" />
+                        Add
+                      </div>
                       <span className={styles.months}>1-2 Weeks</span>
                     </div>
                   </button>
@@ -628,7 +739,12 @@ const Pathway = (props) => {
                   <div className={`${styles.contentYellow} accordion-body`}>
                     <div className={styles.navPhases}>
                       <p>Examples:</p>
-                      <button onClick={() => props.getTODType("AS")}>open</button>
+                      <button
+                        style={{ color: "#f99d26" }}
+                        onClick={() => props.getTODType("AS")}
+                      >
+                        open
+                      </button>
                     </div>
                     <span>
                       Purchasing Brief… Business Area Report to CEO… Weekly

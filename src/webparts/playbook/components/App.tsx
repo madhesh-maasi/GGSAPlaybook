@@ -150,7 +150,9 @@ const App = (props: any): JSX.Element => {
 
   /* Get current user details */
   const getCurrentUserDetail = async () => {
-    const paramsString = window.location.href.split("?")[1];
+    const params = window.location.href.split("?");
+    const paramsString =
+      params.length > 1 ? params[1].toLowerCase() : undefined;
     const searchParams = new URLSearchParams(paramsString);
     searchParams.has("activityid")
       ? (dPID = Number(searchParams.get("activityid")))
@@ -728,13 +730,13 @@ const App = (props: any): JSX.Element => {
         setAllSteps([...isArrSteps]);
         let startSteps;
         strSelectedCategory == "routine operations practices"
-          ? ((curSteps = moduleHead.filter(
+          ? (curSteps = moduleHead.filter(
               (obj) => obj.Category.toLowerCase() == strSelectedCategory
-            )[0]))
+            )[0])
           : strSelectedCategory == "routine innovation practices"
-          ? ((curSteps = moduleHead.filter(
+          ? (curSteps = moduleHead.filter(
               (obj) => obj.Category.toLowerCase() == strSelectedCategory
-            )[0]))
+            )[0])
           : ((startSteps = moduleHead.filter(
               (firstModule) => firstModule.Previous == undefined
             )[0]),
@@ -1264,7 +1266,7 @@ const App = (props: any): JSX.Element => {
     navComplete = false;
     strSelectedCategory = "";
     strSelectedCategory = cat.toLowerCase();
-  }
+  };
 
   const changeHeaderHandler = (selectedPhase) => {
     setArrDelSec(undefined);
