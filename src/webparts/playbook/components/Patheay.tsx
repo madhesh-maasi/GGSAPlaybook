@@ -3,14 +3,20 @@ import styles from "./Patheay.module.scss";
 import { Label, Pivot, PivotItem } from "@fluentui/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import { Icon } from "@fluentui/react";
 
 const cardImage1 = require("../../../ExternalRef/img/analytics.jpg");
 const cardImage2 = require("../../../ExternalRef/img/computing.jpg");
 const cardImage3 = require("../../../ExternalRef/img/groupConference.jpg");
 const cardImage4 = require("../../../ExternalRef/img/usingSystem.jpg");
 
+const annualPlanURL = "https://ggsaus.sharepoint.com/sites/Intranet_dev/SitePages/InnovationHub.aspx?Page=AP";
+
 const Pathway = (props) => {
-  console.log(props);
+  /* add the new type of delivery */
+  const addNewTOD = (type) => {
+    type != "" && window.open(annualPlanURL+"&TOD="+type);
+  }
 
   return (
     <div className={`${styles.PathwayWrapper} container`}>
@@ -80,7 +86,15 @@ const Pathway = (props) => {
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>Product:</span>
                     </div>{" "}
-                    <span className={styles.months}>6-12 months</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("PT");
+                        }}
+                      />
+                      <span className={styles.months}>6-12 months</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -90,7 +104,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample"
                 >
                   <div className={`${styles.contentYellow} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("PT")}>open</button>
+                    </div>
                     <span>
                       Oz-e-science F–6… Music For Learning F–6… Mastery Teaching
                       Pathway Courses… 8 Cycles of School Practice… School
@@ -116,7 +133,15 @@ const Pathway = (props) => {
                         New initiative:
                       </span>
                     </div>{" "}
-                    <span className={styles.months}>3–6 months</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("NI");
+                        }}
+                      />
+                      <span className={styles.months}>3–6 months</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -126,7 +151,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample"
                 >
                   <div className={`${styles.contentYellow} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("NI")}>open</button>
+                    </div>
                     <span>
                       Discovery Trail… CYAAA Cape York Expansion… National
                       School Improvement…Funding proposal for major initiative…
@@ -151,7 +179,15 @@ const Pathway = (props) => {
                         Organisation solution:
                       </span>
                     </div>{" "}
-                    <span className={styles.months}>1–6 months</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("OS");
+                        }}
+                      />
+                      <span className={styles.months}>1–6 months</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -161,7 +197,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample"
                 >
                   <div className={`${styles.contentYellow} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("OS")}>open</button>
+                    </div>
                     <span>Setting up new office… Building Infrastructure</span>
                   </div>
                 </div>
@@ -192,7 +231,15 @@ const Pathway = (props) => {
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>Project:</span>
                     </div>{" "}
-                    <span className={styles.months}>2-3 months</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("PR");
+                        }}
+                      />
+                      <span className={styles.months}>2-3 months</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -202,7 +249,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample2"
                 >
                   <div className={`${styles.contentBlue} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("PR")}>open</button>
+                    </div>
                     <span>
                       Oz-e-science F–3 Biology… Oz-e-English Writing F–6…
                       Spelling Mastery professional learning module…Effective
@@ -225,7 +275,15 @@ const Pathway = (props) => {
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>Technology:</span>
                     </div>{" "}
-                    <span className={styles.months}>1–3 months</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("TEC");
+                        }}
+                      />
+                      <span className={styles.months}>1–3 months</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -235,7 +293,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample2"
                 >
                   <div className={`${styles.contentBlue} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("TEC")}>open</button>
+                    </div>
                     <span>
                       Teaching and Learning Platform… MTP Learning
                       portal…Leading Mate…8 cycles of school practice web
@@ -260,7 +321,15 @@ const Pathway = (props) => {
                         System solution:
                       </span>
                     </div>{" "}
-                    <span className={styles.months}>1–3 months</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("SS");
+                        }}
+                      />
+                      <span className={styles.months}>1–3 months</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -270,7 +339,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample2"
                 >
                   <div className={`${styles.contentBlue} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("SS")}>open</button>
+                    </div>
                     <span>
                       Contracts Register… Digital Database… HR Database…
                     </span>
@@ -303,7 +375,15 @@ const Pathway = (props) => {
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>Task:</span>
                     </div>{" "}
-                    <span className={styles.months}>1-6 Weeks</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("T");
+                        }}
+                      />
+                      <span className={styles.months}>1-6 Weeks</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -313,7 +393,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample3"
                 >
                   <div className={`${styles.contentBlue} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("T")}>open</button>
+                    </div>
                     <span>
                       Maths of Science research… Playschool Professional
                       Learning Framework… Oz-e-English Unit 1 Year 5 Poster Set…
@@ -335,7 +418,15 @@ const Pathway = (props) => {
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>Strategy:</span>
                     </div>{" "}
-                    <span className={styles.months}>1-6 Weeks</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("S");
+                        }}
+                      />
+                      <span className={styles.months}>1-6 Weeks</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -345,7 +436,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample3"
                 >
                   <div className={`${styles.contentBlue} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("S")}>open</button>
+                    </div>
                     <span>
                       Investors Policy Paper… Annual Marketing
                       Strategy…Marketing Campaign
@@ -369,7 +463,15 @@ const Pathway = (props) => {
                         Task Solution:
                       </span>
                     </div>{" "}
-                    <span className={styles.months}>1–6 Weeks</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("TS");
+                        }}
+                      />
+                      <span className={styles.months}>1-6 Weeks</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -379,7 +481,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample3"
                 >
                   <div className={`${styles.contentBlue} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("TS")}>open</button>
+                    </div>
                     <span>HR strategy or policies…Board meeting…</span>
                   </div>
                 </div>
@@ -410,7 +515,15 @@ const Pathway = (props) => {
                       <span className="plus">+</span>{" "}
                       <span className={styles.accordianTitle}>Activity:</span>
                     </div>{" "}
-                    <span className={styles.months}>1-3 days</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("A");
+                        }}
+                      />
+                      <span className={styles.months}>1-3 days</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -420,7 +533,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample4"
                 >
                   <div className={`${styles.contentYellow} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("A")}>open</button>
+                    </div>
                     <span>
                       Planning document: Delivery Plan… Commencement Brief… ABCD
                       on a Page… User Stories…Science Exhibition Flyer to
@@ -446,7 +562,15 @@ const Pathway = (props) => {
                         Activity planner:
                       </span>
                     </div>{" "}
-                    <span className={styles.months}>1-6 Weeks</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("AP");
+                        }}
+                      />
+                      <span className={styles.months}>1-6 Weeks</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -456,7 +580,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample4"
                 >
                   <div className={`${styles.contentYellow} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("AP")}>open</button>
+                    </div>
                     <span>
                       Oz-e-maths lesson… Playschool Lesson… Teach Spelling
                       Mastery Lesson… Marketing Campaign Copy… Event… Produce a
@@ -481,7 +608,15 @@ const Pathway = (props) => {
                         Activity Solution:
                       </span>
                     </div>{" "}
-                    <span className={styles.months}>1-2 Weeks</span>
+                    <div>
+                      <Icon
+                        iconName="Add"
+                        onClick={() => {
+                          addNewTOD("AS");
+                        }}
+                      />
+                      <span className={styles.months}>1-2 Weeks</span>
+                    </div>
                   </button>
                 </h2>
                 <div
@@ -491,7 +626,10 @@ const Pathway = (props) => {
                   data-bs-parent="#accordionFlushExample4"
                 >
                   <div className={`${styles.contentYellow} accordion-body`}>
-                    <p>Examples:</p>
+                    <div className={styles.navPhases}>
+                      <p>Examples:</p>
+                      <button onClick={() => props.getTODType("AS")}>open</button>
+                    </div>
                     <span>
                       Purchasing Brief… Business Area Report to CEO… Weekly
                       Production Report……GGSA Annual Plan…

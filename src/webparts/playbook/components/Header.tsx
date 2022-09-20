@@ -65,10 +65,9 @@ const Header = (props: any) => {
   /* function of get header details */
   const getHeaderDetail = () => {
     let curProId = props.ProjectID;
-    currentProject = props.arrMasterAnnual.filter(
+    currentProject = props.arrMasterAnnual && props.arrMasterAnnual.filter(
       (obj) => obj.ID == curProId
     )[0];
-    console.log(currentProject);
     setModHeading({
       Title: "",
       About: "",
@@ -81,22 +80,22 @@ const Header = (props: any) => {
           isShow: false,
         }
       : headingDetails;
-    arrMaster = props.arrMasterAnnual.map((dropVal) => {
+    arrMaster = props.arrMasterAnnual && props.arrMasterAnnual.map((dropVal) => {
       return { key: dropVal.ID, text: dropVal.Project, Value: dropVal.TOD };
     });
-    setDefaultSelectedValue(arrMaster.filter((row) => row.key == curProId)[0]);
-    getProManagerDetail();
-    setMasterDrop(arrMaster);
+    arrMaster && setDefaultSelectedValue(arrMaster.filter((row) => row.key == curProId)[0]);
+    props.arrMasterAnnual && getProManagerDetail();
+    setMasterDrop(arrMaster ?arrMaster:[] );
     setSelectedKey(curProId);
     setModHeading(headingDetails);
   };
 
   /* get change the project */
   const getChangeProject = (ID) => {
-    currentProject = props.arrMasterAnnual.filter((obj) => obj.ID == ID)[0];
+    currentProject = props.arrMasterAnnual && props.arrMasterAnnual.filter((obj) => obj.ID == ID)[0];
     let Type = currentProject.TOD;
     props.getCurrProjectData(ID, Type);
-    getProManagerDetail();
+    props.arrMasterAnnual && getProManagerDetail();
     setSelectedKey(ID);
   };
 
@@ -281,7 +280,7 @@ const Header = (props: any) => {
             ""
           )}
         </div>
-        {props.pageType == "phases" && (
+        {props.pageType == "phases" && props.arrMasterAnnual && (
           <div style={{ transform: "translate(50px, 80px)" }}>
             <Autocomplete
               id="combo-box-demo"
@@ -313,14 +312,12 @@ const Header = (props: any) => {
           </div>
         )}
         <div className={styles.profiles}>
-          {!managerTitle ? (
-            ""
-          ) : (
+          {props.arrMasterAnnual && (
             <div title={managerTitle} className={styles.dev}>
               {manaFirLasLetter}
             </div>
           )}
-          {DeveCount > 0 ? (
+          {DeveCount > 0 && props.arrMasterAnnual ? (
             <>
               <div title={developerTitle} className={styles.manager}>
                 {deveFirLasLetter}

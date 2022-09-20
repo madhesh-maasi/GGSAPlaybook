@@ -52,7 +52,9 @@ const NavHeader = (props) => {
                   props.navLink == "phases" ? styles.linkActive : styles.navbtn
                 }
                 onClick={() => {
-                  props.getNavigationLink("phases");
+                  props.dPID != undefined
+                  ? props.getNavigationLink("phases", props.pathwayTOD)
+                  : props.getNavHeader("phases", "");
                 }}
               >
                 Phases
@@ -64,7 +66,7 @@ const NavHeader = (props) => {
                     : styles.navbtn
                 }
                 onClick={() => {
-                  props.getNavigationLink("practice");
+                  props.getNavHeader("practice", "");
                 }}
               >
                 Practices
@@ -74,7 +76,7 @@ const NavHeader = (props) => {
                   props.navLink == "patheay" ? styles.linkActive : styles.navbtn
                 }
                 onClick={() => {
-                  props.getNavigationLink("patheay");
+                  props.getNavHeader("patheay", "");
                 }}
               >
                 Pathway
@@ -86,7 +88,7 @@ const NavHeader = (props) => {
                     : styles.navbtn
                 }
                 onClick={() => {
-                  props.getNavigationLink("helpguid");
+                  props.getNavHeader("helpguid", "");
                 }}
               >
                 Help guide

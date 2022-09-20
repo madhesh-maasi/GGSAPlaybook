@@ -35,7 +35,7 @@ const Label = (props) => {
             );
           })}
         </div>
-      )}
+      )} 
     </div>
   );
 };

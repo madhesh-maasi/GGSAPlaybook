@@ -129,7 +129,6 @@ const Questions = (props) => {
   /* life cycle of render */
   useEffect(() => {
     getArrangedSteps();
-    console.log(props.phasesSteps);
   }, [render]);
 
   return (

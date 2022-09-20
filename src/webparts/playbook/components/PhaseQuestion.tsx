@@ -168,7 +168,6 @@ const PhaseQuestion = (props) => {
       : (arrMaster[0].isSelected = true);
     setAllPhasesSteps(arrMaster);
     getArrangedSteps();
-    // console.log(props.allPhasesSteps);
   }, [render]);
 
   return (
