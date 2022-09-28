@@ -1,224 +1,227 @@
-import * as React from "react";
-import Header from "./Header";
-import Questions from "./Questions";
-import Footerimg from "./Footerimg";
-import FooterCategories from "./FooterCategories";
-import { useState, useEffect } from "react";
-import Loader from "./Loader";
-import Patheay from "./Patheay";
-import HelpGuide from "./HelpGuide";
-import "../../../ExternalRef/css/style.scss";
-import NavHeader from "./NavHeader";
-import PhaseQuestion from "./PhaseQuestion";
-import styles from "./Playbook.module.scss";
+import * as React from 'react'
+import Header from './Header'
+import Questions from './Questions'
+import Footerimg from './Footerimg'
+import FooterCategories from './FooterCategories'
+import { useState, useEffect } from 'react'
+import Loader from './Loader'
+import Patheay from './Patheay'
+import HelpGuide from './HelpGuide'
+import '../../../ExternalRef/css/style.scss'
+import NavHeader from './NavHeader'
+import PhaseQuestion from './PhaseQuestion'
+import styles from './Playbook.module.scss'
 
-const SplashImage = require("../../../ExternalRef/img/SplashImage.png");
+const SplashImage = require('../../../ExternalRef/img/SplashImage.png')
 type Detail = {
-  Title: string;
-  Order?: number;
-};
+  Title: string
+  Order?: number
+}
 
 interface IListConfig {
-  Title: string;
-  deliver: string;
-  About: string;
-  Next: string;
-  Previous: string;
-  ID: number;
-  UserId?: number;
-  Order?: number;
-  isInComplete?: boolean;
-  TOD?: string[];
-  usersRoles?: string[];
-  activity?: string;
-  nextActivity?: string;
-  FooterImage?: string;
-  Category?: string;
+  Title: string
+  deliver: string
+  About: string
+  Next: string
+  Previous: string
+  ID: number
+  UserId?: number
+  Order?: number
+  isInComplete?: boolean
+  TOD?: string[]
+  usersRoles?: string[]
+  activity?: string
+  nextActivity?: string
+  FooterImage?: string
+  Category?: string
+  ActiveIcon?: string
+  InActiveIcon?: string
 }
 
 interface IListFooter {
-  Title: string;
-  Category: string;
-  FooterImage: string;
-  Order: number;
-  isActive: boolean;
+  Title: string
+  Category: string
+  FooterImage: string
+  Order: number
+  isActive: boolean
 }
 
 interface IListFooterConfig {
-  Title: string;
-  Next: string;
-  Previous: string;
-  ID: number;
-  Category: string;
-  FooterImage: string;
-  Order: number;
-  activity?: string;
-  nextActivity?: string;
+  Title: string
+  Next: string
+  Previous: string
+  ID: number
+  Category: string
+  FooterImage: string
+  Order: number
+  activity?: string
+  nextActivity?: string
 }
 
 interface IListSubStep {
-  ID: number;
-  SubSteps: string;
+  ID: number
+  SubSteps: string
 }
 
 interface IListStep {
-  Title: string;
-  ID: number;
-  Step: string;
-  stepsHeading: string;
-  Time: string;
-  CompletedUser: string;
-  isRead: boolean;
-  Icon: string;
-  arrSubStep: IListSubStep[] | number;
-  Next: number;
-  Previous: number;
-  UserId: number;
-  Order?: number;
+  Title: string
+  ID: number
+  Step: string
+  stepsHeading: string
+  Time: string
+  CompletedUser: string
+  isRead: boolean
+  Icon: string
+  arrSubStep: IListSubStep[] | number
+  Next: number
+  Previous: number
+  UserId: number
+  Order?: number
+  ActiveIcon?: string
+  InActiveIcon?: string
 }
 
 interface IUserList {
-  Value: string;
+  Value: string
 }
 
-let isArrSteps: IListStep[];
-let arrSteps: IListStep[];
-let arrListConfig: any[];
-let moduleHead: IListConfig[];
-let moduleArr: IListConfig[];
-let arrPrimarySteps: IListStep[];
-let backModule: IListConfig[];
-let arrComSteps: IListStep[];
-let footerContent: IListFooterConfig[];
-let footerArr: IListFooter[];
-let arrSubSteps: IListSubStep[];
-let arrMasterAnnual: any[];
-let objComDeliver: IListConfig;
-let backContent: Detail;
-let UserId: number;
-let arrDeliver: IListConfig;
-let firstModOrdNo: number;
-let latestModOrdNo: number;
-let latestOrderNO: number | string;
-let lastModOrdNo: number;
-let pageURL: any;
-let pageType: string;
-let nextModuleTitle: string;
-let PrimaryQus: IListConfig;
-let curSteps: IListConfig;
-let firstName: IUserList[];
-let firstValue: string;
-let lastName: IUserList[];
-let lastValue: string;
-let firstValSplit: string[];
-let lastValSplit: string[];
-let valueOfFirstLetter: string;
-let valueOfLastLetter: string;
-let arrCategory;
-let arrCatConfig;
-let curProject;
-let curProjectTOD;
-let arrCurProject;
-let dPID;
-let curActivity;
-let arrModules = [];
-let arrMainConfig = [];
-let arrActiveSelected = [];
-let arrAllPhasesSteps = [];
-let strSelectedCategory = "";
-let strSelecetdPhase = "";
-let navComplete: boolean;
-let arrPhaseConfig;
-let pathwayTOD;
-let curTOD;
+let isArrSteps: IListStep[]
+let arrSteps: IListStep[]
+let arrListConfig: any[]
+let moduleHead: IListConfig[]
+let moduleArr: IListConfig[]
+let arrPrimarySteps: IListStep[]
+let backModule: IListConfig[]
+let arrComSteps: IListStep[]
+let footerContent: IListFooterConfig[]
+let footerArr: IListFooter[]
+let arrSubSteps: IListSubStep[]
+let arrMasterAnnual: any[]
+let objComDeliver: IListConfig
+let backContent: Detail
+let UserId: number
+let arrDeliver: IListConfig
+let firstModOrdNo: number
+let latestModOrdNo: number
+let latestOrderNO: number | string
+let lastModOrdNo: number
+let pageURL: any
+let pageType: string
+let nextModuleTitle: string
+let PrimaryQus: IListConfig
+let curSteps: IListConfig
+let firstName: IUserList[]
+let firstValue: string
+let lastName: IUserList[]
+let lastValue: string
+let firstValSplit: string[]
+let lastValSplit: string[]
+let valueOfFirstLetter: string
+let valueOfLastLetter: string
+let arrCategory
+let arrCatConfig
+let curProject
+let curProjectTOD
+let arrCurProject
+let dPID
+let curActivity
+let arrModules = []
+let arrMainConfig = []
+let arrActiveSelected = []
+let arrAllPhasesSteps = []
+let strSelectedCategory = ''
+let strSelecetdPhase = ''
+let navComplete: boolean
+let arrPhaseConfig
+let pathwayTOD
+let curTOD
 
 const App = (props: any): JSX.Element => {
   /* All States */
-  const [allSteps, setAllSteps] = useState<IListStep[]>(arrSteps);
-  const [primarySteps, setPrimarySteps] = useState([]);
-  const [arrDelSec, setArrDelSec] = useState<IListConfig>(arrDeliver);
-  const [arrFooter, setArrFooter] = useState<IListFooter[]>([]);
-  const [loader, setLoader] = useState<boolean>(true);
-  const [userName, setUserName] = useState<string>("");
-  const [navLink, setNavLink] = useState("");
-  const [page, setPage] = useState("");
-  const [selectedOrder, setSelectedOrder] = useState(0);
-  const [allPhasesSteps, setAllPhasesSteps] = useState(arrAllPhasesSteps);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [isPhaseAvail, setIsPhaseAvail] = useState(true);
-  const [isSplash, setIsSplash] = useState(true);
+  const [allSteps, setAllSteps] = useState<IListStep[]>(arrSteps)
+  const [primarySteps, setPrimarySteps] = useState([])
+  const [arrDelSec, setArrDelSec] = useState<IListConfig>(arrDeliver)
+  const [arrFooter, setArrFooter] = useState<IListFooter[]>([])
+  const [loader, setLoader] = useState<boolean>(true)
+  const [userName, setUserName] = useState<string>('')
+  const [navLink, setNavLink] = useState('')
+  const [page, setPage] = useState('')
+  const [selectedOrder, setSelectedOrder] = useState(0)
+  const [allPhasesSteps, setAllPhasesSteps] = useState(arrAllPhasesSteps)
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [isPhaseAvail, setIsPhaseAvail] = useState(true)
+  const [isSplash, setIsSplash] = useState(true)
 
   /* Get current user details */
   const getCurrentUserDetail = async () => {
-    const params = window.location.href.split("?");
-    const paramsString =
-      params.length > 1 ? params[1].toLowerCase() : undefined;
-    const searchParams = new URLSearchParams(paramsString);
-    searchParams.has("activityid")
-      ? (dPID = Number(searchParams.get("activityid")))
-      : "";
-    dPID == undefined ? openPathway() : openPhases(dPID);
-  };
+    const params = window.location.href.split('?')
+    const paramsString = params.length > 1 ? params[1].toLowerCase() : undefined
+    const searchParams = new URLSearchParams(paramsString)
+    searchParams.has('activityid')
+      ? (dPID = Number(searchParams.get('activityid')))
+      : ''
+    dPID == undefined ? openPathway() : openPhases(dPID)
+  }
 
   /* get pathway open function */
   const openPathway = async () => {
     await props.URL.currentUser()
       .then(async (res) => {
-        UserId = res.Id;
-        setUserName(res.Title);
+        UserId = res.Id
+        setUserName(res.Title)
         await props.sp.profiles
           .getPropertiesFor(res.LoginName)
           .then(async (event) => {
             firstName = event.UserProfileProperties.filter(
-              (val) => val.Key == "FirstName"
-            );
+              (val) => val.Key == 'FirstName',
+            )
             lastName = event.UserProfileProperties.filter(
-              (val) => val.Key == "LastName"
-            );
+              (val) => val.Key == 'LastName',
+            )
             firstValue = firstName
               .map((firstVal) => {
-                return firstVal.Value;
+                return firstVal.Value
               })
-              .toString();
+              .toString()
             lastValue = lastName
               .map((lastVal) => {
-                return lastVal.Value;
+                return lastVal.Value
               })
-              .toString();
-            firstValSplit = firstValue.split("");
-            lastValSplit = lastValue.split("");
-            valueOfFirstLetter = firstValSplit[0];
-            valueOfLastLetter = lastValSplit[0];
-            setNavLink("patheay");
+              .toString()
+            firstValSplit = firstValue.split('')
+            lastValSplit = lastValue.split('')
+            valueOfFirstLetter = firstValSplit[0]
+            valueOfLastLetter = lastValSplit[0]
+            setNavLink('patheay')
           })
           .catch((err) => {
-            console.log(err);
-          });
+            console.log(err)
+          })
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   /* get phases open function */
   const openPhases = async (Id) => {
     await props.URL.lists
       .getByTitle(props.deliveryPlanList)
-      .items.select("*, AnnualPlanID/ID")
-      .expand("AnnualPlanID")
+      .items.select('*, AnnualPlanID/ID')
+      .expand('AnnualPlanID')
       .getById(Id)
       .get()
       .then((res) => {
-        curProject = res.AnnualPlanIDId;
-        curActivity = res.Title;
-      });
-    pageType = dPID == null ? "practice" : "phases";
+        curProject = res.AnnualPlanIDId
+        curActivity = res.Title
+      })
+    pageType = dPID == null ? 'practice' : 'phases'
     await props.URL.lists
       .getByTitle(props.masterAnnualPlan)
       .items.select(
-        "*, ProjectOwner/Title, ProjectOwner/EMail, ProjectOwner/Name, ProjectOwner/ID, ProjectLead/Title, ProjectLead/EMail, ProjectLead/Name, ProjectOwner/ID"
+        '*, ProjectOwner/Title, ProjectOwner/EMail, ProjectOwner/Name, ProjectOwner/ID, ProjectLead/Title, ProjectLead/EMail, ProjectLead/Name, ProjectOwner/ID',
       )
-      .expand("ProjectOwner, ProjectLead")
+      .expand('ProjectOwner, ProjectLead')
       .top(4000)
       .get()
       .then(async (datas) => {
@@ -226,12 +229,12 @@ const App = (props: any): JSX.Element => {
           // getting ProjManager
           // Should run for  every dropdown change
           let proManager = !objects.ProjectOwnerId
-            ? ""
+            ? ''
             : {
                 Title: objects.ProjectOwner.Title,
                 Name: objects.ProjectOwner.Name,
-              };
-          let proDeveloper = [];
+              }
+          let proDeveloper = []
           // getting ProjDeveloper
           proDeveloper = !objects.ProjectLeadId
             ? []
@@ -239,76 +242,76 @@ const App = (props: any): JSX.Element => {
                 return {
                   Title: data.Title,
                   Name: data.Name,
-                };
-              });
+                }
+              })
           return {
             Project: objects.Title,
             ID: objects.ID,
             TOD: objects.ProjectType,
             Manager: proManager,
             Developer: proDeveloper,
-          };
-        });
+          }
+        })
         curProjectTOD = arrMasterAnnual.filter(
-          (proId) => proId.ID == curProject
-        )[0].TOD;
+          (proId) => proId.ID == curProject,
+        )[0].TOD
         // Current user mail get
         await props.URL.currentUser()
           .then(async (res) => {
-            UserId = res.Id;
-            setUserName(res.Title);
+            UserId = res.Id
+            setUserName(res.Title)
             /* Current user details */
             await props.sp.profiles
               .getPropertiesFor(res.LoginName)
               .then(async (event) => {
                 firstName = event.UserProfileProperties.filter(
-                  (val) => val.Key == "FirstName"
-                );
+                  (val) => val.Key == 'FirstName',
+                )
                 lastName = event.UserProfileProperties.filter(
-                  (val) => val.Key == "LastName"
-                );
+                  (val) => val.Key == 'LastName',
+                )
                 firstValue = firstName
                   .map((firstVal) => {
-                    return firstVal.Value;
+                    return firstVal.Value
                   })
-                  .toString();
+                  .toString()
                 lastValue = lastName
                   .map((lastVal) => {
-                    return lastVal.Value;
+                    return lastVal.Value
                   })
-                  .toString();
-                firstValSplit = firstValue.split("");
-                lastValSplit = lastValue.split("");
-                valueOfFirstLetter = firstValSplit[0];
-                valueOfLastLetter = lastValSplit[0];
-                getDliverPlan(curProjectTOD);
+                  .toString()
+                firstValSplit = firstValue.split('')
+                lastValSplit = lastValue.split('')
+                valueOfFirstLetter = firstValSplit[0]
+                valueOfLastLetter = lastValSplit[0]
+                getDliverPlan(curProjectTOD)
               })
               .catch((err) => {
-                console.log(err);
-              });
+                console.log(err)
+              })
           })
           .catch((err) => {
-            console.log(err);
-          });
+            console.log(err)
+          })
       })
       .catch((err: string) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   /* Get practiceConfig list all datas */
   const getPracticeConfig = (): void => {
     props.URL.lists
-      .getByTitle("PracticeConfig")
-      .items.select("*,Next/Title, Previous/Title")
-      .expand("Next, Previous")
+      .getByTitle('PracticeConfig')
+      .items.select('*,Next/Title, Previous/Title')
+      .expand('Next, Previous')
       .top(4000)
       .get()
       .then((res) => {
-        let arrJSON;
-        arrListConfig = res;
+        let arrJSON
+        arrListConfig = res
         moduleArr = arrListConfig.map((head) => {
-          arrJSON = JSON.parse(head.Deliverable.slice(1, -1));
+          arrJSON = JSON.parse(head.Deliverable.slice(1, -1))
           return {
             Title: head.Title,
             deliver: arrJSON,
@@ -322,8 +325,8 @@ const App = (props: any): JSX.Element => {
                 ? head.usersRoles
                 : [],
             Category: head.Category,
-          };
-        });
+          }
+        })
         footerContent = arrListConfig.map((footer) => {
           return {
             Title: footer.Title,
@@ -334,17 +337,16 @@ const App = (props: any): JSX.Element => {
               footer.Previous != undefined ? footer.Previous.Title : undefined,
             ID: footer.ID,
             Order: footer.Order,
-          };
-        });
-        let arrArrangedModules = [];
-        arrArrangedModules.push(moduleArr.filter((row) => !row.Previous)[0]);
+          }
+        })
+        let arrArrangedModules = []
+        arrArrangedModules.push(moduleArr.filter((row) => !row.Previous)[0])
         moduleArr.slice(1).forEach(() => {
-          let nextTitle =
-            arrArrangedModules[arrArrangedModules.length - 1].Next;
+          let nextTitle = arrArrangedModules[arrArrangedModules.length - 1].Next
           arrArrangedModules.push(
-            moduleArr.filter((row) => row.Title == nextTitle)[0]
-          );
-        });
+            moduleArr.filter((row) => row.Title == nextTitle)[0],
+          )
+        })
         arrArrangedModules = arrArrangedModules.map((row, i) => {
           return {
             Title: row.Title,
@@ -356,55 +358,55 @@ const App = (props: any): JSX.Element => {
             Order: i + 1,
             usersRoles: row.usersRoles,
             Category: row.Category,
-          };
-        });
-        moduleHead = arrArrangedModules.length > 0 && arrArrangedModules;
+          }
+        })
+        moduleHead = arrArrangedModules.length > 0 && arrArrangedModules
         firstModOrdNo = moduleHead
           .filter((ordNo) => ordNo.Previous == undefined)
           .map((firstID) => {
-            return firstID.Order;
-          })[0];
+            return firstID.Order
+          })[0]
         lastModOrdNo = moduleHead
           .filter((ordNo) => ordNo.Next == undefined)
           .map((lastID) => {
-            return lastID.Order;
-          })[0];
-        getPractice();
+            return lastID.Order
+          })[0]
+        getPractice()
       })
       .then(() => {
         props.URL.lists
-          .getByTitle("PhasesConfig")
+          .getByTitle('PhasesConfig')
           .items.top(4000)
           .get()
           .then((res) => {
-            let categories = res.map((row) => row.Category);
+            let categories = res.map((row) => row.Category)
             arrCategory = categories.filter(function (item, pos, self) {
-              return self.indexOf(item) == pos;
-            });
+              return self.indexOf(item) == pos
+            })
           })
           .catch((err) => {
-            console.log(err);
-          });
+            console.log(err)
+          })
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   /* Get phasesConfig list all datas */
   const getPhasesConfig = (): void => {
-    setSelectedCategory("");
-    setAllPhasesSteps([]);
+    setSelectedCategory('')
+    setAllPhasesSteps([])
     props.URL.lists
-      .getByTitle("PhasesConfig")
+      .getByTitle('PhasesConfig')
       .items.top(4000)
       .get()
       .then((res) => {
-        let arrJSON;
-        arrListConfig = res;
+        let arrJSON
+        arrListConfig = res
         //adding Config
         arrPhaseConfig = arrListConfig.map((head, i) => {
-          arrJSON = JSON.parse(head.Deliverable.slice(1, -1));
+          arrJSON = JSON.parse(head.Deliverable.slice(1, -1))
           return {
             Title: head.Title,
             deliver: arrJSON,
@@ -415,29 +417,29 @@ const App = (props: any): JSX.Element => {
             FooterImage: head.FooterImage,
             Category: head.Category.toLowerCase(),
             indx: i,
-          };
-        });
-        curTOD != "" ? getCurPhasesConfig() : getAllPhasesConfig();
+          }
+        })
+        curTOD != '' ? getCurPhasesConfig() : getAllPhasesConfig()
       })
       .then(() => {
         props.URL.lists
-          .getByTitle("PracticeConfig")
-          .items.select("*,Next/Title, Previous/Title")
-          .expand("Next, Previous")
+          .getByTitle('PracticeConfig')
+          .items.select('*,Next/Title, Previous/Title')
+          .expand('Next, Previous')
           .top(4000)
           .get()
           .then((res) => {
-            let categories = res.map((row) => row.Category);
+            let categories = res.map((row) => row.Category)
             arrCategory = categories.filter(function (item, pos, self) {
-              return self.indexOf(item) == pos;
-            });
-            getPhases();
-          });
+              return self.indexOf(item) == pos
+            })
+            getPhases()
+          })
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   /* get all phases configs */
   const getAllPhasesConfig = () => {
@@ -459,8 +461,10 @@ const App = (props: any): JSX.Element => {
           i == 0
             ? undefined
             : arrPhaseConfig.filter((item) => item.indx == i - 1)[0].Title,
-      };
-    });
+      }
+    })
+    console.log(arrMainConfig)
+
     footerContent = arrMainConfig.map((footer) => {
       return {
         Title: footer.Title,
@@ -470,36 +474,37 @@ const App = (props: any): JSX.Element => {
         Previous: footer.Previous,
         ID: footer.ID,
         Order: footer.Order,
-      };
-    });
-    moduleHead = arrMainConfig.length > 0 && arrMainConfig;
+      }
+    })
+    console.log(footerContent)
+    moduleHead = arrMainConfig.length > 0 && arrMainConfig
     firstModOrdNo = moduleHead
       .filter((ordNo) => ordNo.Previous == undefined)
       .map((firstID) => {
-        return firstID.Order;
-      })[0];
+        return firstID.Order
+      })[0]
     lastModOrdNo = moduleHead
       .filter((ordNo) => ordNo.Next == undefined)
       .map((lastID) => {
-        return lastID.Order;
-      })[0];
-  };
+        return lastID.Order
+      })[0]
+  }
 
   /* get current phases configs */
   const getCurPhasesConfig = () => {
     //merging delivery plan and phasesconfig
     let arrDelnPhaseConf = arrCurProject.map((row, i) => {
-      let curRow = arrPhaseConfig.filter((row2) => row.Phases == row2.Title)[0];
-      setIsPhaseAvail(true);
+      let curRow = arrPhaseConfig.filter((row2) => row.Phases == row2.Title)[0]
+      setIsPhaseAvail(true)
       if (!curRow) {
-        setIsPhaseAvail(false);
-        setLoader(false);
-        return;
+        setIsPhaseAvail(false)
+        setLoader(false)
+        return
       }
       let nextActivity =
         i == arrCurProject.length - 1
           ? undefined
-          : arrCurProject.filter((row, ind) => ind == i + 1)[0].Title;
+          : arrCurProject.filter((row, ind) => ind == i + 1)[0].Title
       return {
         Title: curRow.Title,
         deliver: curRow.deliver,
@@ -512,13 +517,13 @@ const App = (props: any): JSX.Element => {
         nextActivity: nextActivity,
         FooterImage: curRow.FooterImage,
         Category: curRow.Category,
-      };
-    });
+      }
+    })
     //set orderno and prev next
     if (arrDelnPhaseConf.filter((row) => row != undefined).length == 0) {
-      setIsPhaseAvail(false);
-      setLoader(false);
-      return;
+      setIsPhaseAvail(false)
+      setLoader(false)
+      return
     }
     let moduleArr = arrDelnPhaseConf.map((row, i) => {
       return {
@@ -541,17 +546,17 @@ const App = (props: any): JSX.Element => {
         FooterImage: row.FooterImage,
         Category: row.Category,
         Order: i + 1,
-      };
-    });
+      }
+    })
     strSelecetdPhase =
       moduleArr.filter((module) => module.activity == curActivity).length > 0
         ? moduleArr.filter((module) => module.activity == curActivity)[0].Title
-        : "";
+        : ''
     // removing duplicate here
     moduleArr = moduleArr.filter(
-      (v, i, a) => a["findIndex"]((v2) => v2.Title === v.Title) === i
-    );
-    let arrPhaModule = [];
+      (v, i, a) => a['findIndex']((v2) => v2.Title === v.Title) === i,
+    )
+    let arrPhaModule = []
     // gte index no
     arrPhaModule = moduleArr.map((row, i) => {
       return {
@@ -567,8 +572,8 @@ const App = (props: any): JSX.Element => {
         index: i,
         TOD: row.TOD,
         usersRoles: row.usersRoles,
-      };
-    });
+      }
+    })
     //setin prev and next then order no again
     arrMainConfig = arrPhaModule.map((obj, i) => {
       return {
@@ -591,8 +596,8 @@ const App = (props: any): JSX.Element => {
         Order: i + 1,
         TOD: obj.TOD,
         usersRoles: obj.usersRoles,
-      };
-    });
+      }
+    })
     footerContent = arrMainConfig.map((footer) => {
       return {
         Title: footer.Title,
@@ -604,103 +609,121 @@ const App = (props: any): JSX.Element => {
         Order: footer.Order,
         activity: footer.activity,
         nextActivity: footer.nextActivity,
-      };
-    });
-    moduleHead = arrMainConfig.length > 0 && arrMainConfig;
+      }
+    })
+    moduleHead = arrMainConfig.length > 0 && arrMainConfig
     firstModOrdNo = moduleHead
       .filter((ordNo) => ordNo.Previous == undefined)
       .map((firstID) => {
-        return firstID.Order;
-      })[0];
+        return firstID.Order
+      })[0]
     lastModOrdNo = moduleHead
       .filter((ordNo) => ordNo.Next == undefined)
       .map((lastID) => {
-        return lastID.Order;
-      })[0];
-  };
+        return lastID.Order
+      })[0]
+  }
 
   /* Get practice list all datas */
   const getPractice = (): void => {
     props.URL.lists
-      .getByTitle("Practice")
-      .items.select("*,Practice/Title, Next/ID, Previous/ID")
-      .expand("Practice, Next, Previous")
+      .getByTitle('Practice')
+      .items.select('*,Practice/Title, Next/ID, Previous/ID')
+      .expand('Practice, Next, Previous')
       .top(4000)
       .get()
       .then((val) => {
-        setLoader(true);
+        setLoader(true)
         arrSteps = val.map((row) => {
           let isUserCompleted = row.CompletedUser
-            ? row.CompletedUser.split(",")
+            ? row.CompletedUser.split(',')
                 .map((id) => +id)
                 .some((id) => id == UserId)
-            : false;
+            : false
           return {
             UserId: UserId,
-            Title: row.Title ? row.Title : "",
+            Title: row.Title ? row.Title : '',
             ID: row.ID,
             Step: row.Step,
             stepsHeading: row.Practice.Title,
             Time: row.Time,
-            CompletedUser: row.CompletedUser != null ? row.CompletedUser : "",
+            CompletedUser: row.CompletedUser != null ? row.CompletedUser : '',
             isRead: isUserCompleted,
-            Icon: row.Icon ? row.Icon : "",
+            Icon: row.Icon ? row.Icon : '',
             arrSubStep: row.ID,
             Next: row.NextId,
             Previous: row.PreviousId,
-          };
-        });
-        getPracticeSubSteps();
+            ActiveIcon: `${JSON.parse(row.ActiveIcon).serverUrl}${
+              JSON.parse(row.ActiveIcon).serverRelativeUrl
+            }`,
+            InActiveIcon: `${JSON.parse(row.InActiveIcon).serverUrl}${
+              JSON.parse(row.InActiveIcon).serverRelativeUrl
+            }`,
+            // FooterIcon: `${JSON.parse(row.FooterIcon).serverUrl}${
+            //   JSON.parse(row.FooterIcon).serverRelativeUrl
+            // }`,
+          }
+        })
+        getPracticeSubSteps()
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   /* Get phases list all datas */
   const getPhases = (): void => {
     props.URL.lists
-      .getByTitle("Phases")
-      .items.select("*,Phases/Title, Next/ID, Previous/ID")
-      .expand("Phases, Next, Previous")
+      .getByTitle('Phases')
+      .items.select('*,Phases/Title, Next/ID, Previous/ID')
+      .expand('Phases, Next, Previous')
       .top(4000)
       .get()
       .then((val) => {
-        setLoader(true);
+        setLoader(true)
         arrSteps = val.map((row) => {
           let isUserCompleted = row.CompletedUser
-            ? row.CompletedUser.split(",")
+            ? row.CompletedUser.split(',')
                 .map((id) => +id)
                 .some((id) => id == UserId)
-            : false;
+            : false
           return {
             UserId: UserId,
-            Title: row.Title ? row.Title : "",
+            Title: row.Title ? row.Title : '',
             ID: row.ID,
             Step: row.Step,
             stepsHeading: row.Phases.Title,
             Time: row.Time,
-            CompletedUser: row.CompletedUser != null ? row.CompletedUser : "",
+            CompletedUser: row.CompletedUser != null ? row.CompletedUser : '',
             isRead: isUserCompleted,
-            Icon: row.Icon ? row.Icon : "",
+            Icon: row.Icon ? row.Icon : '',
             arrSubStep: row.ID,
             Next: row.NextId,
             Previous: row.PreviousId,
-          };
-        });
-        getPhasesSubSteps();
+            ActiveIcon: `${JSON.parse(row.ActiveIcon).serverUrl}${
+              JSON.parse(row.ActiveIcon).serverRelativeUrl
+            }`,
+            InActiveIcon: `${JSON.parse(row.InActiveIcon).serverUrl}${
+              JSON.parse(row.InActiveIcon).serverRelativeUrl
+            }`,
+            // FooterIcon: `${JSON.parse(row.FooterIcon).serverUrl}${
+            //   JSON.parse(row.FooterIcon).serverRelativeUrl
+            // }`,
+          }
+        })
+        getPhasesSubSteps()
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   /* Get practiceSubSteps list all datas */
   const getPracticeSubSteps = (): void => {
     props.URL.lists
-      .getByTitle("PracticeSubSteps")
-      .items.select("*, Practice/ID")
-      .expand("Practice")
+      .getByTitle('PracticeSubSteps')
+      .items.select('*, Practice/ID')
+      .expand('Practice')
       .top(4000)
       .get()
       .then((SubSteps) => {
@@ -708,8 +731,8 @@ const App = (props: any): JSX.Element => {
           return {
             ID: obj.PracticeId,
             SubSteps: obj.SubSteps,
-          };
-        });
+          }
+        })
         isArrSteps = arrSteps.map((row) => {
           return {
             UserId: row.UserId,
@@ -724,21 +747,23 @@ const App = (props: any): JSX.Element => {
             arrSubStep: arrSubSteps.filter((data) => data.ID == row.ID),
             Next: row.Next,
             Previous: row.Previous,
-          };
-        });
-        setAllSteps([]);
-        setAllSteps([...isArrSteps]);
-        let startSteps;
-        strSelectedCategory == "routine operations practices"
+            ActiveIcon: row.ActiveIcon,
+            InActiveIcon: row.InActiveIcon,
+          }
+        })
+        setAllSteps([])
+        setAllSteps([...isArrSteps])
+        let startSteps
+        strSelectedCategory == 'routine operations practices'
           ? (curSteps = moduleHead.filter(
-              (obj) => obj.Category.toLowerCase() == strSelectedCategory
+              (obj) => obj.Category.toLowerCase() == strSelectedCategory,
             )[0])
-          : strSelectedCategory == "routine innovation practices"
+          : strSelectedCategory == 'routine innovation practices'
           ? (curSteps = moduleHead.filter(
-              (obj) => obj.Category.toLowerCase() == strSelectedCategory
+              (obj) => obj.Category.toLowerCase() == strSelectedCategory,
             )[0])
           : ((startSteps = moduleHead.filter(
-              (firstModule) => firstModule.Previous == undefined
+              (firstModule) => firstModule.Previous == undefined,
             )[0]),
             (curSteps = [
               {
@@ -754,13 +779,13 @@ const App = (props: any): JSX.Element => {
                   .filter((step) => step.stepsHeading == startSteps.Title)
                   .some((step) => step.isRead == false),
               },
-            ].filter((practice) => practice.isInComplete == true)[0]));
+            ].filter((practice) => practice.isInComplete == true)[0]))
         curSteps != undefined
           ? ((arrDeliver = moduleHead.filter(
-              (DeliSec) => DeliSec.Title == curSteps.Title
+              (DeliSec) => DeliSec.Title == curSteps.Title,
             )[0]),
             (arrPrimarySteps = isArrSteps.filter(
-              (step) => step.stepsHeading == curSteps.Title
+              (step) => step.stepsHeading == curSteps.Title,
             )),
             (footerArr =
               footerContent.length > 0 &&
@@ -771,9 +796,9 @@ const App = (props: any): JSX.Element => {
                   FooterImage: row.FooterImage,
                   Order: row.Order,
                   isActive: row.Title == arrDeliver.Title ? true : false,
-                };
+                }
               })),
-            strSelectedCategory == ""
+            strSelectedCategory == ''
               ? ((latestModOrdNo = arrDeliver.Order),
                 arrPrimarySteps.length > 0 &&
                   ((nextModuleTitle = arrDeliver.Next),
@@ -782,21 +807,21 @@ const App = (props: any): JSX.Element => {
                   curSteps.Title,
                   arrPrimarySteps,
                   footerArr,
-                  arrDeliver
+                  arrDeliver,
                 ))
-          : moduleRerunning(startSteps.Next);
+          : moduleRerunning(startSteps.Next)
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   /* Get phasesSubSteps list all datas */
   const getPhasesSubSteps = (): void => {
     props.URL.lists
-      .getByTitle("PhasesSubSteps")
-      .items.select("*, Phases/ID")
-      .expand("Phases")
+      .getByTitle('PhasesSubSteps')
+      .items.select('*, Phases/ID')
+      .expand('Phases')
       .top(4000)
       .get()
       .then((SubSteps) => {
@@ -804,8 +829,8 @@ const App = (props: any): JSX.Element => {
           return {
             ID: obj.PhasesId,
             SubSteps: obj.SubSteps,
-          };
-        });
+          }
+        })
         isArrSteps = arrSteps.map((row) => {
           return {
             UserId: row.UserId,
@@ -820,10 +845,12 @@ const App = (props: any): JSX.Element => {
             arrSubStep: arrSubSteps.filter((data) => data.ID == row.ID),
             Next: row.Next,
             Previous: row.Previous,
-          };
-        });
-        setAllSteps([]);
-        setAllSteps([...isArrSteps]);
+            ActiveIcon: row.ActiveIcon,
+            InActiveIcon: row.InActiveIcon,
+          }
+        })
+        setAllSteps([])
+        setAllSteps([...isArrSteps])
         arrActiveSelected = moduleHead.map((obj) => {
           return {
             Title: obj.Title,
@@ -837,23 +864,23 @@ const App = (props: any): JSX.Element => {
             activity: obj.activity,
             TOD: obj.TOD,
             PhaseSteps: isArrSteps.filter(
-              (step) => step.stepsHeading == obj.Title
+              (step) => step.stepsHeading == obj.Title,
             ),
             isSelected: obj.Title == strSelecetdPhase,
             nextActivity: obj.nextActivity,
             FooterImage: obj.FooterImage,
             Category: obj.Category,
-          };
-        });
-        strSelectedCategory != ""
+          }
+        })
+        strSelectedCategory != ''
           ? (arrActiveSelected.forEach((li, i) => {
-              arrActiveSelected[i].isSelected = false;
+              arrActiveSelected[i].isSelected = false
             }),
             (arrActiveSelected.filter(
               (row) =>
-                row.Category.toLowerCase() == strSelectedCategory.toLowerCase()
+                row.Category.toLowerCase() == strSelectedCategory.toLowerCase(),
             )[0].isSelected = true))
-          : "";
+          : ''
         footerArr =
           arrActiveSelected.length > 0 &&
           arrActiveSelected.map((row) => {
@@ -863,38 +890,38 @@ const App = (props: any): JSX.Element => {
               FooterImage: row.FooterImage,
               Order: row.Order,
               isActive: false,
-            };
-          });
+            }
+          })
         arrActiveSelected.some((row) => row.isSelected)
           ? arrActiveSelected
-          : (arrActiveSelected[0].isSelected = true);
+          : (arrActiveSelected[0].isSelected = true)
         footerArr.filter(
           (row) =>
             row.Title ==
-            arrActiveSelected.filter((li) => li.isSelected)[0].Title
-        )[0].isActive = true;
+            arrActiveSelected.filter((li) => li.isSelected)[0].Title,
+        )[0].isActive = true
         setArrDelSec({
           ...arrActiveSelected.filter((row) => row.isSelected)[0],
-        });
-        setArrFooter(footerArr);
-        setAllPhasesSteps([...arrActiveSelected]);
-        setLoader(false);
+        })
+        setArrFooter(footerArr)
+        setAllPhasesSteps([...arrActiveSelected])
+        setLoader(false)
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   /* get latest order number function */
   const getLatestOrderNo = (
     nextQus,
     arrPrimarySteps,
     footerArr,
-    arrDeliver
+    arrDeliver,
   ) => {
     nextQus != undefined
       ? ((PrimaryQus = moduleHead.filter(
-          (currentObj) => currentObj.Title == nextQus
+          (currentObj) => currentObj.Title == nextQus,
         )[0]),
         PrimaryQus != undefined &&
           ((curSteps = [
@@ -914,10 +941,10 @@ const App = (props: any): JSX.Element => {
           curSteps != undefined
             ? navComplete == true
               ? ((arrDeliver = moduleHead.filter(
-                  (deliver) => deliver.Title == curSteps.Title
+                  (deliver) => deliver.Title == curSteps.Title,
                 )[0]),
                 (arrPrimarySteps = isArrSteps.filter(
-                  (step) => step.stepsHeading == curSteps.Title
+                  (step) => step.stepsHeading == curSteps.Title,
                 )),
                 (footerArr =
                   footerContent.length > 0 &&
@@ -928,7 +955,7 @@ const App = (props: any): JSX.Element => {
                       FooterImage: row.FooterImage,
                       Order: row.Order,
                       isActive: row.Title == arrDeliver.Title ? true : false,
-                    };
+                    }
                   })),
                 (latestModOrdNo = arrDeliver.Order),
                 arrPrimarySteps.length > 0 &&
@@ -941,17 +968,17 @@ const App = (props: any): JSX.Element => {
                 PrimaryQus.Next,
                 arrPrimarySteps,
                 footerArr,
-                arrDeliver
+                arrDeliver,
               )))
       : ((latestModOrdNo = moduleHead[moduleHead.length - 1].Order),
-        reArrange(arrPrimarySteps, footerArr, arrDeliver));
-  };
+        reArrange(arrPrimarySteps, footerArr, arrDeliver))
+  }
 
   /* All modules Rerunning */
   const moduleRerunning = (nextQus): void => {
     nextQus != undefined
       ? ((PrimaryQus = moduleHead.filter(
-          (currentObj) => currentObj.Title == nextQus
+          (currentObj) => currentObj.Title == nextQus,
         )[0]),
         PrimaryQus != undefined &&
           ((curSteps = [
@@ -969,10 +996,10 @@ const App = (props: any): JSX.Element => {
           ].filter((isStep) => isStep.isInComplete == true)[0]),
           curSteps != undefined
             ? ((arrDeliver = moduleHead.filter(
-                (deliver) => deliver.Title == curSteps.Title
+                (deliver) => deliver.Title == curSteps.Title,
               )[0]),
               (arrPrimarySteps = isArrSteps.filter(
-                (step) => step.stepsHeading == curSteps.Title
+                (step) => step.stepsHeading == curSteps.Title,
               )),
               (footerArr =
                 footerContent.length > 0 &&
@@ -983,25 +1010,25 @@ const App = (props: any): JSX.Element => {
                     FooterImage: row.FooterImage,
                     Order: row.Order,
                     isActive: row.Title == arrDeliver.Title ? true : false,
-                  };
+                  }
                 })),
               (latestModOrdNo = arrDeliver.Order),
               arrPrimarySteps.length > 0 &&
                 ((nextModuleTitle = arrDeliver.Next),
                 reArrange(arrPrimarySteps, footerArr, arrDeliver)))
             : moduleRerunning(PrimaryQus.Next)))
-      : comAllModule();
-  };
+      : comAllModule()
+  }
 
   /* All Values Rearrangeing */
   const reArrange = (arrAllSteps, footerArr, DeliverableObj): void => {
-    setSelectedOrder(DeliverableObj.Order);
-    let arrArrangedSteps = [];
-    arrArrangedSteps.push(arrAllSteps.filter((row) => !row.Previous)[0]);
+    setSelectedOrder(DeliverableObj.Order)
+    let arrArrangedSteps = []
+    arrArrangedSteps.push(arrAllSteps.filter((row) => !row.Previous)[0])
     arrAllSteps.slice(1).forEach(() => {
-      let nextID = arrArrangedSteps[arrArrangedSteps.length - 1].Next;
-      arrArrangedSteps.push(arrAllSteps.filter((row) => row.ID == nextID)[0]);
-    });
+      let nextID = arrArrangedSteps[arrArrangedSteps.length - 1].Next
+      arrArrangedSteps.push(arrAllSteps.filter((row) => row.ID == nextID)[0])
+    })
     arrArrangedSteps = arrArrangedSteps.map((row, i) => {
       return {
         CompletedUser: row.CompletedUser,
@@ -1017,30 +1044,32 @@ const App = (props: any): JSX.Element => {
         arrSubStep: row.arrSubStep,
         isRead: row.isRead,
         Order: i + 1,
-      };
-    });
-    latestOrderNO = DeliverableObj.Order;
-    setArrFooter(footerArr);
-    setArrDelSec(DeliverableObj);
-    setPrimarySteps([]);
-    setPrimarySteps(arrArrangedSteps);
+        ActiveIcon: row.ActiveIcon,
+        InActiveIcon: row.InActiveIcon,
+      }
+    })
+    latestOrderNO = DeliverableObj.Order
+    setArrFooter(footerArr)
+    setArrDelSec(DeliverableObj)
+    setPrimarySteps([])
+    setPrimarySteps(arrArrangedSteps)
     setTimeout(() => {
-      setLoader(false);
-    }, 1000);
-  };
+      setLoader(false)
+    }, 1000)
+  }
 
   /* all steps complete after first questions Running */
   const comAllModule = (): void => {
-    let arrComArrangedTime = [];
-    objComDeliver = moduleHead.filter((module) => !module.Previous)[0];
+    let arrComArrangedTime = []
+    objComDeliver = moduleHead.filter((module) => !module.Previous)[0]
     arrComSteps = isArrSteps.filter(
-      (step) => step.stepsHeading == objComDeliver.Title
-    );
-    arrComArrangedTime.push(arrComSteps.filter((row) => !row.Previous)[0]);
+      (step) => step.stepsHeading == objComDeliver.Title,
+    )
+    arrComArrangedTime.push(arrComSteps.filter((row) => !row.Previous)[0])
     arrComSteps.slice(1).forEach(() => {
-      let nextID = arrComArrangedTime[arrComArrangedTime.length - 1].Next;
-      arrComArrangedTime.push(arrComSteps.filter((row) => row.ID == nextID)[0]);
-    });
+      let nextID = arrComArrangedTime[arrComArrangedTime.length - 1].Next
+      arrComArrangedTime.push(arrComSteps.filter((row) => row.ID == nextID)[0])
+    })
     arrComArrangedTime = arrComArrangedTime.map((row, i) => {
       return {
         CompletedUser: row.CompletedUser,
@@ -1056,8 +1085,10 @@ const App = (props: any): JSX.Element => {
         arrSubStep: row.arrSubStep,
         isRead: row.isRead,
         Order: i + 1,
-      };
-    });
+        ActiveIcon: row.ActiveIcon,
+        InActiveIcon: row.InActiveIcon,
+      }
+    })
     footerArr =
       footerContent.length > 0 &&
       footerContent.map((row) => {
@@ -1067,34 +1098,34 @@ const App = (props: any): JSX.Element => {
           FooterImage: row.FooterImage,
           Order: row.Order,
           isActive: row.Title == objComDeliver.Title ? true : false,
-        };
-      });
-    latestModOrdNo = moduleHead[moduleHead.length - 1].Order;
-    latestOrderNO = moduleHead[0].Order;
-    setArrFooter(footerArr);
-    setArrDelSec(objComDeliver);
-    setPrimarySteps([]);
-    setPrimarySteps([...arrComArrangedTime]);
+        }
+      })
+    latestModOrdNo = moduleHead[moduleHead.length - 1].Order
+    latestOrderNO = moduleHead[0].Order
+    setArrFooter(footerArr)
+    setArrDelSec(objComDeliver)
+    setPrimarySteps([])
+    setPrimarySteps([...arrComArrangedTime])
     setTimeout(() => {
-      setLoader(false);
-    }, 1000);
-  };
+      setLoader(false)
+    }, 1000)
+  }
 
   /* User Already Read module function */
   const readModules = (): void => {
-    let arrArrangedTime = [];
-    latestOrderNO = backContent.Order;
+    let arrArrangedTime = []
+    latestOrderNO = backContent.Order
     objComDeliver = moduleHead.filter(
-      (deliver) => deliver.Title == backContent.Title
-    )[0];
+      (deliver) => deliver.Title == backContent.Title,
+    )[0]
     arrComSteps = allSteps.filter(
-      (step) => step.stepsHeading == backContent.Title
-    );
-    arrArrangedTime.push(arrComSteps.filter((row) => !row.Previous)[0]);
+      (step) => step.stepsHeading == backContent.Title,
+    )
+    arrArrangedTime.push(arrComSteps.filter((row) => !row.Previous)[0])
     arrComSteps.slice(1).forEach(() => {
-      let nextID = arrArrangedTime[arrArrangedTime.length - 1].Next;
-      arrArrangedTime.push(arrComSteps.filter((row) => row.ID == nextID)[0]);
-    });
+      let nextID = arrArrangedTime[arrArrangedTime.length - 1].Next
+      arrArrangedTime.push(arrComSteps.filter((row) => row.ID == nextID)[0])
+    })
     arrArrangedTime = arrArrangedTime.map((row, i) => {
       return {
         CompletedUser: row.CompletedUser,
@@ -1110,8 +1141,10 @@ const App = (props: any): JSX.Element => {
         arrSubStep: row.arrSubStep,
         isRead: row.isRead,
         Order: i + 1,
-      };
-    });
+        ActiveIcon: row.ActiveIcon,
+        InActiveIcon: row.InActiveIcon,
+      }
+    })
     footerArr =
       footerContent.length > 0 &&
       footerContent.map((row) => {
@@ -1121,74 +1154,81 @@ const App = (props: any): JSX.Element => {
           FooterImage: row.FooterImage,
           Order: row.Order,
           isActive: row.Title == backContent.Title ? true : false,
-        };
-      });
-    setArrFooter(footerArr);
-    setArrDelSec(objComDeliver);
-    setPrimarySteps([]);
-    setPrimarySteps([...arrArrangedTime]);
-    setLoader(false);
-  };
+        }
+      })
+    setArrFooter(footerArr)
+    setArrDelSec(objComDeliver)
+    setPrimarySteps([])
+    setPrimarySteps([...arrArrangedTime])
+    setLoader(false)
+  }
 
   /* next module running */
   const reRunning = (curModOrdNo, nextTitle): void => {
-    setSelectedOrder(1);
-    navComplete = true;
+    setSelectedOrder(1)
+    navComplete = true
     lastModOrdNo == curModOrdNo
       ? (setLoader(true),
         (latestOrderNO = moduleHead[0].Order),
         (latestModOrdNo = moduleHead[moduleHead.length - 1].Order),
         comAllModule())
-      : page == "phases"
+      : page == 'phases'
       ? getPhases()
-      : getPractice();
-  };
+      : getPractice()
+  }
 
   /* function of Previous Module */
   const BeforeModule = (ordNumber): void => {
-    setLoader(true);
-    setSelectedOrder(ordNumber - 1);
-    backModule = moduleHead.filter((row) => row.Order < ordNumber);
-    backContent = backModule[backModule.length - 1];
+    setLoader(true)
+    setSelectedOrder(ordNumber - 1)
+    backModule = moduleHead.filter((row) => row.Order < ordNumber)
+    backContent = backModule[backModule.length - 1]
     setTimeout(() => {
-      readModules();
-    }, 1000);
-  };
+      readModules()
+    }, 1000)
+  }
 
   /* function of Next Module */
   const AfterModule = (ordNumber): void => {
-    setLoader(true);
-    setSelectedOrder(ordNumber + 1);
-    backModule = moduleHead.filter((row) => row.Order > ordNumber);
-    backContent = backModule.shift();
+    setLoader(true)
+    setSelectedOrder(ordNumber + 1)
+    backModule = moduleHead.filter((row) => row.Order > ordNumber)
+    backContent = backModule.shift()
     setTimeout(() => {
-      readModules();
-    }, 1000);
-  };
+      readModules()
+    }, 1000)
+  }
 
   /* Get Category Config */
   const getCategoryConfig = (link) => {
     props.URL.lists
-      .getByTitle("CaterogyConfig")
+      .getByTitle('CaterogyConfig')
       .items.top(4000)
       .get()
       .then((res) => {
-        arrCatConfig = res.map((row) => ({ Title: row.Title, Icon: row.Icon }));
-        setPage(link);
-        link == "phases" ? getPhasesConfig() : getPracticeConfig();
+        arrCatConfig = res.map((row) => ({
+          Title: row.Title,
+          Icon: row.Icon,
+          // //FooterIcon: row.FooterIcon
+          FooterIcon: `${JSON.parse(row.FooterIcon).serverUrl}${
+            JSON.parse(row.FooterIcon).serverRelativeUrl
+          }`,
+        }))
+        setPage(link)
+        link == 'phases' ? getPhasesConfig() : getPracticeConfig()
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   /* get delivery plan phase list */
   const getDliverPlan = (type) => {
-    pathwayTOD = type;
+    pathwayTOD = type
     props.URL.lists
       .getByTitle(props.deliveryPlan)
-      .items.select("*, Phases/Title, Phases/ID")
-      .expand("Phases")
+      .items.select('*, Phases/Title, Phases/ID')
+      .expand('Phases')
       .top(4000)
       .get()
       .then((values) => {
@@ -1200,12 +1240,12 @@ const App = (props: any): JSX.Element => {
               delPlan: arr.DeliveryPlanCategory,
               DelTOD: arr.DeliverPlanTypeOfWork.filter((tod) => tod == type)[0],
               Hours: arr.Hours,
-              Phases: arr.PhasesId == null ? "" : arr.Phases.Title,
-            };
+              Phases: arr.PhasesId == null ? '' : arr.Phases.Title,
+            }
           })
-          .filter((event) => event.DelTOD != undefined);
+          .filter((event) => event.DelTOD != undefined)
         // filter completion
-        let totObj = arrProject.length - 1;
+        let totObj = arrProject.length - 1
         //Set Prevs and Next to Activities
         arrCurProject = arrProject.map((e, i) => {
           return {
@@ -1217,90 +1257,91 @@ const App = (props: any): JSX.Element => {
             Order: i + 1,
             Previous: i == 0 ? null : i,
             Next: i < totObj ? 2 + i : null,
-          };
-        });
-        getNavHeader(pageType, pathwayTOD);
+          }
+        })
+        getNavHeader(pageType, pathwayTOD)
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   /* get current project Id */
   const getCurrProjectData = (Id, type) => {
-    curProject = null;
-    curProject = Id;
+    curProject = null
+    curProject = Id
     // curActivity = type;
-    curActivity = "";
-    strSelecetdPhase = "";
-    getDliverPlan(type);
-  };
+    curActivity = ''
+    strSelecetdPhase = ''
+    getDliverPlan(type)
+  }
 
   /* function of navigation */
   const getNavigationLink = (nav, Type) => {
-    getNavHeader(nav, Type);
-  };
+    getNavHeader(nav, Type)
+  }
 
   /* get naveHeader */
   const getNavHeader = (nav, Type) => {
-    curTOD = Type;
-    setLoader(true);
-    setNavLink(nav);
-    getCategoryConfig(nav);
-    setSelectedCategory("");
-    strSelectedCategory = "";
-  };
+    curTOD = Type
+    setLoader(true)
+    setNavLink(nav)
+    getCategoryConfig(nav)
+    setSelectedCategory('')
+    strSelectedCategory = ''
+  }
 
   /* footer Navigation function */
   const footerNavigation = (type, cat, curData) => {
-    getNavFooter(type, cat, curData);
-  };
+    getNavFooter(type, cat, curData)
+  }
 
   /* get footer nav */
   const getNavFooter = (type, cat, curData) => {
-    curTOD = curData;
-    pageType = type;
-    setNavLink(pageType);
-    setPage(pageType);
-    getCategoryConfig(pageType);
-    navComplete = false;
-    strSelectedCategory = "";
-    strSelectedCategory = cat.toLowerCase();
-  };
+    curTOD = curData
+    pageType = type
+    setNavLink(pageType)
+    setPage(pageType)
+    getCategoryConfig(pageType)
+    navComplete = false
+    strSelectedCategory = ''
+    strSelectedCategory = cat.toLowerCase()
+  }
 
   const changeHeaderHandler = (selectedPhase) => {
-    setArrDelSec(undefined);
-    setArrDelSec({ ...selectedPhase });
-  };
+    setArrDelSec(undefined)
+    setArrDelSec({ ...selectedPhase })
+  }
 
   const changeFooterHandler = (selectedTitle) => {
     footerArr.forEach((li, i) => {
-      footerArr[i].isActive = false;
-    });
-    footerArr.filter((row) => row.Title == selectedTitle)[0].isActive = true;
-    setArrFooter([...footerArr]);
-  };
+      footerArr[i].isActive = false
+    })
+    footerArr.filter((row) => row.Title == selectedTitle)[0].isActive = true
+    setArrFooter([...footerArr])
+  }
 
   /* get type of TOD */
   const getTODType = (type) => {
-    pageType = "phases";
-    getDliverPlan(type);
-  };
+    pageType = 'phases'
+    getDliverPlan(type)
+  }
 
   /* life cycle of onload */
   useEffect(() => {
-    getCurrentUserDetail();
+    getCurrentUserDetail()
     setTimeout(() => {
-      setIsSplash(false);
-    }, 3000);
-  }, []);
+      setIsSplash(false)
+    }, 5000)
+  }, [])
 
   return (
     <>
       {isSplash ? (
-        <div className={styles.splashContainer}>
-          <img src={`${SplashImage}`} style={{ width: 500, height: 500 }} />
-        </div>
+        <>
+          {/* <img src={`${SplashImage}`} style={{ width: 500, height: 500 }} /> */}
+          <Loader splashImg={SplashImage} />
+        </>
       ) : (
         <>
           <NavHeader
@@ -1310,7 +1351,7 @@ const App = (props: any): JSX.Element => {
             pathwayTOD={pathwayTOD}
             getNavHeader={getNavHeader}
           />
-          {navLink == "phases" ? (
+          {navLink == 'phases' ? (
             <>
               {
                 <>
@@ -1332,7 +1373,7 @@ const App = (props: any): JSX.Element => {
                   )}
                   {allPhasesSteps.length > 0 || !isPhaseAvail ? (
                     loader ? (
-                      <Loader />
+                      <Loader splashImg={SplashImage} />
                     ) : (
                       <>
                         {isPhaseAvail ? (
@@ -1383,17 +1424,17 @@ const App = (props: any): JSX.Element => {
                       </>
                     )
                   ) : (
-                    ""
+                    ''
                   )}
                 </>
               }
             </>
-          ) : navLink == "practice" ? (
+          ) : navLink == 'practice' ? (
             <>
               {primarySteps.length > 0 && (
                 <>
                   {loader ? (
-                    <Loader />
+                    <Loader splashImg={SplashImage} />
                   ) : (
                     <>
                       <Header
@@ -1449,7 +1490,7 @@ const App = (props: any): JSX.Element => {
                 </>
               )}
             </>
-          ) : navLink == "patheay" ? (
+          ) : navLink == 'patheay' ? (
             <Patheay
               userName={userName}
               firstName={valueOfFirstLetter}
@@ -1457,15 +1498,15 @@ const App = (props: any): JSX.Element => {
               getTODType={getTODType}
             />
           ) : // <></>
-          navLink == "helpguid" ? (
+          navLink == 'helpguid' ? (
             <HelpGuide />
           ) : (
-            ""
+            ''
           )}
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App

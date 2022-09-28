@@ -118,7 +118,7 @@
             }
             .contentYellow,
             .contentBlue {
-                height: 140px;
+                // height: 140px;
                 // overflow: scroll;
                 background-color: #fcb52780;
                 @extend .flex;
@@ -146,7 +146,7 @@
 }
 
 // media queries for responsive
-@media (min-width:1600px) {
+@media (min-width: 1600px) {
     .PathwayWrapper .pathwayContent .pathwayCard .contentBlue,
     .PathwayWrapper .pathwayContent .pathwayCard .contentYellow {
         p {

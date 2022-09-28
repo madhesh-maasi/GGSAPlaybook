@@ -1,239 +1,237 @@
-import * as React from "react";
-import styles from "./Header.module.scss";
-import { useState, useEffect } from "react";
+import * as React from 'react'
+import styles from './Header.module.scss'
+import { useState, useEffect } from 'react'
 import {
   Icon,
   Dropdown,
   IDropdownStyles,
   IDropdownOption,
-} from "@fluentui/react";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+} from '@fluentui/react'
+import TextField from '@material-ui/core/TextField'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 
-const closeIcon = require("../../../ExternalRef/img/close-button.png");
+const closeIcon = require('../../../ExternalRef/img/close-button.png')
 
 let headingDetails = {
-  Title: "",
-  About: "",
+  Title: '',
+  About: '',
   isShow: false,
-};
+}
 
 const dropdownStyles: Partial<IDropdownStyles> = {
   dropdown: { width: 260 },
-};
+}
 
-let currentProject;
-let managerFirstName;
-let managerLastName;
-let developerFirstName;
-let developerLastName;
-let manaFirValue;
-let manaLasValue;
-let deveFirValue;
-let deveLasValue;
-let manaFirValSplit;
-let manaLasValSplit;
-let deveFirValSplit;
-let deveLasValSplit;
-let manaFirLetter;
-let manaLasLetter;
-let deveFirLetter;
-let deveLasLetter;
-let curManagerName;
-let curDeveloperName;
-let arrDeveloperName;
-let arrMaster = [];
+let currentProject
+let managerFirstName
+let managerLastName
+let developerFirstName
+let developerLastName
+let manaFirValue
+let manaLasValue
+let deveFirValue
+let deveLasValue
+let manaFirValSplit
+let manaLasValSplit
+let deveFirValSplit
+let deveLasValSplit
+let manaFirLetter
+let manaLasLetter
+let deveFirLetter
+let deveLasLetter
+let curManagerName
+let curDeveloperName
+let arrDeveloperName
+let arrMaster = []
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 
 const Header = (props: any) => {
   /* All States */
-  const [modHeading, setModHeading] = useState(headingDetails);
-  const [masterDrop, setMasterDrop] = useState([]);
-  const [selectedKey, setSelectedKey] = useState<string | number>();
-  const [managerTitle, setManagerTitle] = useState();
-  const [manaFirLasLetter, setManaFirLasLetter] = useState();
-  const [developerTitle, setDeveloperTitle] = useState();
-  const [deveFirLasLetter, setDeveFirLasLetter] = useState();
-  const [arrDeveName, setArrDeveName] = useState([]);
-  const [DeveCount, setDeveCount] = useState<string | number>();
+  const [modHeading, setModHeading] = useState(headingDetails)
+  const [masterDrop, setMasterDrop] = useState([])
+  const [selectedKey, setSelectedKey] = useState<string | number>()
+  const [managerTitle, setManagerTitle] = useState()
+  const [manaFirLasLetter, setManaFirLasLetter] = useState()
+  const [developerTitle, setDeveloperTitle] = useState()
+  const [deveFirLasLetter, setDeveFirLasLetter] = useState()
+  const [arrDeveName, setArrDeveName] = useState([])
+  const [DeveCount, setDeveCount] = useState<string | number>()
   const [defaultSelectedValue, setDefaultSelectedValue] = useState({
     key: 0,
-    text: "",
+    text: '',
     Value: null,
-  });
+  })
 
   /* function of get header details */
   const getHeaderDetail = () => {
-    let curProId = props.ProjectID;
+    let curProId = props.ProjectID
     currentProject =
       props.arrMasterAnnual &&
-      props.arrMasterAnnual.filter((obj) => obj.ID == curProId)[0];
+      props.arrMasterAnnual.filter((obj) => obj.ID == curProId)[0]
     setModHeading({
-      Title: "",
-      About: "",
+      Title: '',
+      About: '',
       isShow: false,
-    });
+    })
     headingDetails = props.arrDelSec
       ? {
           Title: props.arrDelSec.Title,
           About: props.arrDelSec.About,
           isShow: false,
         }
-      : headingDetails;
+      : headingDetails
     arrMaster =
       props.arrMasterAnnual &&
       props.arrMasterAnnual.map((dropVal) => {
-        return { key: dropVal.ID, text: dropVal.Project, Value: dropVal.TOD };
-      });
+        return { key: dropVal.ID, text: dropVal.Project, Value: dropVal.TOD }
+      })
     arrMaster &&
-      setDefaultSelectedValue(
-        arrMaster.filter((row) => row.key == curProId)[0]
-      );
-    props.arrMasterAnnual && getProManagerDetail();
-    setMasterDrop(arrMaster ? arrMaster : []);
-    setSelectedKey(curProId);
-    setModHeading(headingDetails);
-  };
+      setDefaultSelectedValue(arrMaster.filter((row) => row.key == curProId)[0])
+    props.arrMasterAnnual && getProManagerDetail()
+    setMasterDrop(arrMaster ? arrMaster : [])
+    setSelectedKey(curProId)
+    setModHeading(headingDetails)
+  }
 
   /* get change the project */
   const getChangeProject = (ID) => {
     currentProject =
       props.arrMasterAnnual &&
-      props.arrMasterAnnual.filter((obj) => obj.ID == ID)[0];
-    let Type = currentProject.TOD;
-    props.getCurrProjectData(ID, Type);
-    props.arrMasterAnnual && getProManagerDetail();
-    setSelectedKey(ID);
-  };
+      props.arrMasterAnnual.filter((obj) => obj.ID == ID)[0]
+    let Type = currentProject.TOD
+    props.getCurrProjectData(ID, Type)
+    props.arrMasterAnnual && getProManagerDetail()
+    setSelectedKey(ID)
+  }
 
   /* get project manager details */
   const getProManagerDetail = () => {
-    curManagerName = "";
+    curManagerName = ''
     curManagerName = !currentProject.Manager.Title
-      ? ""
-      : currentProject.Manager.Title;
-    let curManagetLoginName = "";
+      ? ''
+      : currentProject.Manager.Title
+    let curManagetLoginName = ''
     curManagetLoginName = !currentProject.Manager.Name
-      ? ""
-      : currentProject.Manager.Name;
+      ? ''
+      : currentProject.Manager.Name
     !curManagetLoginName
       ? (getProDeveloperDetail(), setManagerTitle(curManagerName))
       : props.sp.profiles
           .getPropertiesFor(curManagetLoginName)
           .then((event) => {
             managerFirstName = event.UserProfileProperties.filter(
-              (val) => val.Key == "FirstName"
-            );
+              (val) => val.Key == 'FirstName',
+            )
             managerLastName = event.UserProfileProperties.filter(
-              (val) => val.Key == "LastName"
-            );
+              (val) => val.Key == 'LastName',
+            )
             manaFirValue = managerFirstName
               .map((firstVal) => {
-                return firstVal.Value;
+                return firstVal.Value
               })
-              .toString();
+              .toString()
             manaLasValue = managerLastName
               .map((lastVal) => {
-                return lastVal.Value;
+                return lastVal.Value
               })
-              .toString();
-            manaFirValSplit = manaFirValue.split("");
-            manaLasValSplit = manaLasValue.split("");
-            manaFirLetter = manaFirValSplit[0];
-            manaLasLetter = manaLasValSplit[0];
-            setManagerTitle(curManagerName);
-            setManaFirLasLetter(manaFirLetter + manaLasLetter);
-            getProDeveloperDetail();
+              .toString()
+            manaFirValSplit = manaFirValue.split('')
+            manaLasValSplit = manaLasValue.split('')
+            manaFirLetter = manaFirValSplit[0]
+            manaLasLetter = manaLasValSplit[0]
+            setManagerTitle(curManagerName)
+            setManaFirLasLetter(manaFirLetter + manaLasLetter)
+            getProDeveloperDetail()
           })
           .catch((err) => {
-            console.log(err);
-          });
-  };
+            console.log(err)
+          })
+  }
 
   /* get project developer details */
   const getProDeveloperDetail = () => {
-    arrDeveloperName = [];
+    arrDeveloperName = []
     arrDeveloperName =
       currentProject.Developer.length > 0
         ? currentProject.Developer.map((detail) => {
-            return detail.Title;
+            return detail.Title
           })
-        : [];
-    curDeveloperName = arrDeveloperName[0];
-    let curDeveloperLoginName = [];
+        : []
+    curDeveloperName = arrDeveloperName[0]
+    let curDeveloperLoginName = []
     curDeveloperLoginName =
       currentProject.Developer.length > 0
         ? currentProject.Developer.map((detail) => {
-            return detail.Name;
+            return detail.Name
           })
-        : [];
-    let curFirstDeveloper = curDeveloperLoginName[0];
+        : []
+    let curFirstDeveloper = curDeveloperLoginName[0]
     curDeveloperLoginName.length > 0
       ? props.sp.profiles
           .getPropertiesFor(curFirstDeveloper)
           .then((event) => {
             developerFirstName = event.UserProfileProperties.filter(
-              (val) => val.Key == "FirstName"
-            );
+              (val) => val.Key == 'FirstName',
+            )
             developerLastName = event.UserProfileProperties.filter(
-              (val) => val.Key == "LastName"
-            );
+              (val) => val.Key == 'LastName',
+            )
             deveFirValue = developerFirstName
               .map((firstVal) => {
-                return firstVal.Value;
+                return firstVal.Value
               })
-              .toString();
+              .toString()
             deveLasValue = developerLastName
               .map((lastVal) => {
-                return lastVal.Value;
+                return lastVal.Value
               })
-              .toString();
-            deveFirValSplit = deveFirValue.split("");
-            deveLasValSplit = deveLasValue.split("");
-            deveFirLetter = deveFirValSplit[0];
-            deveLasLetter = deveLasValSplit[0];
+              .toString()
+            deveFirValSplit = deveFirValue.split('')
+            deveLasValSplit = deveLasValue.split('')
+            deveFirLetter = deveFirValSplit[0]
+            deveLasLetter = deveLasValSplit[0]
             let Counting =
               curDeveloperLoginName.length > 1
                 ? curDeveloperLoginName.length - 1
-                : 0;
-            setDeveCount(Counting);
-            setArrDeveName(arrDeveloperName);
-            setDeveloperTitle(curDeveloperName);
-            setDeveFirLasLetter(deveFirLetter + deveLasLetter);
+                : 0
+            setDeveCount(Counting)
+            setArrDeveName(arrDeveloperName)
+            setDeveloperTitle(curDeveloperName)
+            setDeveFirLasLetter(deveFirLetter + deveLasLetter)
           })
           .catch((err) => {
-            console.log(err);
+            console.log(err)
           })
-      : setArrDeveName(arrDeveloperName);
-  };
+      : setArrDeveName(arrDeveloperName)
+  }
 
   /* Life cycle of Onload */
   useEffect(() => {
-    getHeaderDetail();
-  }, [props.arrDelSec]);
+    getHeaderDetail()
+  }, [props.arrDelSec])
 
   return (
-    <div style={{ padding: "16px", paddingBottom: "0" }}>
+    <div style={{ padding: '16px', paddingBottom: '0' }}>
       <div className={styles.valueofHead}>
         <div className={styles.titleWrapper}>
-          {props.isPhaseAvail || props.pageType != "phases" ? (
+          {props.isPhaseAvail || props.pageType != 'phases' ? (
             <span
               className={
-                props.pageType == "phases" ? styles.phaseTitle : styles.title
+                props.pageType == 'phases' ? styles.phaseTitle : styles.title
               }
             >
-              {modHeading.Title}{" "}
+              {modHeading.Title}{' '}
               <Icon
                 iconName="InfoSolid"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
                 className={
-                  props.pageType == "phases"
+                  props.pageType == 'phases'
                     ? styles.phaseInfoIcon
                     : styles.infoIcon
                 }
                 onClick={() => {
-                  modHeading.isShow = true;
-                  setModHeading({ ...modHeading });
+                  modHeading.isShow = true
+                  setModHeading({ ...modHeading })
                 }}
               />
               {modHeading.isShow == true && (
@@ -241,40 +239,40 @@ const Header = (props: any) => {
                   <div className={styles.modalBox}>
                     <div
                       style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
                       }}
                     >
                       <div
                         className={
-                          props.pageType == "phases"
+                          props.pageType == 'phases'
                             ? styles.phaseModalSet
                             : styles.modalSet
                         }
-                        style={{ display: "flex" }}
+                        style={{ display: 'flex' }}
                       >
                         <Icon
                           iconName="Settings"
                           style={{
-                            color: "white",
+                            color: 'white',
                           }}
                         />
-                        {"      "}
-                        <div style={{ transform: "translateY(5px)" }}>
+                        {'      '}
+                        <div style={{ transform: 'translateY(5px)' }}>
                           About
                         </div>
                       </div>
                       <img
                         style={{
-                          cursor: "pointer",
+                          cursor: 'pointer',
                         }}
                         src={`${closeIcon}`}
                         // height={15}
                         // width={"20px"}
                         onClick={() => {
-                          modHeading.isShow = false;
-                          setModHeading({ ...modHeading });
+                          modHeading.isShow = false
+                          setModHeading({ ...modHeading })
                         }}
                       />
                     </div>
@@ -284,11 +282,11 @@ const Header = (props: any) => {
               )}
             </span>
           ) : (
-            ""
+            ''
           )}
         </div>
-        {props.pageType == "phases" && props.arrMasterAnnual && (
-          <div style={{ transform: "translate(216px, 80px)" }}>
+        {props.pageType == 'phases' && props.arrMasterAnnual && (
+          <div style={{ transform: 'translate(106px, 80px)' }}>
             <Autocomplete
               id="combo-box-demo"
               options={masterDrop}
@@ -299,7 +297,7 @@ const Header = (props: any) => {
               style={{ width: 300, marginRight: 20 }}
               onChange={(e, value) => {
                 value && getChangeProject(value.key),
-                  setDefaultSelectedValue({ ...value });
+                  setDefaultSelectedValue({ ...value })
               }}
               value={defaultSelectedValue.text}
               renderInput={(params) => (
@@ -319,7 +317,7 @@ const Header = (props: any) => {
           </div>
         )}
         <div className={styles.profiles}>
-          <button className={styles.addProjectBtn}>Add Project</button>
+          {/* <button className={styles.addProjectBtn}>Add Project</button> */}
           {props.arrMasterAnnual && (
             <div title={managerTitle} className={styles.dev}>
               {manaFirLasLetter}
@@ -339,7 +337,7 @@ const Header = (props: any) => {
               </div>
             </>
           ) : (
-            ""
+            ''
           )}
           <div title={props.userName} className={styles.user}>
             {props.valueOfFirstLetter}
@@ -348,7 +346,7 @@ const Header = (props: any) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

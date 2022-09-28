@@ -16,5 +16,10 @@
         position: relative;
         z-index: 1;
         box-sizing: unset !important;
+        img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
     }
 }

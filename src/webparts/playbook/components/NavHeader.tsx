@@ -1,24 +1,24 @@
-import * as React from "react";
-import styles from "./NavHeader.module.scss";
-import { Panel } from "@fluentui/react/lib/Panel";
-import { useBoolean } from "@fluentui/react-hooks";
-import { useState, useEffect } from "react";
-import { Icon } from "@fluentui/react";
-import { PanelBase } from "office-ui-fabric-react";
+import * as React from 'react'
+import styles from './NavHeader.module.scss'
+import { Panel } from '@fluentui/react/lib/Panel'
+import { useBoolean } from '@fluentui/react-hooks'
+import { useState, useEffect } from 'react'
+import { Icon } from '@fluentui/react'
+import { PanelBase } from 'office-ui-fabric-react'
 
-const menu = require("./../../../ExternalRef/img/menu.png");
-const headerLogo = require("./../../../ExternalRef/img/GGSATopLogo.png");
+const menu = require('./../../../ExternalRef/img/menu.png')
+const headerLogo = require('./../../../ExternalRef/img/GGSATopLogoNew.png')
 
 const NavHeader = (props) => {
-  const [isPanel, setIsPanel] = useState(false);
+  const [isPanel, setIsPanel] = useState(false)
 
   const getPanelWork = (bool) => {
-    setIsPanel(bool);
-  };
+    setIsPanel(bool)
+  }
 
   useEffect(() => {
-    getPanelWork(false);
-  }, []);
+    getPanelWork(false)
+  }, [])
 
   return (
     <div>
@@ -26,14 +26,21 @@ const NavHeader = (props) => {
         <div className={styles.headerLogo}>
           <img src={`${headerLogo}`} alt="logo" width={300} />
         </div>
-        <img
-          className={styles.navMenu}
-          src={`${menu}`}
-          alt="menu"
-          onClick={() => {
-            getPanelWork(true);
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
           }}
-        />
+        >
+          <img
+            className={styles.navMenu}
+            src={`${menu}`}
+            alt="menu"
+            onClick={() => {
+              getPanelWork(true)
+            }}
+          />
+        </div>
       </div>
       <div>
         {isPanel == true && (
@@ -43,52 +50,52 @@ const NavHeader = (props) => {
             closeButtonAriaLabel="Close"
             headerText="Menu"
             onClick={() => {
-              getPanelWork(false);
+              getPanelWork(false)
             }}
           >
             <div className={styles.navWrapper}>
               <div
                 className={
-                  props.navLink == "phases" ? styles.linkActive : styles.navbtn
+                  props.navLink == 'phases' ? styles.linkActive : styles.navbtn
                 }
                 onClick={() => {
                   props.dPID != undefined
-                  ? props.getNavigationLink("phases", props.pathwayTOD)
-                  : props.getNavHeader("phases", "");
+                    ? props.getNavigationLink('phases', props.pathwayTOD)
+                    : props.getNavHeader('phases', '')
                 }}
               >
                 Phases
               </div>
               <div
                 className={
-                  props.navLink == "practice"
+                  props.navLink == 'practice'
                     ? styles.linkActive
                     : styles.navbtn
                 }
                 onClick={() => {
-                  props.getNavHeader("practice", "");
+                  props.getNavHeader('practice', '')
                 }}
               >
                 Practices
               </div>
               <div
                 className={
-                  props.navLink == "patheay" ? styles.linkActive : styles.navbtn
+                  props.navLink == 'patheay' ? styles.linkActive : styles.navbtn
                 }
                 onClick={() => {
-                  props.getNavHeader("patheay", "");
+                  props.getNavHeader('patheay', '')
                 }}
               >
                 Pathway
               </div>
               <div
                 className={
-                  props.navLink == "helpguid"
+                  props.navLink == 'helpguid'
                     ? styles.linkActive
                     : styles.navbtn
                 }
                 onClick={() => {
-                  props.getNavHeader("helpguid", "");
+                  props.getNavHeader('helpguid', '')
                 }}
               >
                 Help guide
@@ -98,7 +105,7 @@ const NavHeader = (props) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NavHeader;
+export default NavHeader

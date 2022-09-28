@@ -1,11 +1,11 @@
-import * as React from "react";
-import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
-import { Icon } from "@fluentui/react";
-import classes from "./Timeline.module.scss";
-import { useState, useEffect } from "react";
+import * as React from 'react'
+import { ProgressIndicator } from '@fluentui/react/lib/ProgressIndicator'
+import { Icon } from '@fluentui/react'
+import classes from './Timeline.module.scss'
+import { useState, useEffect } from 'react'
 
-let arrTimeline = [];
-let curQusOrderNo = 0;
+let arrTimeline = []
+let curQusOrderNo = 0
 
 const ProgressStyles = {
   root: {
@@ -20,16 +20,16 @@ const ProgressStyles = {
     height: 10,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
-    backgroundColor: "#03787c",
+    backgroundColor: '#03787c',
   },
-};
+}
 
 const Timeline = (props) => {
   /* All states */
-  const [timelineData, setTimelineData] = useState(arrTimeline);
-  const [curOrder, setCurOrder] = useState(curQusOrderNo);
-  const [render, setRender] = useState(props.timelineRender);
-  const [progressDetail, setprogressDetail] = useState(ProgressStyles);
+  const [timelineData, setTimelineData] = useState(arrTimeline)
+  const [curOrder, setCurOrder] = useState(curQusOrderNo)
+  const [render, setRender] = useState(props.timelineRender)
+  const [progressDetail, setprogressDetail] = useState(ProgressStyles)
 
   /* function of time line */
   const getTimeLine = () => {
@@ -46,24 +46,24 @@ const Timeline = (props) => {
         height: 10,
         borderTopRightRadius: 10,
         borderBottomRightRadius: 10,
-        backgroundColor: props.pageType == "phases" ? "#f99d26" : "#03787c",
+        backgroundColor: props.pageType == 'phases' ? '#f99d26' : '#03787c',
       },
-    });
-    arrTimeline = props.timeline;
+    })
+    arrTimeline = props.timeline
     curQusOrderNo =
       arrTimeline.length > 0 &&
       arrTimeline.filter((li) => li.isRead == false).length > 0
         ? arrTimeline.filter((li) => li.isRead == false)[0].Order
-        : arrTimeline[arrTimeline.length - 1].Order;
-    setCurOrder(curQusOrderNo);
-    setTimelineData([...arrTimeline]);
-    setRender(false);
-  };
+        : arrTimeline[arrTimeline.length - 1].Order
+    setCurOrder(curQusOrderNo)
+    setTimelineData([...arrTimeline])
+    setRender(false)
+  }
 
   /* life cycle of onload */
   useEffect(() => {
-    getTimeLine();
-  }, [render, props.timelineRender]);
+    getTimeLine()
+  }, [render, props.timelineRender])
 
   return (
     <div className={classes.TimeLineCover}>
@@ -75,36 +75,51 @@ const Timeline = (props) => {
                 className={classes.TimeLineIconCover}
                 style={{
                   border:
-                    props.pageType == "phases"
+                    props.pageType == 'phases'
                       ? `4px solid ${
-                          li.Order <= curOrder ? "#f99d26" : "#878787"
+                          li.Order <= curOrder ? '#f99d26' : '#878787'
                         }`
                       : `4px solid ${
-                          li.Order <= curOrder ? "#03787c" : "#878787"
+                          li.Order <= curOrder ? '#03787c' : '#878787'
                         }`,
                 }}
               >
-                <Icon
+                {props.pageType == 'phases' ? (
+                  <img
+                    src={li.Order <= curOrder ? li.ActiveIcon : li.InActiveIcon}
+                    alt=""
+                  />
+                ) : (
+                  <img
+                    src={li.Order <= curOrder ? li.ActiveIcon : li.InActiveIcon}
+                    alt=""
+                  />
+                )}
+                {/* <Image {props.ActiveIcon} alt="Example with no image fit value and no height or width is specified." /> */}
+                {/* {props.pageType == 'phases' ? '' : ''} */}
+                {/* props.pageType == 'phases' */}
+                {/* <Icon
                   iconName={`${li.Icon}`}
                   styles={{
                     root: {
                       fontSize: 24,
                       fontWeight: 600,
                       color:
-                        props.pageType == "phases"
+                        props.pageType == 'phases'
                           ? li.Order <= curOrder
-                            ? "#f99d26"
-                            : "#878787"
+                            ? '#f99d26'
+                            : '#878787'
                           : li.Order <= curOrder
-                          ? "#03787c"
-                          : "#878787",
-                      cursor: "context-menu",
+                          ? '#03787c'
+                          : '#878787',
+                      cursor: 'context-menu',
                     },
                   }}
-                />
+                /> */}
+                {/* <Image {...imageProps} alt="Example with no image fit value and no height or width is specified." /> */}
               </div>
               {li.ID == timelineData[timelineData.length - 1].ID ? (
-                ""
+                ''
               ) : (
                 <ProgressIndicator
                   styles={progressDetail}
@@ -114,10 +129,10 @@ const Timeline = (props) => {
                 />
               )}
             </>
-          );
+          )
         })}
     </div>
-  );
-};
+  )
+}
 
-export default Timeline;
+export default Timeline

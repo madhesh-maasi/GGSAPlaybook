@@ -1,10 +1,10 @@
-import * as React from 'react';
-import styles from "./Loader.module.scss";
+import * as React from 'react'
+import styles from './Loader.module.scss'
 
-const Loader = () => {
-    return (
-        <>
-            <div className={styles.Overlay}>
+const Loader = (props) => {
+  return (
+    <>
+      {/* <div className={styles.Overlay}>
                 <div className={styles.wrapper}>
                     <div className={styles.opposites}>
                         <div className={`${styles.opposites} ${styles.bl}`}></div>
@@ -13,9 +13,16 @@ const Loader = () => {
                         <div className={`${styles.opposites} ${styles.tl}`}></div>
                     </div>
                 </div>
-            </div>
-        </>
-    )
+            </div> */}
+      <div className={styles.Overlay}>
+        <img
+          className={styles.splashLogo}
+          src={`${props.splashImg}`}
+          style={{ width: 500, height: 500 }}
+        />
+      </div>
+    </>
+  )
 }
 
 export default Loader

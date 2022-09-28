@@ -1,20 +1,20 @@
-import * as React from "react";
-import styles from "./Footerimg.module.scss";
+import * as React from 'react'
+import styles from './Footerimg.module.scss'
 
-let footerList = [];
-let footerCategories = [];
+let footerList = []
+let footerCategories = []
 const Footerimg = (props) => {
-  footerList = props.arrFooter;
+  footerList = props.arrFooter
   footerCategories = footerList
     .filter(
-      (v, i, a) => a["findIndex"]((v2) => v2.Category === v.Category) === i
+      (v, i, a) => a['findIndex']((v2) => v2.Category === v.Category) === i,
     )
-    .map((row) => row.Category);
-  console.log(footerCategories);
+    .map((row) => row.Category)
+  console.log(footerCategories)
 
   return (
     <>
-      {footerList.length > 0 && props.pageType.toLowerCase() == "phases" ? (
+      {footerList.length > 0 && props.pageType.toLowerCase() == 'phases' ? (
         <>
           <div className={styles.phaseFooterImgWrapper}>
             <div
@@ -23,9 +23,9 @@ const Footerimg = (props) => {
                 backgroundImage: `url(https://ggsaus.sharepoint.com${
                   footerList.filter((row) => row.isActive)[0].FooterImage
                     ? JSON.parse(
-                        footerList.filter((row) => row.isActive)[0].FooterImage
+                        footerList.filter((row) => row.isActive)[0].FooterImage,
                       ).serverRelativeUrl
-                    : ""
+                    : ''
                 })`,
               }}
             >
@@ -39,13 +39,13 @@ const Footerimg = (props) => {
                       <h2
                         className={styles.phaseRoutineTitle}
                         style={{
-                          textTransform: "capitalize",
+                          textTransform: 'capitalize',
                           color:
-                            props.pageType == "phases"
-                              ? "#00859c"
-                              : props.pageType == "practice"
-                              ? "#f99d26"
-                              : "",
+                            props.pageType == 'phases'
+                              ? '#00859c'
+                              : props.pageType == 'practice'
+                              ? '#f99d26'
+                              : '',
                         }}
                       >
                         {li}
@@ -67,9 +67,9 @@ const Footerimg = (props) => {
                                     className={styles.bulletPoint}
                                     style={{
                                       background:
-                                        props.pageType == "phases"
-                                          ? "#f99d26"
-                                          : "#00859c",
+                                        props.pageType == 'phases'
+                                          ? '#f99d26'
+                                          : '#00859c',
                                     }}
                                   ></div>
                                   {row.Title}
@@ -79,7 +79,7 @@ const Footerimg = (props) => {
                           </>
                         ))}
                     </div>
-                  );
+                  )
                 })}
             </div>
           </div>
@@ -88,7 +88,7 @@ const Footerimg = (props) => {
         <>
           <div
             className={
-              props.pageType.toLowerCase() == "phases"
+              props.pageType.toLowerCase() == 'phases'
                 ? styles.phaseFooterImgWrapper
                 : styles.footerImgWrapper
             }
@@ -99,9 +99,9 @@ const Footerimg = (props) => {
                 backgroundImage: `url(https://ggsaus.sharepoint.com${
                   footerList.filter((row) => row.isActive)[0].FooterImage
                     ? JSON.parse(
-                        footerList.filter((row) => row.isActive)[0].FooterImage
+                        footerList.filter((row) => row.isActive)[0].FooterImage,
                       ).serverRelativeUrl
-                    : ""
+                    : ''
                 })`,
               }}
             >
@@ -116,7 +116,7 @@ const Footerimg = (props) => {
                     >
                       <h2
                         className={styles.practiceRoutineTitle}
-                        style={{ textTransform: "capitalize" }}
+                        style={{ textTransform: 'capitalize' }}
                       >
                         {li}
                       </h2>
@@ -141,14 +141,14 @@ const Footerimg = (props) => {
                           </>
                         ))}
                     </div>
-                  );
+                  )
                 })}
             </div>
           </div>
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Footerimg;
+export default Footerimg

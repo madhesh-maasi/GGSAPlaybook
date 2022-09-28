@@ -1,42 +1,42 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import style from "./Deliverable.module.scss";
-import { Icon } from "@fluentui/react";
+import * as React from 'react'
+import { useState, useEffect } from 'react'
+import style from './Deliverable.module.scss'
+import { Icon } from '@fluentui/react'
 
-let arrDlble = [];
+let arrDlble = []
 
 const Deliverable = (props) => {
   /* All states */
-  const [currDeliver, setCurrDeliver] = useState([]);
+  const [currDeliver, setCurrDeliver] = useState([])
 
   /* function of Deliverable */
   const getDeliverableDetails = () => {
     arrDlble =
-      props.pageType.toLowerCase() == "phases"
+      props.pageType.toLowerCase() == 'phases'
         ? props.arrDelSec
-        : props.arrDelSec.deliver;
+        : props.arrDelSec.deliver
     arrDlble = arrDlble.map((li) => ({
       Title: li.title,
       Details: li.details,
       isShow: false,
-    }));
-    setCurrDeliver(arrDlble);
-  };
+    }))
+    setCurrDeliver(arrDlble)
+  }
 
   // life cycle of onload
   useEffect(() => {
-    getDeliverableDetails();
-  }, [props]);
+    getDeliverableDetails()
+  }, [props])
 
   return (
     <div
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        height: "100px",
-        margin: "15px 0",
-        marginTop: "30px",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        minHeight: '100px',
+        margin: '15px 0',
+        marginTop: '30px',
       }}
     >
       {currDeliver.length > 0
@@ -46,42 +46,42 @@ const Deliverable = (props) => {
                 {item.isShow == true && (
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      justifyContent: "center",
-                      flexDirection: "column",
-                      minHeight: "126px",
-                      width: "200px",
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      justifyContent: 'center',
+                      flexDirection: 'column',
+                      minHeight: '126px',
+                      width: '200px',
                       backgroundColor:
-                        props.pageType.toLowerCase() == "phases"
-                          ? "#00859c"
-                          : "#f99d26",
-                      padding: "15px",
-                      borderRadius: "20px",
-                      position: "relative",
-                      cursor: "pointer",
-                      marginTop: "46px",
-                      boxSizing: "border-box",
-                      paddingTop: "50px",
+                        props.pageType.toLowerCase() == 'phases'
+                          ? '#00859c'
+                          : '#f99d26',
+                      padding: '15px',
+                      borderRadius: '20px',
+                      position: 'relative',
+                      cursor: 'pointer',
+                      // marginTop: '60px',
+                      boxSizing: 'border-box',
+                      paddingTop: '35px',
                     }}
                     className={style.deliverOpenWrapper}
                     onClick={() => {
                       arrDlble.filter(
-                        (fiItem) => fiItem.Title == item.Title
-                      )[0].isShow = false;
-                      setCurrDeliver([...arrDlble]);
+                        (fiItem) => fiItem.Title == item.Title,
+                      )[0].isShow = false
+                      setCurrDeliver([...arrDlble])
                     }}
                   >
-                    {item.Title == "Planning" ? (
+                    {item.Title == 'Planning' ? (
                       <>
                         <Icon
                           iconName="BarChart4"
                           style={{
-                            color: "white",
-                            position: "absolute",
-                            top: "8%",
-                            left: "46%",
-                            fontSize: "20px",
+                            color: 'white',
+                            position: 'absolute',
+                            top: '8%',
+                            left: '46%',
+                            fontSize: '20px',
                           }}
                         />
                         {item.Details.length > 0 ? (
@@ -90,7 +90,7 @@ const Deliverable = (props) => {
                               <div className={style.deliverOpen}>
                                 <li>{row}</li>
                               </div>
-                            );
+                            )
                           })
                         ) : (
                           <div className={style.deliverOpen}>
@@ -98,17 +98,18 @@ const Deliverable = (props) => {
                           </div>
                         )}
                       </>
-                    ) : item.Title == "Development" ? (
+                    ) : item.Title == 'Development' ? (
                       <>
                         <Icon
                           iconName="ChevronUnfold10"
                           style={{
-                            color: "white",
-                            fontSize: "20px",
-                            position: "absolute",
-                            top: "15%",
-                            left: "50%",
-                            transform: " translate(-50%, -50%) rotate(90deg)",
+                            color: 'white',
+                            fontSize: '20px',
+                            position: 'absolute',
+                            top: '12%',
+                            left: '50%',
+                            //paddingTop: '10px',
+                            transform: ' translate(-50%, -50%) rotate(90deg)',
                           }}
                         />
                         {item.Details.length > 0 ? (
@@ -119,7 +120,7 @@ const Deliverable = (props) => {
                                   <li>{row}</li>
                                 </div>
                               </div>
-                            );
+                            )
                           })
                         ) : (
                           <div className={style.deliverOpen}>
@@ -128,16 +129,16 @@ const Deliverable = (props) => {
                         )}
                       </>
                     ) : (
-                      item.Title == "Product/solution" && (
+                      item.Title == 'Product/solution' && (
                         <>
                           <Icon
                             iconName="CubeShape"
                             style={{
-                              color: "white",
-                              position: "absolute",
-                              top: "8%",
-                              left: "46%",
-                              fontSize: "20px",
+                              color: 'white',
+                              position: 'absolute',
+                              top: '8%',
+                              left: '46%',
+                              fontSize: '20px',
                             }}
                           />
                           {item.Details.length > 0 ? (
@@ -146,7 +147,7 @@ const Deliverable = (props) => {
                                 <div className={style.deliverOpen}>
                                   <li>{row}</li>
                                 </div>
-                              );
+                              )
                             })
                           ) : (
                             <div className={style.deliverOpen}>
@@ -161,62 +162,62 @@ const Deliverable = (props) => {
                 {item.isShow == false && (
                   <div
                     onClick={() => {
-                      arrDlble.forEach((li) => (li.isShow = false));
+                      arrDlble.forEach((li) => (li.isShow = false))
                       arrDlble.filter(
-                        (fiItem) => fiItem.Title == item.Title
-                      )[0].isShow = true;
-                      setCurrDeliver([...arrDlble]);
+                        (fiItem) => fiItem.Title == item.Title,
+                      )[0].isShow = true
+                      setCurrDeliver([...arrDlble])
                     }}
                     style={{
                       color:
-                        props.pageType.toLowerCase() == "phases"
-                          ? "#00859c"
-                          : "#f99d26",
-                      padding: "5px 10px",
-                      margin: "10px",
-                      cursor: "pointer",
-                      textAlign: "center",
-                      fontWeight: "bold",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexDirection: "column",
+                        props.pageType.toLowerCase() == 'phases'
+                          ? '#00859c'
+                          : '#f99d26',
+                      padding: '5px 10px',
+                      margin: '10px',
+                      cursor: 'pointer',
+                      textAlign: 'center',
+                      fontWeight: 'bold',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexDirection: 'column',
                       width: 100,
-                      fontSize: "18px",
+                      fontSize: '18px',
                     }}
                   >
                     <div
                       className={
-                        props.pageType.toLowerCase() == "phases"
+                        props.pageType.toLowerCase() == 'phases'
                           ? style.phaseCardImg
                           : style.cardImg
                       }
                     >
-                      {item.Title == "Planning" ? (
+                      {item.Title == 'Planning' ? (
                         <Icon
                           iconName="BarChart4"
                           style={{
-                            color: "white",
-                            fontSize: "20px",
-                            // transform: "translateY(-4px)",
+                            color: 'white',
+                            fontSize: '20px',
+                            //transform: 'translateY(-4px)',
                           }}
                         />
-                      ) : item.Title == "Development" ? (
+                      ) : item.Title == 'Development' ? (
                         <Icon
                           iconName="ChevronUnfold10"
                           style={{
-                            color: "white",
-                            fontSize: "20px",
-                            transform: "translate(-50%, -50%) rotate(90deg)",
+                            color: 'white',
+                            fontSize: '20px',
+                            transform: 'translate(-50%, -50%) rotate(90deg)',
                           }}
                         />
                       ) : (
-                        item.Title == "Product/solution" && (
+                        item.Title == 'Product/solution' && (
                           <Icon
                             iconName="CubeShape"
                             style={{
-                              color: "white",
-                              fontSize: "20px",
+                              color: 'white',
+                              fontSize: '20px',
                               // transform: "translateY(-4px)",
                             }}
                           />
@@ -227,11 +228,11 @@ const Deliverable = (props) => {
                   </div>
                 )}
               </div>
-            );
+            )
           })
-        : ""}
+        : ''}
     </div>
-  );
-};
+  )
+}
 
-export default Deliverable;
+export default Deliverable
