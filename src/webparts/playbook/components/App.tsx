@@ -135,6 +135,8 @@ let navComplete: boolean
 let arrPhaseConfig
 let pathwayTOD
 let curTOD
+// let curID
+// let curProjectID
 
 const App = (props: any): JSX.Element => {
   /* All States */
@@ -214,6 +216,7 @@ const App = (props: any): JSX.Element => {
       .then((res) => {
         curProject = res.AnnualPlanIDId
         curActivity = res.Title
+        //curID = res.ID
       })
     pageType = dPID == null ? 'practice' : 'phases'
     await props.URL.lists
@@ -255,6 +258,9 @@ const App = (props: any): JSX.Element => {
         curProjectTOD = arrMasterAnnual.filter(
           (proId) => proId.ID == curProject,
         )[0].TOD
+        // curProjectID = arrMasterAnnual.filter((proId) => proId.ID == curID)[0]
+        //   .ID
+
         // Current user mail get
         await props.URL.currentUser()
           .then(async (res) => {
@@ -441,8 +447,33 @@ const App = (props: any): JSX.Element => {
       })
   }
 
+  /* remove duplicates from arrays */
+  function removeDuplicates(arr) {
+    return arr.filter((item, index) => arr.indexOf(item) === index)
+  }
+
   /* get all phases configs */
   const getAllPhasesConfig = () => {
+    /* arrCategories which is contains Categories of phase for manipulation and no other reuse - SCR1*/
+    var arrCategories = []
+    for (var k = 0; k < arrPhaseConfig.length; k++) {
+      arrCategories.push(arrPhaseConfig[k].Category)
+    }
+    arrCategories = removeDuplicates(arrCategories)
+
+    /* starts manipulating phases based on the category */
+    var tempArray = []
+    for (var i = 0; i < arrCategories.length; i++) {
+      for (var j = 0; j < arrPhaseConfig.length; j++) {
+        if (arrCategories[i] == arrPhaseConfig[j].Category) {
+          tempArray.push(arrPhaseConfig[j])
+        }
+      }
+    }
+
+    if (tempArray.length > 0) arrPhaseConfig = tempArray
+    /* Ends manipulating phases based on the category*/
+
     arrMainConfig = arrPhaseConfig.map((obj, i) => {
       return {
         About: obj.About,
@@ -463,6 +494,7 @@ const App = (props: any): JSX.Element => {
             : arrPhaseConfig.filter((item) => item.indx == i - 1)[0].Title,
       }
     })
+
     console.log(arrMainConfig)
 
     footerContent = arrMainConfig.map((footer) => {
@@ -611,6 +643,7 @@ const App = (props: any): JSX.Element => {
         nextActivity: footer.nextActivity,
       }
     })
+
     moduleHead = arrMainConfig.length > 0 && arrMainConfig
     firstModOrdNo = moduleHead
       .filter((ordNo) => ordNo.Previous == undefined)
