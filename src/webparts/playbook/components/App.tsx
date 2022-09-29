@@ -258,8 +258,9 @@ const App = (props: any): JSX.Element => {
         curProjectTOD = arrMasterAnnual.filter(
           (proId) => proId.ID == curProject,
         )[0].TOD
-        // curProjectID = arrMasterAnnual.filter((proId) => proId.ID == curID)[0]
-        //   .ID
+        // curProjectTOD = arrMasterAnnual.filter(
+        //   (proId) => proId.ID == curProject && proId.Title == curActivity,
+        // )[0].TOD
 
         // Current user mail get
         await props.URL.currentUser()

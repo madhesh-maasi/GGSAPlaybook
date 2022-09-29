@@ -19,10 +19,10 @@ const Loader = (props) => {
           <img
             //className={styles.splashLogo}
             src={`${props.splashImg}`}
-            style={{ width: 500, height: 500 }}
+            style={{ width: 350, height: 350 }}
           />
         </div>
-        <div>
+        <div style={{ marginLeft: '50px' }}>
           <div className={styles.wrapper}>
             <div className={styles.opposites}>
               <div className={`${styles.opposites} ${styles.bl}`}></div>
