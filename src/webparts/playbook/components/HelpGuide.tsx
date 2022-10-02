@@ -63,6 +63,7 @@ const pivotStyles: Partial<IStyleSet<IPivotStyles>> = {
     justifyContent: "center",
     padding: "20px 100px",
   },
+
   link: {
     width: "220px ",
     ":hover": {
@@ -72,7 +73,9 @@ const pivotStyles: Partial<IStyleSet<IPivotStyles>> = {
       background: "transparent",
     },
   },
+
   linkContent: {},
+
   linkIsSelected: {
     width: "220px ",
     selectors: {
