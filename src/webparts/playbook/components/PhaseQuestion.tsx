@@ -100,9 +100,18 @@ const PhaseQuestion = (props) => {
 
   /* update the complete steps */
   const addUserId = (Id, completeValues) => {
+    /*
     let currCompleteValue = !completeValues
       ? `${UserId}`
       : `${completeValues},${UserId}`
+    */
+
+    /* start changes for project based phases bind SA-1*/
+    let annualplanID = props.APID ? props.APID : '0'
+    let currCompleteValue = !completeValues
+      ? `${annualplanID}-${UserId}`
+      : `${completeValues},${annualplanID}-${UserId}`
+    /* end changes for project based phases bind SA-1*/
 
     // Post to List
     props.URL.lists

@@ -22,7 +22,7 @@ const Loader = (props) => {
             style={{ width: 350, height: 350 }}
           />
         </div>
-        <div style={{ marginLeft: '50px' }}>
+        <div style={{ marginLeft: '55px' }}>
           <div className={styles.wrapper}>
             <div className={styles.opposites}>
               <div className={`${styles.opposites} ${styles.bl}`}></div>

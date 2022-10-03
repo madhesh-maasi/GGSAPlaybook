@@ -36,6 +36,8 @@ interface IListConfig {
   Category?: string
   ActiveIcon?: string
   InActiveIcon?: string
+  Example?: string
+  PathwayCategory?: string
 }
 
 interface IListFooter {
@@ -56,6 +58,7 @@ interface IListFooterConfig {
   Order: number
   activity?: string
   nextActivity?: string
+  Example?: string
 }
 
 interface IListSubStep {
@@ -79,6 +82,8 @@ interface IListStep {
   Order?: number
   ActiveIcon?: string
   InActiveIcon?: string
+  Example?: string
+  PathwayCategory?: string
 }
 
 interface IUserList {
@@ -153,6 +158,7 @@ const App = (props: any): JSX.Element => {
   const [selectedCategory, setSelectedCategory] = useState('')
   const [isPhaseAvail, setIsPhaseAvail] = useState(true)
   const [isSplash, setIsSplash] = useState(true)
+  const [pathwayEntry, setPathwayEntry] = useState([])
 
   /* Get current user details */
   const getCurrentUserDetail = async () => {
@@ -208,13 +214,16 @@ const App = (props: any): JSX.Element => {
   /* get phases open function */
   const openPhases = async (Id) => {
     await props.URL.lists
-      .getByTitle(props.deliveryPlanList)
-      .items.select('*, AnnualPlanID/ID')
-      .expand('AnnualPlanID')
+      //.getByTitle(props.deliveryPlanList)
+      //.items.select('*, AnnualPlanID/ID')
+      //.expand('AnnualPlanID')
+      .getByTitle(props.masterAnnualPlan)
+      .items.select('*')
       .getById(Id)
       .get()
       .then((res) => {
-        curProject = res.AnnualPlanIDId
+        //curProject = res.AnnualPlanIDId
+        curProject = res.ID
         curActivity = res.Title
         //curID = res.ID
       })
@@ -258,6 +267,7 @@ const App = (props: any): JSX.Element => {
         curProjectTOD = arrMasterAnnual.filter(
           (proId) => proId.ID == curProject,
         )[0].TOD
+
         // curProjectTOD = arrMasterAnnual.filter(
         //   (proId) => proId.ID == curProject && proId.Title == curActivity,
         // )[0].TOD
@@ -715,12 +725,15 @@ const App = (props: any): JSX.Element => {
       .get()
       .then((val) => {
         setLoader(true)
+        if (!curProject) curProject = 0
         arrSteps = val.map((row) => {
           let isUserCompleted = row.CompletedUser
             ? row.CompletedUser.split(',')
-                .map((id) => +id)
-                .some((id) => id == UserId)
-            : false
+                .map((id) => id)
+                .some((id) => id == curProject + '-' + UserId)
+            : //.map((id) => id) /* changed for load phased based on project SA-1*/
+              //.some((id) => id)
+              false
           return {
             UserId: UserId,
             Title: row.Title ? row.Title : '',
@@ -1414,6 +1427,7 @@ const App = (props: any): JSX.Element => {
                           <>
                             <PhaseQuestion
                               context={props.context}
+                              APID={curProject}
                               sp={props.sp}
                               URL={props.URL}
                               pageType={page}
@@ -1530,6 +1544,7 @@ const App = (props: any): JSX.Element => {
               firstName={valueOfFirstLetter}
               lastName={valueOfLastLetter}
               getTODType={getTODType}
+              sp={props.URL}
             />
           ) : // <></>
           navLink == 'helpguid' ? (

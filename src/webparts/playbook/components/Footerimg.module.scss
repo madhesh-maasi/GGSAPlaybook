@@ -241,6 +241,7 @@
         list-style-type: none;
         font-weight: bold;
         padding: 6px 22px;
+        margin: 4px;
         display: flex;
         padding-left: 3px;
         .bulletPoint {
@@ -248,6 +249,7 @@
             height: 10px;
             // background-color: #f99d26;
             border-radius: 2px;
+            // margin: 4px;
             // display: inline-block;
             transform: translate(-6px, 7px);
         }

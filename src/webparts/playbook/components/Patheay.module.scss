@@ -179,3 +179,10 @@
         margin-right: 3px;
     }
 }
+
+.scroller {
+    width: 375px;
+    height: 80px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
