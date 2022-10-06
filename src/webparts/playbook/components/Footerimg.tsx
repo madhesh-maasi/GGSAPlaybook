@@ -70,6 +70,7 @@ const Footerimg = (props) => {
                                         props.pageType == 'phases'
                                           ? '#f99d26'
                                           : '#00859c',
+                                      marginRight: '5px',
                                     }}
                                   ></div>
                                   {row.Title}

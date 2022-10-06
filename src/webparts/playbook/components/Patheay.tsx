@@ -134,7 +134,9 @@ const Pathway = (props) => {
                     <div>
                       <div
                         className={styles.ribbonBtn}
-                        style={{ backgroundColor: '#f99d26' }}
+                        style={{
+                          backgroundColor: '#f99d26',
+                        }}
                         onClick={() => {
                           addNewTOD('PT')
                         }}
@@ -210,7 +212,9 @@ const Pathway = (props) => {
                     <div>
                       <div
                         className={styles.ribbonBtn}
-                        style={{ backgroundColor: '#f99d26' }}
+                        style={{
+                          backgroundColor: '#f99d26',
+                        }}
                         onClick={() => {
                           addNewTOD('NI')
                         }}
@@ -285,7 +289,9 @@ const Pathway = (props) => {
                     <div>
                       <div
                         className={styles.ribbonBtn}
-                        style={{ backgroundColor: '#f99d26' }}
+                        style={{
+                          backgroundColor: '#f99d26',
+                        }}
                         onClick={() => {
                           addNewTOD('OS')
                         }}

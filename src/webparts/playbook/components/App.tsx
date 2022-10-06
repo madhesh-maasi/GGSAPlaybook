@@ -11,6 +11,8 @@ import '../../../ExternalRef/css/style.scss'
 import NavHeader from './NavHeader'
 import PhaseQuestion from './PhaseQuestion'
 import styles from './Playbook.module.scss'
+import { Log } from '@microsoft/sp-core-library'
+import { log } from '@pnp/pnpjs'
 
 const SplashImage = require('../../../ExternalRef/img/SplashImage.png')
 type Detail = {
@@ -417,8 +419,10 @@ const App = (props: any): JSX.Element => {
     props.URL.lists
       .getByTitle('PhasesConfig')
       .items.top(4000)
+      .select('*')
       .get()
       .then((res) => {
+        console.log(res)
         let arrJSON
         arrListConfig = res
         //adding Config
