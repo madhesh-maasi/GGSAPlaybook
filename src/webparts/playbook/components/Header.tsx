@@ -296,7 +296,7 @@ const Header = (props: any) => {
           )}
         </div>
         {props.pageType == 'phases' && props.arrMasterAnnual && (
-          <div style={{ transform: 'translate(106px, 80px)' }}>
+          <div style={{ transform: 'translate(100px, 80px)' }}>
             <Autocomplete
               id="combo-box-demo"
               options={masterDrop}

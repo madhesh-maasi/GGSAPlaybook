@@ -159,6 +159,8 @@
         padding: 2px 20px;
         list-style-type: none;
         display: flex;
+        // align-items: center;
+        //justify-content: space-evenly;
         padding-left: 5px;
         .bulletPoint {
             width: 10px;
@@ -187,6 +189,7 @@
         display: flex;
         padding-left: 3px;
         .bulletPoint {
+            min-width: 10px !important;
             width: 10px;
             height: 10px;
             // background-color: #f99d26;
@@ -213,6 +216,7 @@
         list-style-type: none;
         font-weight: bold;
         padding: 6px 22px;
+        margin: 4px;
         display: flex;
         padding-left: 3px;
         .bulletPoint {
@@ -248,7 +252,7 @@
         .bulletPoint {
             width: 10px;
             height: 10px;
-            // background-color: #f99d26;
+            //background-color: #f99d26;
             border-radius: 2px;
             // margin: 4px;
             // display: inline-block;

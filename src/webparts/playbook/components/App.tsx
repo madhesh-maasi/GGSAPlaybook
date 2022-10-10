@@ -270,6 +270,19 @@ const App = (props: any): JSX.Element => {
           (proId) => proId.ID == curProject,
         )[0].TOD
 
+        //-----
+        // let completeSteps = curProjectTOD.map((item) => {
+        //   let isUserCompleted = item.CompletedUser
+        //     ? item.CompletedUser.split(',')
+        //         .map((id) => +id)
+        //         .some((id) => id == UserId)
+        //     : false
+        //   return {
+        //     Id: item.Id,
+        //   }
+        // })
+        //------
+
         // curProjectTOD = arrMasterAnnual.filter(
         //   (proId) => proId.ID == curProject && proId.Title == curActivity,
         // )[0].TOD
@@ -304,6 +317,7 @@ const App = (props: any): JSX.Element => {
                 valueOfFirstLetter = firstValSplit[0]
                 valueOfLastLetter = lastValSplit[0]
                 getDliverPlan(curProjectTOD)
+                //getDliverPlan(completeSteps)
               })
               .catch((err) => {
                 console.log(err)
@@ -566,33 +580,53 @@ const App = (props: any): JSX.Element => {
         Category: curRow.Category,
       }
     })
+    console.log(arrDelnPhaseConf)
     //set orderno and prev next
     if (arrDelnPhaseConf.filter((row) => row != undefined).length == 0) {
       setIsPhaseAvail(false)
       setLoader(false)
       return
     }
+
+    /* remove undefined values and change the index order SA -1*/
+    var tempArrDelPhaseConf = []
+    for (var i = 0; i < arrDelnPhaseConf.length; i++) {
+      if (arrDelnPhaseConf[i]) {
+        tempArrDelPhaseConf.push(arrDelnPhaseConf[i])
+      }
+    }
+    for (var j = 0; j < tempArrDelPhaseConf.length; j++) {
+      tempArrDelPhaseConf[j].indx = j
+    }
+    console.log(tempArrDelPhaseConf)
+    arrDelnPhaseConf = tempArrDelPhaseConf
+
     let moduleArr = arrDelnPhaseConf.map((row, i) => {
-      return {
-        Title: row.Title,
-        deliver: row.deliver,
-        About: row.About,
-        ID: row.ID,
-        TOD: row.TOD,
-        usersRoles: row.usersRoles,
-        activity: row.activity,
-        nextActivity: row.nextActivity,
-        Previous:
-          i == 0
-            ? undefined
-            : arrDelnPhaseConf.filter((item) => item.indx == i - 1)[0].Title,
-        Next:
-          i == arrDelnPhaseConf.length - 1
-            ? undefined
-            : arrDelnPhaseConf.filter((item) => item.indx == i + 1)[0].Title,
-        FooterImage: row.FooterImage,
-        Category: row.Category,
-        Order: i + 1,
+      try {
+        return {
+          Title: row.Title,
+          deliver: row.deliver,
+          About: row.About,
+          ID: row.ID,
+          TOD: row.TOD,
+          usersRoles: row.usersRoles,
+          activity: row.activity,
+          nextActivity: row.nextActivity,
+          Previous:
+            i == 0
+              ? undefined
+              : arrDelnPhaseConf.filter((item) => item.indx == i - 1)[0].Title,
+          Next:
+            i == arrDelnPhaseConf.length - 1
+              ? undefined
+              : arrDelnPhaseConf.filter((item) => item.indx == i + 1)[0].Title,
+          FooterImage: row.FooterImage,
+          Category: row.Category,
+          Order: i + 1,
+        }
+      } catch (e) {
+        console.log(i)
+        console.error(e)
       }
     })
     strSelecetdPhase =
@@ -1404,6 +1438,7 @@ const App = (props: any): JSX.Element => {
           />
           {navLink == 'phases' ? (
             <>
+              {/* <Loader splashImg={SplashImage} /> */}
               {
                 <>
                   {arrDelSec && (
