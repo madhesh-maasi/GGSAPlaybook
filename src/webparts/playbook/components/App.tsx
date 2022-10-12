@@ -711,6 +711,7 @@ const App = (props: any): JSX.Element => {
     props.URL.lists
       .getByTitle('Practice')
       .items.select('*,Practice/Title, Next/ID, Previous/ID')
+      //.items.select('*')
       .expand('Practice, Next, Previous')
       .top(4000)
       .get()

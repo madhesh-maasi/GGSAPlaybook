@@ -74,8 +74,15 @@ img {
                 b {
                     padding: 0 5px;
                 }
+                ul {
+                    margin-top: 10px;
+                    // font-size: 15px;
+                    // font-weight: 600;
+                    // margin-right: 20px;
+                    // width: 560px;
+                }
                 li {
-                    margin-top: 20px;
+                    margin-top: 10px;
                     font-size: 15px;
                     font-weight: 600;
                     margin-right: 20px;
@@ -87,7 +94,8 @@ img {
         .cardsSection {
             @extend .flex;
             align-items: flex-start;
-            margin: 80px 0;
+            margin: 50px 0;
+            //margin: 80px 0;
             .card,
             .cardBlue,
             .cardBlueSm {
@@ -241,7 +249,8 @@ img {
                 }
             }
             .tab4Cont {
-                padding: 20px 40px !important;
+                padding: 20px 25px !important;
+                //padding: 20px 40px !important;
                 .textContent {
                     li {
                         font-size: 13px;
@@ -560,12 +569,18 @@ img {
                                 background-color: #e3f5fb;
                                 @extend .flex;
                                 justify-content: flex-start;
+                                //-----
+                                height: 40px;
+                                //----
                                 flex-direction: column;
                                 margin: 10px;
                                 padding: 0px 10px;
                                 border-radius: 30px;
                                 .infoTop {
                                     width: 250px;
+                                    //-----
+                                    height: 30px;
+                                    //-----
                                     @extend .flex;
                                     justify-content: flex-start;
                                     padding: 5px 10px;
@@ -601,7 +616,11 @@ img {
                                     font-size: 16px;
                                     color: #0580a1;
                                     font-weight: 600;
-                                    margin: auto !important;
+                                    //margin: auto !important;
+                                    //-----
+                                    margin-top: 12px;
+                                    padding-left: 10px;
+                                    //-----
                                 }
                             }
                         }

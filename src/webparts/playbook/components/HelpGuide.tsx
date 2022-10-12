@@ -266,31 +266,35 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={styles.bottomContent}>
                   <div className={styles.textContent}>
-                    <li>
-                      The <b>Annual Plan</b> lists all the <b>Products</b> and
-                      <b> Solutions</b> that are to be developed for that
-                      calendar year.
-                    </li>
-                    <li>
-                      The <b>Delivery Plan</b> lists all of the deliverables for
-                      that particular <b>Product or Solution</b>.
-                    </li>
-                    <li>
-                      The <b>Production board</b> lists the work, called
-                      <b> Activities</b>, that you will do for that week. All
-                      roles log their productor solution development{' '}
-                      <b>activity</b> on the <b>Production Board</b> each week. 
-                    </li>
-                    <li>
-                      The <b>Activity Planner</b> lists the steps that standard
-                      <b> Activity</b> follows and indicates when each one is
-                      completed by team members.{' '}
-                    </li>
-                    <li>
-                      The <b>Document Review</b> shows all the{' '}
-                      <b>Deliverables</b> for that week that you have submitted
-                      for review and/or sign off.
-                    </li>
+                    <ul>
+                      <li>
+                        The <b>Annual Plan</b> lists all the <b>Products</b> and
+                        <b> Solutions</b> that are to be developed for that
+                        calendar year.
+                      </li>
+                      <li>
+                        The <b>Delivery Plan</b> lists all of the deliverables
+                        for that particular <b>Product or Solution</b>.
+                      </li>
+                      <li>
+                        The <b>Production board</b> lists the work, called
+                        <b> Activities</b>, that you will do for that week. All
+                        roles log their productor solution development{' '}
+                        <b>activity</b> on the <b>Production Board</b> each
+                        week. 
+                      </li>
+                      <li>
+                        The <b>Activity Planner</b> lists the steps that
+                        standard
+                        <b> Activity</b> follows and indicates when each one is
+                        completed by team members.{' '}
+                      </li>
+                      <li>
+                        The <b>Document Review</b> shows all the{' '}
+                        <b>Deliverables</b> for that week that you have
+                        submitted for review and/or sign off.
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -308,31 +312,33 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={styles.bottomContent}>
                   <div className={styles.textContent}>
-                    <li>
-                      Every piece of work associated with a <b>Product</b> or
-                      <b> Solution</b> is called a <b>Deliverable</b>.
-                    </li>
-                    <li>
-                      Every <b>Deliverable</b> belongs to a business area.
-                    </li>
-                    <li>
-                      Each <b>Deliverable</b> is categorised as either a:
-                      <span>
-                        <b>Planning</b>: To plan deliverables, e.g. Commencement
-                        Brief, Delivery Plan
-                      </span>
-                      <span>
-                        <b>Development</b>: To design and build a deliverable,
-                        e.g. a strategic conversation, User Stories
-                      </span>
-                      <span>
-                        <b> Product/solution</b>: <b>The actual piece</b> or
-                        <b> component</b> that is part of a product that the
-                        customer uses, e.g. Teaching Guide, Professional
-                        Learning module or a School Improvement Plan or part of
-                        the <b>solution</b> the team uses
-                      </span>
-                    </li>
+                    <ul>
+                      <li>
+                        Every piece of work associated with a <b>Product</b> or
+                        <b> Solution</b> is called a <b>Deliverable</b>.
+                      </li>
+                      <li>
+                        Every <b>Deliverable</b> belongs to a business area.
+                      </li>
+                      <li>
+                        Each <b>Deliverable</b> is categorised as either a:
+                        <span>
+                          <b>Planning</b>: To plan deliverables, e.g.
+                          Commencement Brief, Delivery Plan
+                        </span>
+                        <span>
+                          <b>Development</b>: To design and build a deliverable,
+                          e.g. a strategic conversation, User Stories
+                        </span>
+                        <span>
+                          <b> Product/solution</b>: <b>The actual piece</b> or
+                          <b> component</b> that is part of a product that the
+                          customer uses, e.g. Teaching Guide, Professional
+                          Learning module or a School Improvement Plan or part
+                          of the <b>solution</b> the team uses
+                        </span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -351,15 +357,20 @@ const HelpGuide = (props) => {
                 </div>
               </h1>
               <p>
-                <li>
-                  The leadership is provided by the Client, who holds the vision
-                  for the product and directs the team on product development.
-                </li>
-                <li>
-                  The developer ensures they confidently plan and carry out
-                  their work, resolve process issues as they arise, and deliver
-                  the work to agreed timelines.
-                </li>
+                <ul>
+                  <li>
+                    The leadership is provided by the Client, who holds the
+                    vision for the product and directs the team on product
+                    development.
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    The developer ensures they confidently plan and carry out
+                    their work, resolve process issues as they arise, and
+                    deliver the work to agreed timelines.
+                  </li>
+                </ul>
               </p>
             </div>
             <div className={styles.cardsSection}>
@@ -377,24 +388,26 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab3Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>
-                      Understand the vision for the deliverable and lead its
-                      development.
-                    </li>
-                    <li>Endorse resourcing, budget and products.</li>
-                    <li>
-                      Provide direction in Client Innovation Meetings on work
-                      underway and work about to commence.
-                    </li>
-                    <li>
-                      Inform Developer of emerging issues regarding quality and
-                      timelines of deliverables.
-                    </li>
-                    <li>
-                      Provide Developers feedback to support weekly process
-                      debriefs.
-                    </li>
-                    <li>Sign off on deliverables.</li>
+                    <ol>
+                      <li>
+                        Understand the vision for the deliverable and lead its
+                        development.
+                      </li>
+                      <li>Endorse resourcing, budget and products.</li>
+                      <li>
+                        Provide direction in Client Innovation Meetings on work
+                        underway and work about to commence.
+                      </li>
+                      <li>
+                        Inform Developer of emerging issues regarding quality
+                        and timelines of deliverables.
+                      </li>
+                      <li>
+                        Provide Developers feedback to support weekly process
+                        debriefs.
+                      </li>
+                      <li>Sign off on deliverables.</li>
+                    </ol>
                   </div>
                 </div>
               </div>
@@ -412,17 +425,21 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab3Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>Oversee timelines, resourcing and budget.</li>
-                    <li>Advise team on following work practices.</li>
-                    <li>
-                      Support developers to manage work to agreed timelines.
-                    </li>
-                    <li>Ensure teams schedule advised stand-ups.</li>
-                    <li>Address productivity issues impacting on delivery.</li>
-                    <li>
-                      Facilitate weekly debriefs on process and implement
-                      improvements with the team.
-                    </li>
+                    <ol>
+                      <li>Oversee timelines, resourcing and budget.</li>
+                      <li>Advise team on following work practices.</li>
+                      <li>
+                        Support developers to manage work to agreed timelines.
+                      </li>
+                      <li>Ensure teams schedule advised stand-ups.</li>
+                      <li>
+                        Address productivity issues impacting on delivery.
+                      </li>
+                      <li>
+                        Facilitate weekly debriefs on process and implement
+                        improvements with the team.
+                      </li>
+                    </ol>
                   </div>
                 </div>
               </div>
@@ -450,22 +467,24 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab4Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>
-                      There are 10 <b>business areas</b> made up of three
-                      <b> Product Development</b>, six <b>Skilled Services</b>{' '}
-                      and one school support area, being{' '}
-                      <b>School Partnerships.</b>{' '}
-                    </li>
-                    <li>
-                      <b>Developers</b> work in
-                      <b> Curriculum, Professional Learning</b> and{' '}
-                      <b>School Improvement.</b>
-                    </li>
-                    <li>
-                      <b>Specialist Developers</b> work in their respective
-                      <b> Skilled Services business areas</b> and work products
-                      and solutions as required.
-                    </li>
+                    <ul>
+                      <li>
+                        There are 10 <b>business areas</b> made up of three
+                        <b> Product Development</b>, six <b>Skilled Services</b>{' '}
+                        and one school support area, being{' '}
+                        <b>School Partnerships.</b>{' '}
+                      </li>
+                      <li>
+                        <b>Developers</b> work in
+                        <b> Curriculum, Professional Learning</b> and{' '}
+                        <b>School Improvement.</b>
+                      </li>
+                      <li>
+                        <b>Specialist Developers</b> work in their respective
+                        <b> Skilled Services business areas</b> and work
+                        products and solutions as required.
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -483,26 +502,29 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab4Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>
-                      <b>Clients</b> provide direction on all work
-                    </li>
-                    <li>
-                      <b>Scheduler</b> supports team members to deliver work
-                      based on the Client direction.
-                    </li>
-                    <li>
-                      <b>Business Area Leads</b> get direction from Clients for
-                      their team’s work for each year which the build into the
-                      <b> Annual Plan.</b>{' '}
-                    </li>
-                    <li>
-                      They support their team members to plan so they complete
-                      deliverables on time and to expected standard.
-                    </li>
-                    <li>
-                      Team members work on products and solution from start to
-                      finish so they develop expertise in those products.
-                    </li>
+                    <ul>
+                      <li>
+                        <b>Clients</b> provide direction on all work
+                      </li>
+                      <li>
+                        <b>Scheduler</b> supports team members to deliver work
+                        based on the Client direction.
+                      </li>
+                      <li>
+                        <b>Business Area Leads</b> get direction from Clients
+                        for their team’s work for each year which the build into
+                        the
+                        <b> Annual Plan.</b>{' '}
+                      </li>
+                      <li>
+                        They support their team members to plan so they complete
+                        deliverables on time and to expected standard.
+                      </li>
+                      <li>
+                        Team members work on products and solution from start to
+                        finish so they develop expertise in those products.
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -520,28 +542,30 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab4Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>
-                      Every role in GGSA carries out their work using the
-                      Innovation Hub.
-                    </li>
-                    <li>
-                      Some roles use it more than others:
-                      <span>
-                        Operational roles spend 60-80 per cent of their time on
-                        operations activity which is not recorded in the
+                    <ul>
+                      <li>
+                        Every role in GGSA carries out their work using the
                         Innovation Hub.
-                      </span>
-                      <span>
-                        Development roles spend 80–90 per cent of their time on
-                        innovation activity which I all done using the
-                        Innovation Hub.
-                      </span>
-                    </li>
-                    <li>
-                      Every role has an administration allocation of two hours
-                      per week or eight hours per month pre-set time to role
-                      management.{' '}
-                    </li>
+                      </li>
+                      <li>
+                        Some roles use it more than others:
+                        <span>
+                          Operational roles spend 60-80 per cent of their time
+                          on operations activity which is not recorded in the
+                          Innovation Hub.
+                        </span>
+                        <span>
+                          Development roles spend 80–90 per cent of their time
+                          on innovation activity which I all done using the
+                          Innovation Hub.
+                        </span>
+                      </li>
+                      <li>
+                        Every role has an administration allocation of two hours
+                        per week or eight hours per month pre-set time to role
+                        management.{' '}
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -614,7 +638,7 @@ const HelpGuide = (props) => {
                       </div>
                     </div>
                     <div className={styles.roundCard}>
-                      <p>Buisness developer</p>
+                      <p>Business developer</p>
                       <div className={styles.img}>
                         <img src={`${avatarYellow}`} alt="" />
                       </div>

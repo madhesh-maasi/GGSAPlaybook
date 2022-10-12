@@ -125,7 +125,7 @@ const PhasesQuestions = (props) => {
   /* function of after module */
   const lastOrderNo = (orderNo) => {
     orderNo != ''
-      ? props.latestModOrdNo >= orderNo - 1
+      ? props.latestModOrdNo > orderNo - 1
         ? props.AfterModule(orderNo)
         : ''
       : ''

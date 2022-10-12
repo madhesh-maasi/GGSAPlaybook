@@ -211,7 +211,7 @@ const Header = (props: any) => {
     getHeaderDetail()
   }, [props.arrDelSec])
 
-  console.log(modHeading.About)
+  //console.log(modHeading.About)
 
   return (
     <div style={{ padding: '16px', paddingBottom: '0' }}>
