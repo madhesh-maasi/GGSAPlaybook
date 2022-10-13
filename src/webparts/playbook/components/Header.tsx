@@ -90,6 +90,7 @@ const Header = (props: any) => {
     props.arrMasterAnnual && getProManagerDetail()
     setMasterDrop(arrMaster ? arrMaster : [])
     setSelectedKey(curProId)
+    console.log(headingDetails)
     setModHeading(headingDetails)
   }
 
@@ -210,6 +211,8 @@ const Header = (props: any) => {
     getHeaderDetail()
   }, [props.arrDelSec])
 
+  //console.log(modHeading.About)
+
   return (
     <div style={{ padding: '16px', paddingBottom: '0' }}>
       <div className={styles.valueofHead}>
@@ -276,7 +279,14 @@ const Header = (props: any) => {
                         }}
                       />
                     </div>
-                    <p>{modHeading.About}</p>
+                    <p
+                      dangerouslySetInnerHTML={{ __html: modHeading.About }}
+                    ></p>
+                    {/* <p>{modHeading.About}</p> */}
+
+                    {/* <p>
+                      <div>{modHeading.About}</div>
+                    </p> */}
                   </div>
                 </div>
               )}
@@ -286,7 +296,7 @@ const Header = (props: any) => {
           )}
         </div>
         {props.pageType == 'phases' && props.arrMasterAnnual && (
-          <div style={{ transform: 'translate(106px, 80px)' }}>
+          <div style={{ transform: 'translate(100px, 80px)' }}>
             <Autocomplete
               id="combo-box-demo"
               options={masterDrop}

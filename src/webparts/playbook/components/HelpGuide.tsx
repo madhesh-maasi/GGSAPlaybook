@@ -1,131 +1,131 @@
-import * as React from "react";
-import styles from "./HelpGuide.module.scss";
+import * as React from 'react'
+import styles from './HelpGuide.module.scss'
 // Pivot
 import {
   IPivotStyles,
   Pivot,
   PivotItem,
-} from "office-ui-fabric-react/lib/Pivot";
-import { Icon, IStyleSet, mergeStyleSets } from "office-ui-fabric-react";
+} from 'office-ui-fabric-react/lib/Pivot'
+import { Icon, IStyleSet, mergeStyleSets } from 'office-ui-fabric-react'
 // images
-const bgImage1 = require("../../../ExternalRef/img/discussionImg1.jpg");
-const bgImage2 = require("../../../ExternalRef/img/discussionImg2.jpg");
-const avatarYellow = require("../../../ExternalRef/img/avatarYellow.png");
-const avatarBlue = require("../../../ExternalRef/img/avatarBlue.png");
-const avatarWhite = require("../../../ExternalRef/img/avatarWhite.png");
-const boxBlue = require("../../../ExternalRef/img/boxBlue.png");
-const boxYellow = require("../../../ExternalRef/img/boxYellow.png");
-const giftBlue = require("../../../ExternalRef/img/giftBlue.png");
+const bgImage1 = require('../../../ExternalRef/img/discussionImg1.jpg')
+const bgImage2 = require('../../../ExternalRef/img/discussionImg2.jpg')
+const avatarYellow = require('../../../ExternalRef/img/avatarYellow.png')
+const avatarBlue = require('../../../ExternalRef/img/avatarBlue.png')
+const avatarWhite = require('../../../ExternalRef/img/avatarWhite.png')
+const boxBlue = require('../../../ExternalRef/img/boxBlue.png')
+const boxYellow = require('../../../ExternalRef/img/boxYellow.png')
+const giftBlue = require('../../../ExternalRef/img/giftBlue.png')
 
 // lines
 // yellow lines
-const lineY1 = require("../../../ExternalRef/img/Product flow michel yellow lines/lineYel1.png");
-const lineY2 = require("../../../ExternalRef/img/Product flow michel yellow lines/lineYel2.png");
-const lineY3 = require("../../../ExternalRef/img/Product flow michel yellow lines/lineYel3.png");
-const lineY4 = require("../../../ExternalRef/img/Product flow michel yellow lines/lineYel4.png");
-const lineY5 = require("../../../ExternalRef/img/Product flow michel yellow lines/lineYel5.png");
+const lineY1 = require('../../../ExternalRef/img/Product flow michel yellow lines/lineYel1.png')
+const lineY2 = require('../../../ExternalRef/img/Product flow michel yellow lines/lineYel2.png')
+const lineY3 = require('../../../ExternalRef/img/Product flow michel yellow lines/lineYel3.png')
+const lineY4 = require('../../../ExternalRef/img/Product flow michel yellow lines/lineYel4.png')
+const lineY5 = require('../../../ExternalRef/img/Product flow michel yellow lines/lineYel5.png')
 // blue lines
-const lineBl1 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl1.png");
-const lineBl2 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl2.png");
-const lineBl3 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl3.png");
-const lineBl4 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl4.png");
-const lineBl5 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl5.png");
-const lineBl6 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl6.png");
-const lineBl7 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl7.png");
-const lineBl8 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl8.png");
-const lineBl9 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl9.png");
-const lineBl10 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl10.png");
-const lineBl11 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl11.png");
-const lineBl12 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl12.png");
-const lineBl13 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl13.png");
-const lineBl14 = require("../../../ExternalRef/img/Product flow michel blue lines/lineBl14.png");
+const lineBl1 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl1.png')
+const lineBl2 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl2.png')
+const lineBl3 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl3.png')
+const lineBl4 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl4.png')
+const lineBl5 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl5.png')
+const lineBl6 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl6.png')
+const lineBl7 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl7.png')
+const lineBl8 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl8.png')
+const lineBl9 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl9.png')
+const lineBl10 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl10.png')
+const lineBl11 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl11.png')
+const lineBl12 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl12.png')
+const lineBl13 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl13.png')
+const lineBl14 = require('../../../ExternalRef/img/Product flow michel blue lines/lineBl14.png')
 
 // cards badge images
-const productImg = require("../../../ExternalRef/img/products.png");
-const solutionsImg = require("../../../ExternalRef/img/solutions.png");
-const InnovationSysImg = require("../../../ExternalRef/img/inoSys.png");
-const DelivarablesImg = require("../../../ExternalRef/img/delivarables.png");
-const clientFuncImg = require("../../../ExternalRef/img/clientFunc.png");
-const productionBlueImg = require("../../../ExternalRef/img/productionBlue.png");
-const teamsImg = require("../../../ExternalRef/img/teams.png");
+const productImg = require('../../../ExternalRef/img/products.png')
+const solutionsImg = require('../../../ExternalRef/img/solutions.png')
+const InnovationSysImg = require('../../../ExternalRef/img/inoSys.png')
+const DelivarablesImg = require('../../../ExternalRef/img/delivarables.png')
+const clientFuncImg = require('../../../ExternalRef/img/clientFunc.png')
+const productionBlueImg = require('../../../ExternalRef/img/productionBlue.png')
+const teamsImg = require('../../../ExternalRef/img/teams.png')
 
 const pivotStyles: Partial<IStyleSet<IPivotStyles>> = {
   root: {
-    ".ms-Pivot-icon": {
-      fontSize: "25px",
-      color: "#8F8F8F",
+    '.ms-Pivot-icon': {
+      fontSize: '25px',
+      color: '#8F8F8F',
     },
   },
   itemContainer: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "20px 100px",
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '20px 100px',
   },
   link: {
-    width: "220px ",
-    ":hover": {
-      background: "transparent",
+    width: '220px ',
+    ':hover': {
+      background: 'transparent',
     },
-    ":active": {
-      background: "transparent",
+    ':active': {
+      background: 'transparent',
     },
   },
   linkContent: {},
   linkIsSelected: {
-    width: "220px ",
+    width: '220px ',
     selectors: {
-      ":hover": {
-        background: "transparent",
-        ":before": {
-          left: "8px",
-          right: "8px",
+      ':hover': {
+        background: 'transparent',
+        ':before': {
+          left: '8px',
+          right: '8px',
         },
-        ":active": {
-          background: "transparent",
+        ':active': {
+          background: 'transparent',
         },
-        ".ms-Pivot-icon": {
-          fontSize: "25px",
-          fontWeight: "bold",
+        '.ms-Pivot-icon': {
+          fontSize: '25px',
+          fontWeight: 'bold',
         },
       },
-      ":before": {
-        borderRadius: "50px",
-        height: "12px",
-        transform: "translateY(20px)",
-        background: "linear-gradient(18deg,#F99D26,#FCB427 )",
-        boxShadow: "0px 2px 10px #F99D2680",
+      ':before': {
+        borderRadius: '50px',
+        height: '12px',
+        transform: 'translateY(20px)',
+        background: 'linear-gradient(18deg,#F99D26,#FCB427 )',
+        boxShadow: '0px 2px 10px #F99D2680',
       },
-      ".ms-Pivot-icon": {
-        fontSize: "25px",
-        fontWeight: "bold",
-        color: "#f99d26",
+      '.ms-Pivot-icon': {
+        fontSize: '25px',
+        fontWeight: 'bold',
+        color: '#f99d26',
       },
     },
   },
-};
+}
 const eventab = mergeStyleSets({
   tabBlue: {
     linkIsSelected: {
-      width: "220px ",
+      width: '220px ',
       selectors: {
-        ":before": {
-          borderRadius: "50px",
-          height: "13px",
-          transform: "translateY(20px)",
-          background: "linear-gradient(18deg,#00859C,#00859C90 ) !important",
-          boxShadow: "0px 2px 10px #00859C80 !important",
+        ':before': {
+          borderRadius: '50px',
+          height: '13px',
+          transform: 'translateY(20px)',
+          background: 'linear-gradient(18deg,#00859C,#00859C90 ) !important',
+          boxShadow: '0px 2px 10px #00859C80 !important',
         },
-        ".ms-Pivot-icon": {
-          fontSize: "25px",
-          fontWeight: "bold",
-          color: "#00859C !important",
+        '.ms-Pivot-icon': {
+          fontSize: '25px',
+          fontWeight: 'bold',
+          color: '#00859C !important',
         },
       },
     },
   },
-});
+})
 // popup function
 // const openPopup = (e) => {
 //   document
@@ -246,7 +246,7 @@ const HelpGuide = (props) => {
               <h1>Our Innovation Hub</h1>
               <p>
                 All team members follow the <b>Playbook</b> to deliver their
-                work. It articulates how teams deliver{" "}
+                work. It articulates how teams deliver{' '}
                 <b>products and solutions</b> by following <b>practices</b> and
                 <b>phases</b>.
               </p>
@@ -266,31 +266,35 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={styles.bottomContent}>
                   <div className={styles.textContent}>
-                    <li>
-                      The <b>Annual Plan</b> lists all the <b>Products</b> and
-                      <b> Solutions</b> that are to be developed for that
-                      calendar year.
-                    </li>
-                    <li>
-                      The <b>Delivery Plan</b> lists all of the deliverables for
-                      that particular <b>Product or Solution</b>.
-                    </li>
-                    <li>
-                      The <b>Production board</b> lists the work, called
-                      <b> Activities</b>, that you will do for that week. All
-                      roles log their productor solution development{" "}
-                      <b>activity</b> on the <b>Production Board</b> each week. 
-                    </li>
-                    <li>
-                      The <b>Activity Planner</b> lists the steps that standard
-                      <b> Activity</b> follows and indicates when each one is
-                      completed by team members.{" "}
-                    </li>
-                    <li>
-                      The <b>Document Review</b> shows all the{" "}
-                      <b>Deliverables</b> for that week that you have submitted
-                      for review and/or sign off.
-                    </li>
+                    <ul>
+                      <li>
+                        The <b>Annual Plan</b> lists all the <b>Products</b> and
+                        <b> Solutions</b> that are to be developed for that
+                        calendar year.
+                      </li>
+                      <li>
+                        The <b>Delivery Plan</b> lists all of the deliverables
+                        for that particular <b>Product or Solution</b>.
+                      </li>
+                      <li>
+                        The <b>Production board</b> lists the work, called
+                        <b> Activities</b>, that you will do for that week. All
+                        roles log their productor solution development{' '}
+                        <b>activity</b> on the <b>Production Board</b> each
+                        week. 
+                      </li>
+                      <li>
+                        The <b>Activity Planner</b> lists the steps that
+                        standard
+                        <b> Activity</b> follows and indicates when each one is
+                        completed by team members.{' '}
+                      </li>
+                      <li>
+                        The <b>Document Review</b> shows all the{' '}
+                        <b>Deliverables</b> for that week that you have
+                        submitted for review and/or sign off.
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -308,31 +312,33 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={styles.bottomContent}>
                   <div className={styles.textContent}>
-                    <li>
-                      Every piece of work associated with a <b>Product</b> or
-                      <b> Solution</b> is called a <b>Deliverable</b>.
-                    </li>
-                    <li>
-                      Every <b>Deliverable</b> belongs to a business area.
-                    </li>
-                    <li>
-                      Each <b>Deliverable</b> is categorised as either a:
-                      <span>
-                        <b>Planning</b>: To plan deliverables, e.g. Commencement
-                        Brief, Delivery Plan
-                      </span>
-                      <span>
-                        <b>Development</b>: To design and build a deliverable,
-                        e.g. a strategic conversation, User Stories
-                      </span>
-                      <span>
-                        <b> Product/solution</b>: <b>The actual piece</b> or
-                        <b> component</b> that is part of a product that the
-                        customer uses, e.g. Teaching Guide, Professional
-                        Learning module or a School Improvement Plan or part of
-                        the <b>solution</b> the team uses
-                      </span>
-                    </li>
+                    <ul>
+                      <li>
+                        Every piece of work associated with a <b>Product</b> or
+                        <b> Solution</b> is called a <b>Deliverable</b>.
+                      </li>
+                      <li>
+                        Every <b>Deliverable</b> belongs to a business area.
+                      </li>
+                      <li>
+                        Each <b>Deliverable</b> is categorised as either a:
+                        <span>
+                          <b>Planning</b>: To plan deliverables, e.g.
+                          Commencement Brief, Delivery Plan
+                        </span>
+                        <span>
+                          <b>Development</b>: To design and build a deliverable,
+                          e.g. a strategic conversation, User Stories
+                        </span>
+                        <span>
+                          <b> Product/solution</b>: <b>The actual piece</b> or
+                          <b> component</b> that is part of a product that the
+                          customer uses, e.g. Teaching Guide, Professional
+                          Learning module or a School Improvement Plan or part
+                          of the <b>solution</b> the team uses
+                        </span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -344,22 +350,27 @@ const HelpGuide = (props) => {
           <div className={styles.pivotContainer}>
             <div className={styles.tabInfoText}>
               <h1>
-                Client and team relationship{" "}
-                <span>
+                Client and team relationship{' '}
+                <div>
                   Developers are supported by leadership to successfully produce
                   deliverables in their roles.
-                </span>
+                </div>
               </h1>
               <p>
-                <li>
-                  The leadership is provided by the Client, who holds the vision
-                  for the product and directs the team on product development.
-                </li>
-                <li>
-                  The developer ensures they confidently plan and carry out
-                  their work, resolve process issues as they arise, and deliver
-                  the work to agreed timelines.
-                </li>
+                <ul>
+                  <li>
+                    The leadership is provided by the Client, who holds the
+                    vision for the product and directs the team on product
+                    development.
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    The developer ensures they confidently plan and carry out
+                    their work, resolve process issues as they arise, and
+                    deliver the work to agreed timelines.
+                  </li>
+                </ul>
               </p>
             </div>
             <div className={styles.cardsSection}>
@@ -377,24 +388,26 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab3Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>
-                      Understand the vision for the deliverable and lead its
-                      development.
-                    </li>
-                    <li>Endorse resourcing, budget and products.</li>
-                    <li>
-                      Provide direction in Client Innovation Meetings on work
-                      underway and work about to commence.
-                    </li>
-                    <li>
-                      Inform Developer of emerging issues regarding quality and
-                      timelines of deliverables.
-                    </li>
-                    <li>
-                      Provide Developers feedback to support weekly process
-                      debriefs.
-                    </li>
-                    <li>Sign off on deliverables.</li>
+                    <ol>
+                      <li>
+                        Understand the vision for the deliverable and lead its
+                        development.
+                      </li>
+                      <li>Endorse resourcing, budget and products.</li>
+                      <li>
+                        Provide direction in Client Innovation Meetings on work
+                        underway and work about to commence.
+                      </li>
+                      <li>
+                        Inform Developer of emerging issues regarding quality
+                        and timelines of deliverables.
+                      </li>
+                      <li>
+                        Provide Developers feedback to support weekly process
+                        debriefs.
+                      </li>
+                      <li>Sign off on deliverables.</li>
+                    </ol>
                   </div>
                 </div>
               </div>
@@ -412,17 +425,21 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab3Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>Oversee timelines, resourcing and budget.</li>
-                    <li>Advise team on following work practices.</li>
-                    <li>
-                      Support developers to manage work to agreed timelines.
-                    </li>
-                    <li>Ensure teams schedule advised stand-ups.</li>
-                    <li>Address productivity issues impacting on delivery.</li>
-                    <li>
-                      Facilitate weekly debriefs on process and implement
-                      improvements with the team.
-                    </li>
+                    <ol>
+                      <li>Oversee timelines, resourcing and budget.</li>
+                      <li>Advise team on following work practices.</li>
+                      <li>
+                        Support developers to manage work to agreed timelines.
+                      </li>
+                      <li>Ensure teams schedule advised stand-ups.</li>
+                      <li>
+                        Address productivity issues impacting on delivery.
+                      </li>
+                      <li>
+                        Facilitate weekly debriefs on process and implement
+                        improvements with the team.
+                      </li>
+                    </ol>
                   </div>
                 </div>
               </div>
@@ -450,22 +467,24 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab4Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>
-                      There are 10 <b>business areas</b> made up of three
-                      <b> Product Development</b>, six <b>Skilled Services</b>{" "}
-                      and one school support area, being{" "}
-                      <b>School Partnerships.</b>{" "}
-                    </li>
-                    <li>
-                      <b>Developers</b> work in
-                      <b> Curriculum, Professional Learning</b> and{" "}
-                      <b>School Improvement.</b>
-                    </li>
-                    <li>
-                      <b>Specialist Developers</b> work in their respective
-                      <b> Skilled Services business areas</b> and work products
-                      and solutions as required.
-                    </li>
+                    <ul>
+                      <li>
+                        There are 10 <b>business areas</b> made up of three
+                        <b> Product Development</b>, six <b>Skilled Services</b>{' '}
+                        and one school support area, being{' '}
+                        <b>School Partnerships.</b>{' '}
+                      </li>
+                      <li>
+                        <b>Developers</b> work in
+                        <b> Curriculum, Professional Learning</b> and{' '}
+                        <b>School Improvement.</b>
+                      </li>
+                      <li>
+                        <b>Specialist Developers</b> work in their respective
+                        <b> Skilled Services business areas</b> and work
+                        products and solutions as required.
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -483,26 +502,29 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab4Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>
-                      <b>Clients</b> provide direction on all work
-                    </li>
-                    <li>
-                      <b>Scheduler</b> supports team members to deliver work
-                      based on the Client direction.
-                    </li>
-                    <li>
-                      <b>Business Area Leads</b> get direction from Clients for
-                      their team’s work for each year which the build into the
-                      <b> Annual Plan.</b>{" "}
-                    </li>
-                    <li>
-                      They support their team members to plan so they complete
-                      deliverables on time and to expected standard.
-                    </li>
-                    <li>
-                      Team members work on products and solution from start to
-                      finish so they develop expertise in those products.
-                    </li>
+                    <ul>
+                      <li>
+                        <b>Clients</b> provide direction on all work
+                      </li>
+                      <li>
+                        <b>Scheduler</b> supports team members to deliver work
+                        based on the Client direction.
+                      </li>
+                      <li>
+                        <b>Business Area Leads</b> get direction from Clients
+                        for their team’s work for each year which the build into
+                        the
+                        <b> Annual Plan.</b>{' '}
+                      </li>
+                      <li>
+                        They support their team members to plan so they complete
+                        deliverables on time and to expected standard.
+                      </li>
+                      <li>
+                        Team members work on products and solution from start to
+                        finish so they develop expertise in those products.
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -520,28 +542,30 @@ const HelpGuide = (props) => {
                 </div>
                 <div className={`${(styles.bottomContent, styles.tab4Cont)}`}>
                   <div className={styles.textContent}>
-                    <li>
-                      Every role in GGSA carries out their work using the
-                      Innovation Hub.
-                    </li>
-                    <li>
-                      Some roles use it more than others:
-                      <span>
-                        Operational roles spend 60-80 per cent of their time on
-                        operations activity which is not recorded in the
+                    <ul>
+                      <li>
+                        Every role in GGSA carries out their work using the
                         Innovation Hub.
-                      </span>
-                      <span>
-                        Development roles spend 80–90 per cent of their time on
-                        innovation activity which I all done using the
-                        Innovation Hub.
-                      </span>
-                    </li>
-                    <li>
-                      Every role has an administration allocation of two hours
-                      per week or eight hours per month pre-set time to role
-                      management.{" "}
-                    </li>
+                      </li>
+                      <li>
+                        Some roles use it more than others:
+                        <span>
+                          Operational roles spend 60-80 per cent of their time
+                          on operations activity which is not recorded in the
+                          Innovation Hub.
+                        </span>
+                        <span>
+                          Development roles spend 80–90 per cent of their time
+                          on innovation activity which I all done using the
+                          Innovation Hub.
+                        </span>
+                      </li>
+                      <li>
+                        Every role has an administration allocation of two hours
+                        per week or eight hours per month pre-set time to role
+                        management.{' '}
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -567,8 +591,8 @@ const HelpGuide = (props) => {
                         className={styles.img}
                         onClick={() => {
                           document
-                            .querySelector(".MapPopup1")
-                            .classList.toggle(`${styles.closeMapPopup}`);
+                            .querySelector('.MapPopup1')
+                            .classList.toggle(`${styles.closeMapPopup}`)
                         }}
                       >
                         <img src={`${avatarYellow}`} alt="" />
@@ -600,8 +624,8 @@ const HelpGuide = (props) => {
                         className={styles.img}
                         onClick={() => {
                           document
-                            .querySelector(".MapPopup2")
-                            .classList.toggle(`${styles.closeMapPopup}`);
+                            .querySelector('.MapPopup2')
+                            .classList.toggle(`${styles.closeMapPopup}`)
                         }}
                       >
                         <img src={`${avatarYellow}`} alt="" />
@@ -614,7 +638,7 @@ const HelpGuide = (props) => {
                       </div>
                     </div>
                     <div className={styles.roundCard}>
-                      <p>Buisness developer</p>
+                      <p>Business developer</p>
                       <div className={styles.img}>
                         <img src={`${avatarYellow}`} alt="" />
                       </div>
@@ -626,7 +650,7 @@ const HelpGuide = (props) => {
                     <div className={styles.roundCard}>
                       <p>Client</p>
                       <div className={styles.img}>
-                        {" "}
+                        {' '}
                         <img src={`${boxBlue}`} alt="" />
                       </div>
                       <img
@@ -656,11 +680,11 @@ const HelpGuide = (props) => {
                         className={styles.img}
                         onClick={() => {
                           document
-                            .querySelector(".MapPopup3")
-                            .classList.toggle(`${styles.closeMapPopup}`);
+                            .querySelector('.MapPopup3')
+                            .classList.toggle(`${styles.closeMapPopup}`)
                         }}
                       >
-                        {" "}
+                        {' '}
                         <img src={`${avatarBlue}`} alt="" />
                         <div
                           className={`MapPopup3 ${styles.MapPopup} ${styles.closeMapPopup}`}
@@ -687,15 +711,15 @@ const HelpGuide = (props) => {
                         className={styles.img}
                         onClick={() => {
                           document
-                            .querySelector(".MapPopup4")
-                            .classList.toggle(`${styles.closeMapPopup}`);
+                            .querySelector('.MapPopup4')
+                            .classList.toggle(`${styles.closeMapPopup}`)
                         }}
                       >
-                        {" "}
+                        {' '}
                         <img src={`${avatarBlue}`} alt="" />
                         <div
                           className={`MapPopup4 ${styles.MapPopup} ${styles.closeMapPopup}`}
-                          style={{ fontSize: "12px" }}
+                          style={{ fontSize: '12px' }}
                         >
                           Curriculam, professional learning and school
                           improvement. Develops a set of allocated products
@@ -710,7 +734,7 @@ const HelpGuide = (props) => {
                         src={`${lineBl7}`}
                         className={styles.lineB4}
                         alt=""
-                      />{" "}
+                      />{' '}
                     </div>
                   </div>
                   <div className={styles.row2}>
@@ -753,8 +777,8 @@ const HelpGuide = (props) => {
                         className={styles.img}
                         onClick={() => {
                           document
-                            .querySelector(".MapPopup5")
-                            .classList.toggle(`${styles.closeMapPopup}`);
+                            .querySelector('.MapPopup5')
+                            .classList.toggle(`${styles.closeMapPopup}`)
                         }}
                       >
                         <img src={`${giftBlue}`} alt="" />
@@ -764,7 +788,7 @@ const HelpGuide = (props) => {
                           Specialist developers sit across business areas and
                           are assigned work from product managers( who hold the
                           budget and purchase and purchase that resource).
-                          <span style={{ marginTop: "10px" }}>
+                          <span style={{ marginTop: '10px' }}>
                             <b>Skilled services</b> develops product components
                             in their areas to complete deliverables as needed
                             according to annual and term plans
@@ -813,8 +837,8 @@ const HelpGuide = (props) => {
                         className={styles.infoCard}
                         onClick={() => {
                           document
-                            .querySelector(".MapInfoPopup")
-                            .classList.toggle(`${styles.closeMapPopup}`);
+                            .querySelector('.MapInfoPopup')
+                            .classList.toggle(`${styles.closeMapPopup}`)
                         }}
                       >
                         <div className={styles.infoTop}>
@@ -846,6 +870,6 @@ const HelpGuide = (props) => {
         </PivotItem>
       </Pivot>
     </div>
-  );
-};
-export default HelpGuide;
+  )
+}
+export default HelpGuide

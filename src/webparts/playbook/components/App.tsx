@@ -11,6 +11,8 @@ import '../../../ExternalRef/css/style.scss'
 import NavHeader from './NavHeader'
 import PhaseQuestion from './PhaseQuestion'
 import styles from './Playbook.module.scss'
+import { Log } from '@microsoft/sp-core-library'
+import { log } from '@pnp/pnpjs'
 
 const SplashImage = require('../../../ExternalRef/img/SplashImage.png')
 type Detail = {
@@ -36,6 +38,8 @@ interface IListConfig {
   Category?: string
   ActiveIcon?: string
   InActiveIcon?: string
+  Example?: string
+  PathwayCategory?: string
 }
 
 interface IListFooter {
@@ -56,6 +60,7 @@ interface IListFooterConfig {
   Order: number
   activity?: string
   nextActivity?: string
+  Example?: string
 }
 
 interface IListSubStep {
@@ -79,6 +84,8 @@ interface IListStep {
   Order?: number
   ActiveIcon?: string
   InActiveIcon?: string
+  Example?: string
+  PathwayCategory?: string
 }
 
 interface IUserList {
@@ -153,6 +160,7 @@ const App = (props: any): JSX.Element => {
   const [selectedCategory, setSelectedCategory] = useState('')
   const [isPhaseAvail, setIsPhaseAvail] = useState(true)
   const [isSplash, setIsSplash] = useState(true)
+  const [pathwayEntry, setPathwayEntry] = useState([])
 
   /* Get current user details */
   const getCurrentUserDetail = async () => {
@@ -208,13 +216,16 @@ const App = (props: any): JSX.Element => {
   /* get phases open function */
   const openPhases = async (Id) => {
     await props.URL.lists
-      .getByTitle(props.deliveryPlanList)
-      .items.select('*, AnnualPlanID/ID')
-      .expand('AnnualPlanID')
+      //.getByTitle(props.deliveryPlanList)
+      //.items.select('*, AnnualPlanID/ID')
+      //.expand('AnnualPlanID')
+      .getByTitle(props.masterAnnualPlan)
+      .items.select('*')
       .getById(Id)
       .get()
       .then((res) => {
-        curProject = res.AnnualPlanIDId
+        //curProject = res.AnnualPlanIDId
+        curProject = res.ID
         curActivity = res.Title
         //curID = res.ID
       })
@@ -258,8 +269,23 @@ const App = (props: any): JSX.Element => {
         curProjectTOD = arrMasterAnnual.filter(
           (proId) => proId.ID == curProject,
         )[0].TOD
-        // curProjectID = arrMasterAnnual.filter((proId) => proId.ID == curID)[0]
-        //   .ID
+
+        //-----
+        // let completeSteps = curProjectTOD.map((item) => {
+        //   let isUserCompleted = item.CompletedUser
+        //     ? item.CompletedUser.split(',')
+        //         .map((id) => +id)
+        //         .some((id) => id == UserId)
+        //     : false
+        //   return {
+        //     Id: item.Id,
+        //   }
+        // })
+        //------
+
+        // curProjectTOD = arrMasterAnnual.filter(
+        //   (proId) => proId.ID == curProject && proId.Title == curActivity,
+        // )[0].TOD
 
         // Current user mail get
         await props.URL.currentUser()
@@ -291,6 +317,7 @@ const App = (props: any): JSX.Element => {
                 valueOfFirstLetter = firstValSplit[0]
                 valueOfLastLetter = lastValSplit[0]
                 getDliverPlan(curProjectTOD)
+                //getDliverPlan(completeSteps)
               })
               .catch((err) => {
                 console.log(err)
@@ -406,8 +433,10 @@ const App = (props: any): JSX.Element => {
     props.URL.lists
       .getByTitle('PhasesConfig')
       .items.top(4000)
+      .select('*')
       .get()
       .then((res) => {
+        console.log(res)
         let arrJSON
         arrListConfig = res
         //adding Config
@@ -551,33 +580,53 @@ const App = (props: any): JSX.Element => {
         Category: curRow.Category,
       }
     })
+    console.log(arrDelnPhaseConf)
     //set orderno and prev next
     if (arrDelnPhaseConf.filter((row) => row != undefined).length == 0) {
       setIsPhaseAvail(false)
       setLoader(false)
       return
     }
+
+    /* remove undefined values and change the index order SA -1*/
+    var tempArrDelPhaseConf = []
+    for (var i = 0; i < arrDelnPhaseConf.length; i++) {
+      if (arrDelnPhaseConf[i]) {
+        tempArrDelPhaseConf.push(arrDelnPhaseConf[i])
+      }
+    }
+    for (var j = 0; j < tempArrDelPhaseConf.length; j++) {
+      tempArrDelPhaseConf[j].indx = j
+    }
+    console.log(tempArrDelPhaseConf)
+    arrDelnPhaseConf = tempArrDelPhaseConf
+
     let moduleArr = arrDelnPhaseConf.map((row, i) => {
-      return {
-        Title: row.Title,
-        deliver: row.deliver,
-        About: row.About,
-        ID: row.ID,
-        TOD: row.TOD,
-        usersRoles: row.usersRoles,
-        activity: row.activity,
-        nextActivity: row.nextActivity,
-        Previous:
-          i == 0
-            ? undefined
-            : arrDelnPhaseConf.filter((item) => item.indx == i - 1)[0].Title,
-        Next:
-          i == arrDelnPhaseConf.length - 1
-            ? undefined
-            : arrDelnPhaseConf.filter((item) => item.indx == i + 1)[0].Title,
-        FooterImage: row.FooterImage,
-        Category: row.Category,
-        Order: i + 1,
+      try {
+        return {
+          Title: row.Title,
+          deliver: row.deliver,
+          About: row.About,
+          ID: row.ID,
+          TOD: row.TOD,
+          usersRoles: row.usersRoles,
+          activity: row.activity,
+          nextActivity: row.nextActivity,
+          Previous:
+            i == 0
+              ? undefined
+              : arrDelnPhaseConf.filter((item) => item.indx == i - 1)[0].Title,
+          Next:
+            i == arrDelnPhaseConf.length - 1
+              ? undefined
+              : arrDelnPhaseConf.filter((item) => item.indx == i + 1)[0].Title,
+          FooterImage: row.FooterImage,
+          Category: row.Category,
+          Order: i + 1,
+        }
+      } catch (e) {
+        console.log(i)
+        console.error(e)
       }
     })
     strSelecetdPhase =
@@ -662,6 +711,7 @@ const App = (props: any): JSX.Element => {
     props.URL.lists
       .getByTitle('Practice')
       .items.select('*,Practice/Title, Next/ID, Previous/ID')
+      //.items.select('*')
       .expand('Practice, Next, Previous')
       .top(4000)
       .get()
@@ -714,12 +764,15 @@ const App = (props: any): JSX.Element => {
       .get()
       .then((val) => {
         setLoader(true)
+        if (!curProject) curProject = 0
         arrSteps = val.map((row) => {
           let isUserCompleted = row.CompletedUser
             ? row.CompletedUser.split(',')
-                .map((id) => +id)
-                .some((id) => id == UserId)
-            : false
+                .map((id) => id)
+                .some((id) => id == curProject + '-' + UserId)
+            : //.map((id) => id) /* changed for load phased based on project SA-1*/
+              //.some((id) => id)
+              false
           return {
             UserId: UserId,
             Title: row.Title ? row.Title : '',
@@ -1386,6 +1439,7 @@ const App = (props: any): JSX.Element => {
           />
           {navLink == 'phases' ? (
             <>
+              {/* <Loader splashImg={SplashImage} /> */}
               {
                 <>
                   {arrDelSec && (
@@ -1413,6 +1467,7 @@ const App = (props: any): JSX.Element => {
                           <>
                             <PhaseQuestion
                               context={props.context}
+                              APID={curProject}
                               sp={props.sp}
                               URL={props.URL}
                               pageType={page}
@@ -1529,6 +1584,7 @@ const App = (props: any): JSX.Element => {
               firstName={valueOfFirstLetter}
               lastName={valueOfLastLetter}
               getTODType={getTODType}
+              sp={props.URL}
             />
           ) : // <></>
           navLink == 'helpguid' ? (

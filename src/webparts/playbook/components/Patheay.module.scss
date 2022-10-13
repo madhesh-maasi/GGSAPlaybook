@@ -107,6 +107,7 @@
                         font-size: 13px;
                         color: #000;
                         font-weight: normal;
+                        width: 75px;
                     }
                     &::after {
                         display: none;
@@ -178,4 +179,11 @@
         margin-bottom: -4px;
         margin-right: 3px;
     }
+}
+
+.scroller {
+    width: 375px;
+    height: 80px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
 }

@@ -7,7 +7,10 @@
     display: flex;
     justify-content: center;
     //align-items: center;
-    padding-top: 650px;
+    // margin-left: auto;
+    // margin-right: auto;
+    //text-align: center;
+    padding-top: 550px;
 }
 
 .Overlay {
@@ -16,9 +19,12 @@
     width: 100%;
     z-index: 10;
     background: #fff;
+    // margin-left: auto;
+    // margin-right: auto;
     display: flex;
     justify-content: center;
-    // align-items: center;
+    //align-items: center;
+    //text-align: center;
     padding-top: 100px;
 }
 

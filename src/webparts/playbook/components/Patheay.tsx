@@ -4,20 +4,54 @@ import { Label, Pivot, PivotItem } from '@fluentui/react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min'
 import { Icon } from '@fluentui/react'
+import { useEffect, useState } from 'react'
 
 const cardImage1 = require('../../../ExternalRef/img/analytics.jpg')
 const cardImage2 = require('../../../ExternalRef/img/computing.jpg')
 const cardImage3 = require('../../../ExternalRef/img/groupConference.jpg')
 const cardImage4 = require('../../../ExternalRef/img/usingSystem.jpg')
 
+// for Development
 const annualPlanURL =
   'https://ggsaus.sharepoint.com/sites/Intranet_dev/SitePages/InnovationHub.aspx?Page=AP'
 
+// for Production
+// const annualPlanURL =
+//   'https://ggsaus.sharepoint.com/sites/Intranet_Production/SitePages/InnovationHub.aspx?Page=AP'
+
 const Pathway = (props) => {
   /* add the new type of delivery */
+  const [pathwayEntry, setPathwayEntry] = useState([])
+
   const addNewTOD = (type) => {
     type != '' && window.open(annualPlanURL + '&TOD=' + type)
   }
+  const getPathwayConfig = (): void => {
+    let pathwaySteps: []
+    let pathwayEntry
+    props.sp.lists
+      .getByTitle('PathwayConfig')
+      .items.select('*')
+      .top(5000)
+      .get()
+      .then((pathway) => {
+        pathwaySteps = pathway.map((row) => {
+          return {
+            ID: row.ID,
+            Value: row.Title,
+            Category: row.Category,
+          }
+        })
+        console.log(pathwaySteps)
+        setPathwayEntry(pathwaySteps)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  useEffect(() => {
+    getPathwayConfig()
+  }, [])
 
   return (
     <div className={`${styles.PathwayWrapper} container`}>
@@ -25,6 +59,7 @@ const Pathway = (props) => {
         <h1 className={styles.title}>
           Select the pathway for your deliverable
         </h1>
+
         <div className={styles.profile}>
           <p style={{ fontSize: 18, fontWeight: 'bold' }}>{props.userName}</p>
           <div className={styles.avatar}>
@@ -105,7 +140,9 @@ const Pathway = (props) => {
                     <div>
                       <div
                         className={styles.ribbonBtn}
-                        style={{ backgroundColor: '#f99d26' }}
+                        style={{
+                          backgroundColor: '#f99d26',
+                        }}
                         onClick={() => {
                           addNewTOD('PT')
                         }}
@@ -133,7 +170,24 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'Product' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* <span>
                       Oz-e-science F–6. <br />
                       Music For Learning F–6. <br />
                       Mastery Teaching Pathway Courses. <br /> 8 Cycles of
@@ -141,7 +195,7 @@ const Pathway = (props) => {
                       School Improvement Framework. <br />
                       PlayschoolFlight Path. <br />
                       Coaching Model.
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
@@ -164,7 +218,9 @@ const Pathway = (props) => {
                     <div>
                       <div
                         className={styles.ribbonBtn}
-                        style={{ backgroundColor: '#f99d26' }}
+                        style={{
+                          backgroundColor: '#f99d26',
+                        }}
                         onClick={() => {
                           addNewTOD('NI')
                         }}
@@ -193,13 +249,30 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'New initiative' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
+                    {/* 
                     <span>
                       Discovery Trail. <br />
                       CYAAA Cape York Expansion. <br />
                       National School Improvement. <br />
                       Funding proposal for major initiative. <br />
                       Investment Campaign.
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
@@ -222,7 +295,9 @@ const Pathway = (props) => {
                     <div>
                       <div
                         className={styles.ribbonBtn}
-                        style={{ backgroundColor: '#f99d26' }}
+                        style={{
+                          backgroundColor: '#f99d26',
+                        }}
                         onClick={() => {
                           addNewTOD('OS')
                         }}
@@ -251,10 +326,27 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'Organisation solution' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* <span>
                       Setting up new office. <br />
                       Building Infrastructure.
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
@@ -316,13 +408,29 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {/* <span>
                       Oz-e-science F–3 Biology. <br /> Oz-e-English Writing F–6.{' '}
                       <br />
                       Spelling Mastery professional learning module. <br />
                       Effective teaching module. <br />
                       Signals Practice Lesson.
-                    </span>
+                    </span> */}
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'Project' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -371,13 +479,29 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'Technology' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
+                    {/* <span>
                       Teaching and Learning Platform. <br />
                       MTP Learning portal. <br />
                       Leading Mate. <br />8 cycles of school practice web
                       application. <br />
                       Effective teaching web application.
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
@@ -429,11 +553,27 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'System solution' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
+                    {/* <span>
                       Contracts Register. <br />
                       Digital Database. <br />
                       HR Database.
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
@@ -495,11 +635,27 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'Task' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
+                    {/* <span>
                       Maths of Science research. <br />
                       Playschool Professional Learning Framework. <br />
                       Oz-e-English Unit 1 Year 5 Poster Set.
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
@@ -547,11 +703,27 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {/* <span>
                       Investors Policy Paper. <br />
                       Annual Marketing Strategy. <br />
                       Marketing Campaign.
-                    </span>
+                    </span> */}
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'Strategy' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -568,7 +740,7 @@ const Pathway = (props) => {
                     <div>
                       <span className="plus">+</span>{' '}
                       <span className={styles.accordianTitle}>
-                        Task Solution:
+                        Task solution:
                       </span>
                     </div>{' '}
                     <div>
@@ -603,10 +775,26 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'Task solution' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
+                    {/* <span>
                       HR strategy or policies. <br />
                       Board meeting.
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
@@ -668,7 +856,23 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'Activity' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
+                    {/* <span>
                       Planning document: Delivery Plan. <br />
                       Commencement Brief. <br />
                       ABCD on a Page. <br />
@@ -678,7 +882,7 @@ const Pathway = (props) => {
                       Research Brief. <br />
                       Requirements Brief. <br />
                       School Review Report.
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
@@ -730,7 +934,23 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'Activity planner' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
+                    {/* <span>
                       Oz-e-maths lesson. <br />
                       Playschool Lesson. <br />
                       Teach Spelling Mastery Lesson. <br /> Marketing Campaign
@@ -739,7 +959,7 @@ const Pathway = (props) => {
                       Produce a video clip. <br />
                       Make a graphic illustration. <br />
                       Host a Band camp.
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
@@ -756,7 +976,7 @@ const Pathway = (props) => {
                     <div>
                       <span className="plus">+</span>{' '}
                       <span className={styles.accordianTitle}>
-                        Activity Solution:
+                        Activity solution:
                       </span>
                     </div>{' '}
                     <div>
@@ -790,12 +1010,28 @@ const Pathway = (props) => {
                         open
                       </button> */}
                     </div>
-                    <span>
+                    {pathwayEntry.length > 0 && (
+                      <div className={styles.scroller}>
+                        <span>
+                          {pathwayEntry.map((row) => {
+                            return row.Category == 'Activity solution' ? (
+                              <div>
+                                {row.Value}
+                                <br />
+                              </div>
+                            ) : (
+                              ''
+                            )
+                          })}
+                        </span>
+                      </div>
+                    )}
+                    {/* <span>
                       Purchasing Brief. <br /> Business Area Report to CEO.{' '}
                       <br />
                       Weekly Production Report. <br />
                       GGSA Annual Plan.
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
