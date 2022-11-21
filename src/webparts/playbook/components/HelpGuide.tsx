@@ -586,7 +586,7 @@ const HelpGuide = (props) => {
                     <img src={`${lineY5}`} className={styles.lineY5} alt="" />
 
                     <div className={styles.roundCard}>
-                      <p>Buisness area manager</p>
+                      <p>Business area manager</p>
                       <div
                         className={styles.img}
                         onClick={() => {
