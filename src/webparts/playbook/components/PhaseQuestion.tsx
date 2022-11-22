@@ -121,6 +121,9 @@ const PhaseQuestion = (props) => {
         CompletedUser: currCompleteValue,
       })
       .then(() => {
+        if (Id == lastStepID) {
+          window.location.reload();
+        }
         // if (Id == lastStepID) {
         //   props.reRunning(props.arrDelSec.Order, props.arrDelSec.Next);
         // } else {
