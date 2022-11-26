@@ -142,6 +142,8 @@ let navComplete: boolean;
 let arrPhaseConfig;
 let pathwayTOD;
 let curTOD;
+let PhaseID;
+let CurPhaseId;
 // let curID
 // let curProjectID
 
@@ -170,6 +172,9 @@ const App = (props: any): JSX.Element => {
     const searchParams = new URLSearchParams(paramsString);
     searchParams.has("activityid")
       ? (dPID = Number(searchParams.get("activityid")))
+      : "";
+    searchParams.has("activityid")
+      ? (PhaseID = Number(searchParams.get("phaseid")))
       : "";
     dPID == undefined ? openPathway() : openPhases(dPID);
   };
@@ -557,7 +562,7 @@ const App = (props: any): JSX.Element => {
   const getCurPhasesConfig = () => {
     //merging delivery plan and phasesconfig
     let arrDelnPhaseConf = arrCurProject.map((row, i) => {
-      let curRow = arrPhaseConfig.filter((row2) => row.Phases == row2.Title)[0];
+      let curRow = arrPhaseConfig.filter((row2) => row.Title == row2.Title)[0];
       setIsPhaseAvail(true);
       if (!curRow) {
         setIsPhaseAvail(false);
@@ -916,13 +921,13 @@ const App = (props: any): JSX.Element => {
             .filter((step) => step.stepsHeading == moduleHead[i].Title)
             .some((step) => step.isRead == false),
         };
-        if(curSteps.isInComplete) {
+        if (curSteps.isInComplete) {
           isCurrentPractice = true;
           break;
         }
       }
     }
-    if(!isCurrentPractice) {
+    if (!isCurrentPractice) {
       curSteps = moduleHead.filter(
         (obj) => obj.Category.toLowerCase() == strSelectedCategory
       )[0];
@@ -1008,6 +1013,8 @@ const App = (props: any): JSX.Element => {
           });
         arrActiveSelected.some((row) => row.isSelected)
           ? arrActiveSelected
+          : CurPhaseId != 0
+          ? getProjectPhases()
           : getCurrentPhases();
         // : (arrActiveSelected[0].isSelected = true)
         footerArr.filter(
@@ -1025,6 +1032,20 @@ const App = (props: any): JSX.Element => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  // get current Project Phases (Deva Changes)
+  const getProjectPhases = () => {
+    let isPhasesDetail = true;
+    for (let i = 0; arrActiveSelected.length > i; i++) {
+      if (arrActiveSelected[i].ID == CurPhaseId) {
+        arrActiveSelected[i].isSelected = true;
+        break;
+      }
+    }
+    if (!isPhasesDetail) {
+      arrActiveSelected[0].isSelected = true;
+    }
   };
 
   /* getCurrent Phases Steps (Deva Changes) */
@@ -1387,10 +1408,8 @@ const App = (props: any): JSX.Element => {
   const getDliverPlan = (type) => {
     pathwayTOD = type;
     props.URL.lists
-      .getByTitle(props.deliveryPlan)
-      .items.select("*, Phases/Title, Phases/ID")
-      .expand("Phases")
-      .top(4000)
+      .getByTitle("PhasesConfig")
+      .items.top(4000)
       .get()
       .then((values) => {
         // Get items filtered by TOD
@@ -1398,23 +1417,63 @@ const App = (props: any): JSX.Element => {
           .map((arr) => {
             return {
               Title: arr.Title,
-              delPlan: arr.DeliveryPlanCategory,
-              DelTOD: arr.DeliverPlanTypeOfWork.filter((tod) => tod == type)[0],
-              Hours: arr.Hours,
-              Phases: arr.PhasesId == null ? "" : arr.Phases.Title,
+              // delPlan: arr.DeliveryPlanCategory,
+              DelTOD: arr.TOD.filter((tod) => tod == pathwayTOD)[0],
+              // Hours: arr.Hours,
+              phasesCategory: arr.Category ? arr.Category : "",
+              ID: arr.ID,
             };
           })
           .filter((event) => event.DelTOD != undefined);
+        let arrangedDesignPhasesArray: any = [];
+        let arrangedImplementPhasesArray: any = [];
+        let arrangedOperatePhasesArray: any = [];
+        let arrangedBuildPhasesArray: any = [];
+        for (let i = 0; arrProject.length > i; i++) {
+          if (arrProject[i].phasesCategory.toLowerCase() == "design") {
+            arrangedDesignPhasesArray.push(arrProject[i]);
+          } else if (
+            arrProject[i].phasesCategory.toLowerCase() == "implement"
+          ) {
+            arrangedImplementPhasesArray.push(arrProject[i]);
+          } else if (arrProject[i].phasesCategory.toLowerCase() == "operate") {
+            arrangedOperatePhasesArray.push(arrProject[i]);
+          } else if (arrProject[i].phasesCategory.toLowerCase() == "build") {
+            arrangedBuildPhasesArray.push(arrProject[i]);
+          }
+        }
+        let arrangedMasterPhasesArray: any;
+        let concatDesAndImp = arrangedDesignPhasesArray.concat(
+          arrangedImplementPhasesArray
+        );
+        let concatDIAndOpe = concatDesAndImp.concat(arrangedOperatePhasesArray);
+        arrangedMasterPhasesArray = concatDIAndOpe.concat(
+          arrangedBuildPhasesArray
+        );
+        let isCurrentPhaseDetailID: boolean = false;
+        for (let i = 0; arrangedMasterPhasesArray.length > i; i++) {
+          if (
+            PhaseID == arrangedMasterPhasesArray[i].ID &&
+            dPID == curProject
+          ) {
+            CurPhaseId = PhaseID;
+            isCurrentPhaseDetailID = true;
+            break;
+          }
+        }
+        if (!isCurrentPhaseDetailID) {
+          CurPhaseId = 0;
+        }
         // filter completion
-        let totObj = arrProject.length - 1;
+        let totObj = arrangedMasterPhasesArray.length - 1;
         // Set Prevs and Next to Activities
-        arrCurProject = arrProject.map((e, i) => {
+        arrCurProject = arrangedMasterPhasesArray.map((e, i) => {
           return {
             Title: e.Title,
-            delPlan: e.delPlan,
+            // delPlan: e.delPlan,
             DelTOD: e.DelTOD,
-            Hours: e.Hours,
-            Phases: e.Phases,
+            // Hours: e.Hours,
+            // Phases: e.Phases,
             Order: i + 1,
             Previous: i == 0 ? null : i,
             Next: i < totObj ? 2 + i : null,
