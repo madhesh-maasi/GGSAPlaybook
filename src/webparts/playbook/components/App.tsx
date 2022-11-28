@@ -143,7 +143,7 @@ let arrPhaseConfig;
 let pathwayTOD;
 let curTOD;
 let PhaseID;
-let CurPhaseId;
+let CurPhaseId = 0;
 // let curID
 // let curProjectID
 
@@ -419,10 +419,47 @@ const App = (props: any): JSX.Element => {
           .items.top(4000)
           .get()
           .then((res) => {
-            let categories = res.map((row) => row.Category);
+            debugger;
+            console.log(res);
+            console.log(pathwayTOD);
+            let categories;
+            if(pathwayTOD){
+              let duplicateCategories = [];
+              duplicateCategories = res.map((row) => {
+                return {
+                  cate: row.Category,
+                  tod: row.TOD.filter((e) => e == pathwayTOD)
+                }
+              }).filter((val) => val.tod[0] != undefined);
+              
+              duplicateCategories = duplicateCategories.map((data) => data.cate);
+              let DesignArray = [];
+              let BuildArray = [];
+              let ImplementArray = [];
+              let OperateArray = [];
+              for(let i = 0; duplicateCategories.length > i; i++) {
+                if(duplicateCategories[i].toLowerCase() == "design") {
+                  DesignArray.push(duplicateCategories[i]);
+                } else if (duplicateCategories[i].toLowerCase() == "build"){
+                  BuildArray.push(duplicateCategories[i]);
+                } else if (duplicateCategories[i].toLowerCase() == "implement"){
+                  ImplementArray.push(duplicateCategories[i]);
+                } else if (duplicateCategories[i].toLowerCase() == "operate"){
+                  OperateArray.push(duplicateCategories[i]);
+                }
+              }
+              let DesAndBui = DesignArray.concat(BuildArray);
+              let DBAndImp = DesAndBui.concat(ImplementArray);
+              categories = DBAndImp.concat(OperateArray);
+              console.log(categories);
+            } else {
+              categories = res.map((row) => row.Category);
+              console.log(categories);
+            }
             arrCategory = categories.filter(function (item, pos, self) {
               return self.indexOf(item) == pos;
             });
+            console.log(arrCategory);
           })
           .catch((err) => {
             console.log(err);
@@ -1036,10 +1073,11 @@ const App = (props: any): JSX.Element => {
 
   // get current Project Phases (Deva Changes)
   const getProjectPhases = () => {
-    let isPhasesDetail = true;
+    let isPhasesDetail = false;
     for (let i = 0; arrActiveSelected.length > i; i++) {
       if (arrActiveSelected[i].ID == CurPhaseId) {
         arrActiveSelected[i].isSelected = true;
+        isPhasesDetail = true;
         break;
       }
     }
@@ -1433,28 +1471,27 @@ const App = (props: any): JSX.Element => {
           if (arrProject[i].phasesCategory.toLowerCase() == "design") {
             arrangedDesignPhasesArray.push(arrProject[i]);
           } else if (
-            arrProject[i].phasesCategory.toLowerCase() == "implement"
+            arrProject[i].phasesCategory.toLowerCase() == "build"
           ) {
+            arrangedBuildPhasesArray.push(arrProject[i]);
+          } else if (arrProject[i].phasesCategory.toLowerCase() == "implement") {
             arrangedImplementPhasesArray.push(arrProject[i]);
           } else if (arrProject[i].phasesCategory.toLowerCase() == "operate") {
             arrangedOperatePhasesArray.push(arrProject[i]);
-          } else if (arrProject[i].phasesCategory.toLowerCase() == "build") {
-            arrangedBuildPhasesArray.push(arrProject[i]);
           }
         }
         let arrangedMasterPhasesArray: any;
-        let concatDesAndImp = arrangedDesignPhasesArray.concat(
-          arrangedImplementPhasesArray
-        );
-        let concatDIAndOpe = concatDesAndImp.concat(arrangedOperatePhasesArray);
-        arrangedMasterPhasesArray = concatDIAndOpe.concat(
+        let concatDesAndBuild = arrangedDesignPhasesArray.concat(
           arrangedBuildPhasesArray
+        );
+        let concatDIAndImp = concatDesAndBuild.concat(arrangedImplementPhasesArray);
+        arrangedMasterPhasesArray = concatDIAndImp.concat(
+          arrangedOperatePhasesArray
         );
         let isCurrentPhaseDetailID: boolean = false;
         for (let i = 0; arrangedMasterPhasesArray.length > i; i++) {
           if (
-            PhaseID == arrangedMasterPhasesArray[i].ID &&
-            dPID == curProject
+            PhaseID == arrangedMasterPhasesArray[i].ID
           ) {
             CurPhaseId = PhaseID;
             isCurrentPhaseDetailID = true;
