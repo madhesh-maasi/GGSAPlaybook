@@ -12,12 +12,12 @@ const cardImage3 = require('../../../ExternalRef/img/groupConference.jpg')
 const cardImage4 = require('../../../ExternalRef/img/usingSystem.jpg')
 
 // for Development
-const annualPlanURL =
-  'https://ggsaus.sharepoint.com/sites/Intranet_dev/SitePages/InnovationHub.aspx?Page=AP'
+// const annualPlanURL =
+//   'https://ggsaus.sharepoint.com/sites/Intranet_dev/SitePages/InnovationHub.aspx?Page=AP'
 
 // for Production
-// const annualPlanURL =
-//   'https://ggsaus.sharepoint.com/sites/Intranet_Production/SitePages/InnovationHub.aspx?Page=AP'
+const annualPlanURL =
+  'https://ggsaus.sharepoint.com/sites/Intranet_Production/SitePages/InnovationHub.aspx?Page=AP'
 
 const Pathway = (props) => {
   /* add the new type of delivery */
