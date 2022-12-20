@@ -144,6 +144,8 @@ let pathwayTOD;
 let curTOD;
 let PhaseID;
 let CurPhaseId = 0;
+let isNaveLink: boolean = false;
+let PracticeNaveTitle: string = "";
 // let curID
 // let curProjectID
 
@@ -419,32 +421,35 @@ const App = (props: any): JSX.Element => {
           .items.top(4000)
           .get()
           .then((res) => {
-            debugger;
-            console.log(res);
-            console.log(pathwayTOD);
             let categories;
-            if(pathwayTOD){
+            if (pathwayTOD) {
               let duplicateCategories = [];
-              duplicateCategories = res.map((row) => {
-                return {
-                  cate: row.Category,
-                  tod: row.TOD.filter((e) => e == pathwayTOD)
-                }
-              }).filter((val) => val.tod[0] != undefined);
-              
-              duplicateCategories = duplicateCategories.map((data) => data.cate);
+              duplicateCategories = res
+                .map((row) => {
+                  return {
+                    cate: row.Category,
+                    tod: row.TOD.filter((e) => e == pathwayTOD),
+                  };
+                })
+                .filter((val) => val.tod[0] != undefined);
+
+              duplicateCategories = duplicateCategories.map(
+                (data) => data.cate
+              );
               let DesignArray = [];
               let BuildArray = [];
               let ImplementArray = [];
               let OperateArray = [];
-              for(let i = 0; duplicateCategories.length > i; i++) {
-                if(duplicateCategories[i].toLowerCase() == "design") {
+              for (let i = 0; duplicateCategories.length > i; i++) {
+                if (duplicateCategories[i].toLowerCase() == "design") {
                   DesignArray.push(duplicateCategories[i]);
-                } else if (duplicateCategories[i].toLowerCase() == "build"){
+                } else if (duplicateCategories[i].toLowerCase() == "build") {
                   BuildArray.push(duplicateCategories[i]);
-                } else if (duplicateCategories[i].toLowerCase() == "implement"){
+                } else if (
+                  duplicateCategories[i].toLowerCase() == "implement"
+                ) {
                   ImplementArray.push(duplicateCategories[i]);
-                } else if (duplicateCategories[i].toLowerCase() == "operate"){
+                } else if (duplicateCategories[i].toLowerCase() == "operate") {
                   OperateArray.push(duplicateCategories[i]);
                 }
               }
@@ -850,6 +855,7 @@ const App = (props: any): JSX.Element => {
 
   /* Get practiceSubSteps list all datas */
   const getPracticeSubSteps = (): void => {
+    let latestObj;
     props.URL.lists
       .getByTitle("PracticeSubSteps")
       .items.select("*, Practice/ID")
@@ -884,7 +890,7 @@ const App = (props: any): JSX.Element => {
         setAllSteps([]);
         setAllSteps([...isArrSteps]);
         let startSteps;
-        strSelectedCategory != ""
+        isNaveLink || strSelectedCategory != ""
           ? getCurrentCategoryPractice()
           : ((startSteps = moduleHead.filter(
               (firstModule) => firstModule.Previous == undefined
@@ -922,11 +928,18 @@ const App = (props: any): JSX.Element => {
                   isActive: row.Title == arrDeliver.Title ? true : false,
                 };
               })),
-            strSelectedCategory == ""
-              ? ((latestModOrdNo = arrDeliver.Order),
-                arrPrimarySteps.length > 0 &&
-                  ((nextModuleTitle = arrDeliver.Next),
-                  reArrange(arrPrimarySteps, footerArr, arrDeliver)))
+            isNaveLink || strSelectedCategory == ""
+              ? isNaveLink
+                ? ((latestObj = isArrSteps.filter((e) => e.isRead == false))[0],
+                  (latestModOrdNo = moduleHead.filter(
+                    (e) => e.Title == latestObj[0].stepsHeading
+                  )[0].Order),
+                  (isNaveLink = false),
+                  reArrange(arrPrimarySteps, footerArr, arrDeliver))
+                : ((latestModOrdNo = arrDeliver.Order),
+                  arrPrimarySteps.length > 0 &&
+                    ((nextModuleTitle = arrDeliver.Next),
+                    reArrange(arrPrimarySteps, footerArr, arrDeliver)))
               : getLatestOrderNo(
                   curSteps.Title,
                   arrPrimarySteps,
@@ -944,7 +957,10 @@ const App = (props: any): JSX.Element => {
   const getCurrentCategoryPractice = () => {
     let isCurrentPractice = false;
     for (let i = 0; moduleHead.length > i; i++) {
-      if (moduleHead[i].Category.toLowerCase() == strSelectedCategory) {
+      if (
+        moduleHead[i].Category.toLowerCase() == strSelectedCategory ||
+        isNaveLink
+      ) {
         curSteps = {
           Title: moduleHead[i].Title,
           About: moduleHead[i].About,
@@ -954,9 +970,13 @@ const App = (props: any): JSX.Element => {
           ID: moduleHead[i].ID,
           Order: moduleHead[i].Order,
           usersRoles: moduleHead[i].usersRoles,
-          isInComplete: isArrSteps
-            .filter((step) => step.stepsHeading == moduleHead[i].Title)
-            .some((step) => step.isRead == false),
+          isInComplete: isNaveLink
+            ? moduleHead[i].Title == PracticeNaveTitle
+              ? true
+              : false
+            : isArrSteps
+                .filter((step) => step.stepsHeading == moduleHead[i].Title)
+                .some((step) => step.isRead == false),
         };
         if (curSteps.isInComplete) {
           isCurrentPractice = true;
@@ -1046,6 +1066,7 @@ const App = (props: any): JSX.Element => {
               FooterImage: row.FooterImage,
               Order: row.Order,
               isActive: false,
+              ID: row.ID,
             };
           });
         arrActiveSelected.some((row) => row.isSelected)
@@ -1470,11 +1491,11 @@ const App = (props: any): JSX.Element => {
         for (let i = 0; arrProject.length > i; i++) {
           if (arrProject[i].phasesCategory.toLowerCase() == "design") {
             arrangedDesignPhasesArray.push(arrProject[i]);
-          } else if (
-            arrProject[i].phasesCategory.toLowerCase() == "build"
-          ) {
+          } else if (arrProject[i].phasesCategory.toLowerCase() == "build") {
             arrangedBuildPhasesArray.push(arrProject[i]);
-          } else if (arrProject[i].phasesCategory.toLowerCase() == "implement") {
+          } else if (
+            arrProject[i].phasesCategory.toLowerCase() == "implement"
+          ) {
             arrangedImplementPhasesArray.push(arrProject[i]);
           } else if (arrProject[i].phasesCategory.toLowerCase() == "operate") {
             arrangedOperatePhasesArray.push(arrProject[i]);
@@ -1484,17 +1505,18 @@ const App = (props: any): JSX.Element => {
         let concatDesAndBuild = arrangedDesignPhasesArray.concat(
           arrangedBuildPhasesArray
         );
-        let concatDIAndImp = concatDesAndBuild.concat(arrangedImplementPhasesArray);
+        let concatDIAndImp = concatDesAndBuild.concat(
+          arrangedImplementPhasesArray
+        );
         arrangedMasterPhasesArray = concatDIAndImp.concat(
           arrangedOperatePhasesArray
         );
         let isCurrentPhaseDetailID: boolean = false;
         for (let i = 0; arrangedMasterPhasesArray.length > i; i++) {
-          if (
-            PhaseID == arrangedMasterPhasesArray[i].ID
-          ) {
-            CurPhaseId = PhaseID;
-            isCurrentPhaseDetailID = true;
+          if (PhaseID == arrangedMasterPhasesArray[i].ID) {
+            isNaveLink
+              ? ((isCurrentPhaseDetailID = true), (isNaveLink = false))
+              : ((CurPhaseId = PhaseID), (isCurrentPhaseDetailID = true));
             break;
           }
         }
@@ -1592,6 +1614,23 @@ const App = (props: any): JSX.Element => {
     }, 5000);
   }, []);
 
+  /* Phases Steps Navigation Link ( Deva Changes ) */
+  const PhasesNaveLink = (naveID) => {
+    CurPhaseId = naveID;
+    pageType = "phases";
+    isNaveLink = true;
+    dPID != undefined
+      ? getDliverPlan(curProjectTOD)
+      : getNavHeader("phases", "");
+  };
+
+  /* Practice Steps Navigation Link ( Deva Changes ) */
+  const PracticeNaveLink = (Title) => {
+    isNaveLink = true;
+    PracticeNaveTitle = Title;
+    getNavHeader("practice", "");
+  };
+
   return (
     <>
       {isSplash ? (
@@ -1661,6 +1700,7 @@ const App = (props: any): JSX.Element => {
                               URL={props.URL}
                               arrFooter={arrFooter}
                               pageType={page}
+                              PhasesNaveLink={PhasesNaveLink}
                             />
                             <FooterCategories
                               context={props.context}
@@ -1730,6 +1770,7 @@ const App = (props: any): JSX.Element => {
                         URL={props.URL}
                         arrFooter={arrFooter}
                         pageType={page}
+                        PracticeNaveLink={PracticeNaveLink}
                       />
                       <FooterCategories
                         allPhasesSteps={allPhasesSteps}
