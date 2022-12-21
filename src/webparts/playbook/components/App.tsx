@@ -1098,6 +1098,7 @@ const App = (props: any): JSX.Element => {
     for (let i = 0; arrActiveSelected.length > i; i++) {
       if (arrActiveSelected[i].ID == CurPhaseId) {
         arrActiveSelected[i].isSelected = true;
+        isNaveLink = false;
         isPhasesDetail = true;
         break;
       }
@@ -1114,6 +1115,7 @@ const App = (props: any): JSX.Element => {
       for (let j = 0; arrActiveSelected[i].PhaseSteps.length > j; j++) {
         if (arrActiveSelected[i].PhaseSteps[j].isRead == false) {
           isPhasesDetail = true;
+          isNaveLink = false;
           break;
         }
       }
@@ -1138,6 +1140,7 @@ const App = (props: any): JSX.Element => {
             strSelectedCategory.toLowerCase()
         ) {
           isPhasesDetail = true;
+          isNaveLink = false;
           break;
         }
       }
