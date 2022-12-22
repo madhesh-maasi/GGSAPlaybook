@@ -81,7 +81,7 @@ const Footerimg = (props) => {
                                         //marginRight: '5px',
                                       }}
                                     ></div>
-                                    {row.Title}
+                                    <span className={styles.hoverFooterLink}>{row.Title}</span>
                                   </li>
                                 </span>
                               }
@@ -149,7 +149,7 @@ const Footerimg = (props) => {
                                     }}
                                   >
                                     <div className={styles.bulletPoint}></div>
-                                    {row.Title}
+                                    <span className={styles.hoverFooterLink}>{row.Title}</span>
                                   </li>
                                 </span>
                               }
